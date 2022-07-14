@@ -1,7 +1,7 @@
-const { user } = require('../database/models/user');
+const { user: User } = require('../database/models/user');
 const userVerify = require('./validates/userVerify');
 const conflict = require('../errors/conflicts');
-const userExist = require('./validates/userExist');
+// const userExist = require('./validates/userExist');
 const notFound = require('../errors/notFound');
 
 const create = async ({ name, email, password, role }) => {
@@ -9,25 +9,26 @@ const create = async ({ name, email, password, role }) => {
 
   if (isUserRegistered) throw conflict('User already registered');
   
-  const newUser = await user.create({ name, email, password, role });
+  const user = await User.create({ name, email, password, role });
          
-  return newUser;
+  return user;
 };
 
 const getAllUsers = async () => {
-  const users = await user.findAll({ attributes: { exclude: 'password' } });
+  const users = await User.findAll({ attributes: { exclude: 'password' } });
   return users;
 };
 
 const getUserById = async (id) => {
-  const exist = await userExist(id);
-  if (exist === false) throw notFound('User does not exist');
-  const getUser = await user.findByPk(id, { attributes: { exclude: 'password' } });
-  return getUser; 
+  // const exist = await userExist(id);
+  
+  const user = await User.findByPk(id, { attributes: { exclude: 'password' } });
+  if (!user) throw notFound('User does not exist');
+  return user; 
 };
 
 const destroy = async (id) => {
-  await user.destroy({ where: { id } });
+  await User.destroy({ where: { id } });
 };
 
 module.exports = {
