@@ -1,8 +1,8 @@
-const { User } = require('../models');
+const { user: User } = require('../../database/models');
 
 const userExist = async (id) => {
-  const userVerify = await User.findOne({ where: { id } });
-  if (userVerify) return true;
+  const user = await User.findOne({ where: { id } });
+  if (user) return true;
   return false;
 };
 
