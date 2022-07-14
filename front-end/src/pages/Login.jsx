@@ -4,13 +4,12 @@ import deliveryContext from '../context/deliveryContext';
 
 function Login({ history }) {
   const { contexto } = useContext(deliveryContext);
-
-  console.log(contexto);
+  console.log(contexto, history.location.pathname);
 
   useEffect(() => {}, []);
 
-  if (history.pathname.location === '/') {
-    history.push('/login');
+  if (history.location.pathname === '/') {
+    history.push('login');
   }
 
   return (
@@ -25,8 +24,8 @@ export default Login;
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
-    pathname: PropTypes.shape({
-      location: PropTypes.string.isRequired,
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
     }),
   }).isRequired,
 };

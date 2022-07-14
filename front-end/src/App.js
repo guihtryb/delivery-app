@@ -9,6 +9,7 @@ function App() {
       <div className="app">
         <Switch>
           <Route exact path="/" component={ Login } />
+          <Route exact path="/login" component={ Login } />
         </Switch>
       </div>
     </Provider>
