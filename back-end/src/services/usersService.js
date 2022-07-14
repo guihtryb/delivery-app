@@ -1,17 +1,17 @@
-const { user } = require('../models');
-const userVerify = require('../validates/userValidate');
-const conflict = require('../error/conflict');
-const userExist = require('../validates/userExist');
-const notFound = require('../error/notFound');
+const { user } = require('../database/models/user');
+const userVerify = require('./validates/userVerify');
+const conflict = require('../errors/conflicts');
+const userExist = require('./validates/userExist');
+const notFound = require('../errors/notFound');
 
 const create = async ({ name, email, password, role }) => {
   const isUserRegistered = await userVerify(email, password);
 
   if (isUserRegistered) throw conflict('User already registered');
   
-  const user = await user.create({ name, email, password, role });
+  const newUser = await user.create({ name, email, password, role });
          
-  return user;
+  return newUser;
 };
 
 const getAllUsers = async () => {
@@ -22,8 +22,8 @@ const getAllUsers = async () => {
 const getUserById = async (id) => {
   const exist = await userExist(id);
   if (exist === false) throw notFound('User does not exist');
-  const user = await user.findByPk(id, { attributes: { exclude: 'password' } });
-  return user; 
+  const getUser = await user.findByPk(id, { attributes: { exclude: 'password' } });
+  return getUser; 
 };
 
 const destroy = async (id) => {
