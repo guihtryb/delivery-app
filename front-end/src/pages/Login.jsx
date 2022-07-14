@@ -1,13 +1,13 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import deliveryContext from '../context/deliveryContext';
 
 function Login({ history }) {
-  const {
-  } = useContext(deliveryContext);
+  const { contexto } = useContext(deliveryContext);
 
-  useEffect(() => {
-  }, []);
+  console.log(contexto);
+
+  useEffect(() => {}, []);
 
   if (history.pathname.location === '/') {
     history.push('/login');
@@ -15,6 +15,7 @@ function Login({ history }) {
 
   return (
     <div className="login">
+      login
     </div>
   );
 }
@@ -24,5 +25,8 @@ export default Login;
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
+    pathname: PropTypes.shape({
+      location: PropTypes.string.isRequired,
+    }),
   }).isRequired,
 };

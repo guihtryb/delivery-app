@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import deliveryContext from './deliveryContext';
 
 function Provider({ children }) {
-
-  const contextValue = {
-  };
+  const contextValue = {};
 
   return (
-    <recipesContext.Provider value={ contextValue }>
+    <deliveryContext.Provider value={ contextValue }>
       {children}
-    </recipesContext.Provider>
+    </deliveryContext.Provider>
   );
 }
 
