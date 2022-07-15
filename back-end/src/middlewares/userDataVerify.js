@@ -4,7 +4,7 @@ const badRequest = require('../errors/badRequest');
 const userSchema = Joi.object({
   name: Joi.string().min(8).required(),
   email: Joi.string().email().required(),
-  password: Joi.string().length(6).required(),
+  password: Joi.string().min(6).required(),
 });
 
 const userDataVerify = (req, res, next) => {
