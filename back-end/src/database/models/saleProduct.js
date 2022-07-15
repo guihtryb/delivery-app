@@ -5,7 +5,7 @@ const SaleProduct = (sequelize, DataTypes) => {
     {
       modelName: "saleProduct",
       tableName: "salesProducts",
-      timeStamps: false,
+      timestamps: false,
       underscored: true,
     }
   );
@@ -26,7 +26,7 @@ const SaleProduct = (sequelize, DataTypes) => {
     });
   }
 
-  return PostsCategory;
+  return SaleProduct;
 };
 
 module.exports = SaleProduct;
