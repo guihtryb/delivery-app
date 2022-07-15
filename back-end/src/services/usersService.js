@@ -1,7 +1,6 @@
 const userVerify = require('./validates/userVerify');
 const { user } = require('../database/models');
 const conflict = require('../errors/conflicts');
-// const userExist = require('./validates/userExist');
 const notFound = require('../errors/notFound');
 const passwordEncryptor = require('../helpers/passwordEncryptor');
 const { unauthorized } = require('../errors/conflicts');
