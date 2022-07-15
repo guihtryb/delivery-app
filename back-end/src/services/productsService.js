@@ -1,9 +1,9 @@
 const Product = require('../database/models/product');
 
-const getAll = () => Product.findAll();
+const getAll = async () => Product.findAll();
 
-const getById = (id) => {
-  const product = Product.findByPk(id);
+const getById = async (id) => {
+  const product = await Product.findByPk(id);
 
   return !product ? null : product;
 };
