@@ -3,13 +3,16 @@ const userVerify = require('./validates/userVerify');
 const conflict = require('../errors/conflicts');
 // const userExist = require('./validates/userExist');
 const notFound = require('../errors/notFound');
+const passwordEncryptor = require('../helpers/passwordEncryptor');
 
 const create = async ({ name, email, password, role }) => {
-  const isUserRegistered = await userVerify(email, password);
+  const encryptedPassword = passwordEncryptor(password);
+  
+  const isUserRegistered = await userVerify(email, encryptedPassword);
 
   if (isUserRegistered) throw conflict('User already registered');
-  
-  const user = await User.create({ name, email, password, role });
+
+  const user = await User.create({ name, email, encryptedPassword, role });
          
   return user;
 };
@@ -20,8 +23,6 @@ const getAllUsers = async () => {
 };
 
 const getUserById = async (id) => {
-  // const exist = await userExist(id);
-  
   const user = await User.findByPk(id, { attributes: { exclude: 'password' } });
   if (!user) throw notFound('User does not exist');
   return user; 
