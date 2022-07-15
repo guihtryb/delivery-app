@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import deliveryContext from '../context/deliveryContext';
 import Button from '../components/Button';
@@ -10,13 +11,28 @@ function Login({ history }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [disabled, setDisabled] = useState(false);
 
   const loginButton = () => {
     console.log('email : ', email, 'password: ', password);
+    axios.get('https://localhost:3001/user', { email, password })
+      .then((response) => {
+        console.log(response);
+      });
   };
 
   const registerButton = () => {
     history.push('/pagina');
+  };
+
+  const verifyInputs = () => {
+    const min = 6;
+    if (email.split('@').length === 2 && email.split('.').length === 2
+    && password.length >= min) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
   };
 
   const handleChange = ({ target: { value, name } }) => {
@@ -27,7 +43,9 @@ function Login({ history }) {
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    verifyInputs();
+  }, [password, email]);
 
   if (history.location.pathname === '/') {
     history.push('login');
@@ -57,11 +75,13 @@ function Login({ history }) {
           importanceClass="primary"
           name="LOGIN"
           callBack={ loginButton }
+          disabled={ disabled }
         />
         <Button
           dataTestId="common_login__button-register"
-          importanceClass="secundary"
+          importanceClass="terciary"
           name="Ainda nao tenho conta"
+          disabled={ false }
           callBack={ registerButton }
         />
       </form>
