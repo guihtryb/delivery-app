@@ -7,14 +7,14 @@ const { unauthorized } = require('../errors/conflicts');
 
 const create = async ({ name, email, password }) => {
   const encryptedPassword = passwordEncryptor(password);
-  
+
   const isUserRegistered = await userVerify(email, encryptedPassword);
 
   if (isUserRegistered) throw conflict('User already registered');
 
-  const createUser = await user.create({ name, email, encryptedPassword });  
-         
-  return createUser;
+  const createdUser = await user.create({ name, email, password: encryptedPassword });  
+  const newUser = { id: createdUser.id, name: createdUser.name, emal: createdUser.email };
+  return newUser;
 };
 
 const getAllUsers = async () => {
