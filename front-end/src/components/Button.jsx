@@ -15,7 +15,6 @@ function Button({ name, dataTestId, callBack, importanceClass }) {
     </button>
   );
 }
-
 export default Button;
 
 Button.propTypes = {
