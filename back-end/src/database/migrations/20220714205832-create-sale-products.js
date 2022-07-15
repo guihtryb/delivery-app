@@ -8,7 +8,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
-          model: 'sale',
+          model: 'sales',
           key: 'id',
         }
       },
@@ -18,14 +18,13 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
-          model: 'product',
+          model: 'products',
           key: 'id',
         }
       },
       quantity: {
         type: Sequelize.INTEGER,
       },
-      refere
     });
   },
   async down(queryInterface, Sequelize) {
