@@ -15,14 +15,14 @@ function Login({ history }) {
 
   const loginButton = () => {
     console.log('email : ', email, 'password: ', password);
-    axios.get('https://localhost:3001/user', { email, password })
+    axios.get('https://localhost:3001/users', { email, password })
       .then((response) => {
         console.log(response);
       });
   };
 
   const registerButton = () => {
-    history.push('/pagina');
+    history.push('/register');
   };
 
   const verifyInputs = () => {
