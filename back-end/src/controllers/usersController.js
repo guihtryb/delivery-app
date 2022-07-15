@@ -2,9 +2,9 @@ const userService = require('../services/usersService');
 
 const create = async (req, res, next) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password } = req.body;
 
-    const newUser = await userService.create({ name, email, password, role });
+    const newUser = await userService.create({ name, email, password });
 
     return res.status(201).json(newUser);
   } catch (error) {
@@ -31,6 +31,17 @@ const getUserById = async (req, res, next) => {
   }
 };
 
+const update = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { body } = req;
+    const updatedUser = await userService.update(body, id);
+    return res.status(200).json(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const destroy = async (req, res, next) => {
   try {
     const id = req.user;
@@ -45,5 +56,6 @@ module.exports = {
   create,
   getAllUsers,
   getUserById,
+  update,
   destroy,
 }; 
