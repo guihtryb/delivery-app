@@ -37,15 +37,13 @@ const attributes = {
 
 const saleModel = (sequelize) => {
   const sale = sequelize.define('sale', attributes, {
-    modelName: 'sale',
-    tableName: 'sales',
     timestamps: false,
     undescored: true,
   });
 
   sale.associate = (models) => {
     sale.belongsTo(models.user, { as: 'user', foreignKey: 'userId' });
-    sale.belongsTo(models.user, { as: 'user', foreignKey: 'sellerId' });
+    // sale.belongsTo(models.user, { as: 'user', foreignKey: 'sellerId' });
   };
 
   return sale;
