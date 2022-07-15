@@ -18,3 +18,35 @@ code {
   align-items: center;
   justify-content: space-evenly;
 }
+
+.primary {
+  background: #036B52;
+}
+
+.secundary {
+  background: #2FC18C;
+}
+
+.terciary {
+  background: #421981;
+}
+
+button {
+  border: none;
+  margin: 5px;
+  border-radius: 5px;
+  color: white;
+  width: 100%;
+}
+
+button:hover {
+  background: #05231c;
+}
+
+.disabilitado {
+  background-color: grey;
+}
+
+.disabilitado:hover {
+  background-color: gray;
+}
