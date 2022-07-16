@@ -5,8 +5,6 @@ const Product = (sequelize, DataTypes) => {
     url_image: DataTypes.STRING
   },
     {
-      modelName: "product",
-      tableName: "products",
       timestamps: false,
       underscored: true,
     }

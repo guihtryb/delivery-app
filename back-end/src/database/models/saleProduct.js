@@ -1,10 +1,8 @@
 const SaleProduct = (sequelize, DataTypes) => {
-  const SaleProduct = sequelize.define("saleProduct", {
+  const SaleProduct = sequelize.define("salesProduct", {
     quantity: DataTypes.NUMBER
   },
     {
-      modelName: "saleProduct",
-      tableName: "salesProducts",
       timestamps: false,
       underscored: true,
     }

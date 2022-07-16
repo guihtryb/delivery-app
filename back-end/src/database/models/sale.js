@@ -37,8 +37,6 @@ const attributes = {
 
 const saleModel = (sequelize) => {
   const sale = sequelize.define('sale', attributes, {
-    modelName: 'sale',
-    tableName: 'sales',
     timestamps: false,
     undescored: true,
   });

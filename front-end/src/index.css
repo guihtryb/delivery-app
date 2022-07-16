@@ -18,3 +18,72 @@ code {
   align-items: center;
   justify-content: space-evenly;
 }
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.primary {
+  background: #036B52;
+}
+
+.secundary {
+  background: #2FC18C;
+}
+
+.terciary {
+  background: #421981;
+}
+
+button {
+  border: none;
+  margin: 5px;
+  border-radius: 5px;
+  color: white;
+  width: 100%;
+}
+
+button:hover {
+  background: #05231c;
+}
+
+.disabilitado {
+  background-color: grey;
+}
+
+.disabilitado:hover {
+  background-color: gray;
+}
+
+.product-card {
+  border: 2px solid rgb(135, 135, 135);
+  margin: 3px;
+}
+
+.add-button-products {
+  background-color: rgb(193, 193, 193);
+  width: 100%;
+}
+
+.see-car-button {
+  position: sticky;
+  bottom: 0;
+  width: 50%;
+}
+
+.total-price {
+  border-radius: 5px;
+  color: white;
+  font-size: x-large;
+  position: sticky;
+  bottom: 0;
+}
+
+table {
+  border: 1px solid gray;
+  align-items: center;
+  text-align: center;
+}
