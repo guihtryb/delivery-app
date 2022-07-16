@@ -43,16 +43,14 @@ function ProductsPage({ history }) {
         type="button"
         data-testid={ buttonDatatest }
         className="primary see-car-button"
-        onClick={ () => { history.push('/carrinho'); } }
+        onClick={ () => { history.push('/customer/checkout'); } }
       >
-        <p>
-          Ver carrinho: R$
-          <span
-            data-testid="customer_products__checkout-bottom-value"
-          >
-            { totalPrice }
-          </span>
-        </p>
+        Ver carrinho: R$
+        <span
+          data-testid="customer_products__checkout-bottom-value"
+        >
+          { totalPrice }
+        </span>
       </button>
     </div>
   );
