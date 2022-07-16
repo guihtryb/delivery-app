@@ -19,6 +19,13 @@ code {
   justify-content: space-evenly;
 }
 
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
 .primary {
   background: #036B52;
 }
@@ -49,4 +56,20 @@ button:hover {
 
 .disabilitado:hover {
   background-color: gray;
+}
+
+.product-card {
+  border: 2px solid rgb(135, 135, 135);
+  margin: 3px;
+}
+
+.add-button-products {
+  background-color: rgb(193, 193, 193);
+  width: 100%;
+}
+
+.see-car-button {
+  position: sticky;
+  bottom: 0;
+  width: 50%;
 }
