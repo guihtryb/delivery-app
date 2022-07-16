@@ -37,10 +37,7 @@ const update = async (body, id) => {
   if (checkPassword.dataValues.password !== encryptedPassword) {
     throw unauthorized('Unauthorized user');
   }
-  // if (role === 'admin') {
-  //   const userUpdated = await user.update({ name, email, role }, { where: { id } });
-  //   return userUpdated;
-  // }
+
   await user.update({ name, email }, { where: { id } });
   const userUpdated = await user.findByPk(id, { attributes: { exclude: 'password' } });
   console.log(userUpdated);
