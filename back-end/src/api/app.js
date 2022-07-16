@@ -3,6 +3,7 @@ const cors = require('cors');
 const express = require('express');
 const productsRouter = require('../routes/productsRouter');
 const usersRoutes = require('../routes/usersRoutes');
+const registerRoutes = require('../routes/registerRoutes');
 const errors = require('../middlewares/errors');
 
 const app = express();
@@ -11,6 +12,7 @@ app.use(cors());
 
 app.use(usersRoutes);
 app.use(productsRouter);
+app.use(registerRoutes);
 
 app.get('/coffee', (_req, res) => res.status(418).end());
 
