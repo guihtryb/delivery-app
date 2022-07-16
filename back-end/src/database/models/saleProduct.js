@@ -3,6 +3,7 @@ const SaleProduct = (sequelize, DataTypes) => {
     quantity: DataTypes.NUMBER
   },
     {
+      timestamps: false,
       underscored: true,
     }
   );
