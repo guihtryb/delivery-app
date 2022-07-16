@@ -54,7 +54,6 @@ const destroy = async (id, password) => {
     throw unauthorized('Unauthorized user');
   }
   await user.destroy({ where: { id } });
- 
 };
 
 module.exports = {
