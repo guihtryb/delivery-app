@@ -1,4 +1,3 @@
-
 const { DataTypes } = require('sequelize');
 
 const attributes = {
@@ -35,11 +34,15 @@ const attributes = {
   },
 };
 
-const saleModel = (sequelize) => {
-  const sale = sequelize.define('sale', attributes, {
-    timestamps: false,
-    undescored: true,
-  });
+module.exports = (sequelize) => {
+  const sale = sequelize.define(
+    'sale',
+    attributes,
+    {
+      timestamps: false,
+      undescored: true,
+    },
+  );
 
   sale.associate = (models) => {
     sale.belongsTo(models.user, { as: 'user', foreignKey: 'userId' });
@@ -48,5 +51,3 @@ const saleModel = (sequelize) => {
 
   return sale;
 };
-
-module.exports = saleModel;
