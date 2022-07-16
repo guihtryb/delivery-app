@@ -73,3 +73,17 @@ button:hover {
   bottom: 0;
   width: 50%;
 }
+
+.total-price {
+  border-radius: 5px;
+  color: white;
+  font-size: x-large;
+  position: sticky;
+  bottom: 0;
+}
+
+table {
+  border: 1px solid gray;
+  align-items: center;
+  text-align: center;
+}
