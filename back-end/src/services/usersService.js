@@ -7,14 +7,16 @@ const { unauthorized } = require('../errors/conflicts');
 
 const create = async ({ name, email, password }) => {
   const encryptedPassword = passwordEncryptor(password);
-  
+
   const isUserRegistered = await userVerify(email, encryptedPassword);
 
   if (isUserRegistered) throw conflict('User already registered');
 
-  const createUser = await user.create({ name, email, encryptedPassword });  
-         
-  return createUser;
+  const createdUser = await user.create({
+    name, email, password: encryptedPassword, role: 'customer' });  
+  const newUser = {
+    id: createdUser.id, name: createdUser.name, emal: createdUser.email, role: 'customer' };
+  return newUser;
 };
 
 const getAllUsers = async () => {
@@ -29,21 +31,25 @@ const getUserById = async (id) => {
 };
 
 const update = async (body, id) => {
-  const { name, email, password, role } = body;
+  const { name, email, password } = body;
   const checkPassword = await user.findByPk(id);
   const encryptedPassword = passwordEncryptor(password);
-  if (checkPassword.id !== encryptedPassword || role !== 'admin') {
+  if (checkPassword.dataValues.password !== encryptedPassword) {
     throw unauthorized('Unauthorized user');
   }
-  if (role === 'admin') {
-    const userUpdated = await user.update({ name, email, role }, { where: { id } });
-    return userUpdated;
-  }
-  const userUpdated = await user.update({ name, email }, { where: { id } });
+
+  await user.update({ name, email }, { where: { id } });
+  const userUpdated = await user.findByPk(id, { attributes: { exclude: 'password' } });
+  console.log(userUpdated);
     return userUpdated;
 };
 
-const destroy = async (id) => {
+const destroy = async (id, password) => {
+  const checkPassword = await user.findByPk(id);
+  const encryptedPassword = passwordEncryptor(password);
+  if (checkPassword.dataValues.password !== encryptedPassword) {
+    throw unauthorized('Unauthorized user');
+  }
   await user.destroy({ where: { id } });
 };
 

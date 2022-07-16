@@ -44,9 +44,10 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
   try {
-    const id = req.user;
-    await userService.destroy(id);
-    return res.status(204).end();
+    const { id } = req.params;
+    const { password } = req.body;
+    await userService.destroy(id, password);
+    return res.status(204).json({ message: 'Account closed successfully, come back anytime' });
   } catch (error) {
     next(error);
   }

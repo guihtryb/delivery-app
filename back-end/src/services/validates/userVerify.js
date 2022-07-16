@@ -1,8 +1,8 @@
 const { user } = require('../../database/models');
 
 const userVerify = async (email, password) => {
-  const chackUser = await user.findOne({ where: { email, password } });
-  if (chackUser) return userVerify;
+  const checkUser = await user.findOne({ where: { email, password } });
+  if (checkUser) return true;
   return false;
 };
 
