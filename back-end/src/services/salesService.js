@@ -1,10 +1,15 @@
-const { sale: saleModel } = require('../database/models');
+const { sale: saleModel, user: userModel } = require('../database/models');
 
 const createSale = async (id, newSale) => saleModel.create(id, newSale);
 
 const deleteSale = async (id) => saleModel.delete(id);
 
-const getAllSales = async () => saleModel.findAll();
+const getAllSales = async () => saleModel.findAll({
+  include: [
+    { attributes: ['userId'], model: userModel },
+    { attributes: ['sellerId'], model: userModel },
+  ],
+});
 
 const getSaleById = async (id) => saleModel.findOne(id);
 
