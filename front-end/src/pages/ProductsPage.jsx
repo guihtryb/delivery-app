@@ -3,7 +3,6 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import deliveryContext from '../context/deliveryContext';
 import ProductCard from '../components/ProductCard';
-import Button from '../components/Button';
 import { productsMock } from '../helpers/productsMock';
 
 const buttonDatatest = 'customer_products__button-cart';
