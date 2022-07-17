@@ -5,6 +5,8 @@ import DetailsOrder from '../components/DetailsOrder';
 
 function CustomerOrder({ history }) {
   const { orders } = useContext(deliveryContext);
+
+  // AQUI IREMOS RECEBER TODOS OS PEDIDOS REGISTRADOS NA API, E FILTRAR BASEANDO NO ID DA PESSOA USUARIA.
   console.log(orders[0], history);
 
   return (

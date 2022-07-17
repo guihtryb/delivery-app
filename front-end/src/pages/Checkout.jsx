@@ -32,6 +32,7 @@ function Checkout({ history }) {
     const obj = cartProducts;
     obj.adress = adress;
     obj.numero = numero;
+    obj.orderTotalPrice = totalPrice;
     setOrders([...orders, obj]);
     history.push('/customer/orders');
   };

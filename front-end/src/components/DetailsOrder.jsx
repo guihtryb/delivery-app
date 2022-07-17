@@ -31,6 +31,13 @@ function DetailsOrder({ name, data, callBack, orderIndex, status, pedidos }) {
             />
           </th>
         </thead>
+        <thead>
+          <th>item</th>
+          <th>Descrição</th>
+          <th>Quantidade</th>
+          <th>Valor Unitario</th>
+          <th>SubTotal</th>
+        </thead>
         <tbody>
           {
             pedidos.map((pedido, index) => (
@@ -44,6 +51,19 @@ function DetailsOrder({ name, data, callBack, orderIndex, status, pedidos }) {
             ))
           }
         </tbody>
+        <h1
+          data-testid="seller_order_details__element-order-total-price"
+          className="primary"
+        >
+          Total: R$
+          {
+            pedidos.reduce((acc, x) => {
+              const { price, quantity } = x;
+              const aux = acc + price * quantity;
+              return aux;
+            }, 0)
+          }
+        </h1>
       </table>
     </label>
   );
