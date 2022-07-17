@@ -1,11 +1,11 @@
-const Product = require('../database/models/product');
+const { product } = require('../database/models');
 
-const getAll = async () => Product.findAll();
+const getAll = async () => product.findAll();
 
 const getById = async (id) => {
-  const product = await Product.findByPk(id);
+  const productById = await product.findByPk(+id);
 
-  return !product ? null : product;
+  return !productById ? null : productById;
 };
 
-export { getAll, getById };
+module.exports = { getAll, getById };
