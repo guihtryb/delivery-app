@@ -33,7 +33,7 @@ function Checkout({ history }) {
     obj.adress = adress;
     obj.numero = numero;
     setOrders([...orders, obj]);
-    history.push('/custumer/details');
+    history.push('/customer/orders');
   };
 
   return (
