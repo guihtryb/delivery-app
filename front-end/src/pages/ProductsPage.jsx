@@ -13,6 +13,7 @@ function ProductsPage({ history }) {
   const { totalPrice } = useContext(deliveryContext);
 
   const fetchProductsApi = () => {
+    // ISSO AQUI DEVE SER CHAMADO DENTRO DO USE EFFECT, PARA SER CHAMADO QUANDO CARREGAR A PAGINA
     axios.get('https//:localhost:3001/products').then((x) => x.json()).then((res) => {
       console.log(res);
       setProcuts(res);

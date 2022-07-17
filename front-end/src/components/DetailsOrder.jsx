@@ -20,6 +20,10 @@ function DetailsOrder({ name, data, callBack, orderIndex, status, pedidos }) {
             name ? <th data-testid={ sellerTest }>{ name }</th> : null
           }
           <th data-testid={ dataTest }>{ data }</th>
+          {
+            // ESSE STATUS VEM DA API OU DE ALGUM OUTRO LUGAR, PARA VERIFICAR SE O PEDIDO FOI ENTREGUE OU NAO,
+            // E ELE DEVE MUDAR CASO O PEDIDO TENHA SIDO FINALIZADO, OU O USUARIO CLICAR NO BUTAO MARCAR COMO ENTREGUE
+          }
           <th data-testid={ statusTest }>{ status }</th>
           <th>
             <Button

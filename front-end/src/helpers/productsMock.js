@@ -38,3 +38,4 @@ export const productsMock = [
 ];
 
 export const name = '';
+// somente para testar o front, isso aqui é irrelevante depois.
