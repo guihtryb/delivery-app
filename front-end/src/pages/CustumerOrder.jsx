@@ -5,11 +5,11 @@ import DetailsOrder from '../components/DetailsOrder';
 
 function CustomerOrder({ history }) {
   const { orders } = useContext(deliveryContext);
-  console.log(orders, history);
+  console.log(orders[0], history);
 
   return (
     <div className="order-page flex-column">
-      <DetailsOrder pedidos={ orders } />
+      <DetailsOrder pedidos={ orders[0] } />
     </div>
   );
 }
