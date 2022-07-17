@@ -87,3 +87,11 @@ table {
   align-items: center;
   text-align: center;
 }
+
+.purple {
+  background: #421981;
+}
+
+.blue {
+  background: #056CF9;
+}
