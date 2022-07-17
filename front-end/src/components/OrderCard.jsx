@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function  OrderCard({ orderDatatest, orderId, orderStatus, orderData, orderTotal, orderAddress }) {
+function OrderCard({
+  orderDatatest, orderId, orderStatus, orderAddress,
+}) {
   return (
     <div
       className="order-card flex-row"
@@ -17,12 +19,12 @@ function  OrderCard({ orderDatatest, orderId, orderStatus, orderData, orderTotal
             <h3>{ orderStatus }</h3>
           </div>
           <div className="orderInfos flex-column">
-            <div>
+            {/* <div>
               <p>{ orderData }</p>
             </div>
             <div>
               <p>{ `R$${orderTotal}` }</p>
-            </div>
+            </div> */}
           </div>
         </div>
         {
@@ -44,7 +46,7 @@ OrderCard.propTypes = {
   orderDatatest: PropTypes.string.isRequired,
   orderId: PropTypes.number.isRequired,
   orderStatus: PropTypes.string.isRequired,
-  orderData: PropTypes.string.isRequired,
-  orderTotal: PropTypes.number.isRequired,
+  // orderData: PropTypes.string.isRequired,
+  // orderTotal: PropTypes.number.isRequired,
   orderAddress: PropTypes.string.isRequired,
 };
