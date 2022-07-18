@@ -9,6 +9,7 @@ module.exports = (sequelize) => {
     'salesProduct',
     attributes,
     {
+      timestamps: false,
       underscored: true,
     }
   );

@@ -5,78 +5,74 @@ import deliveryContext from '../context/deliveryContext';
 import Button from '../components/Button';
 import InputsText from '../components/InputsText';
 
-function Login({ history }) {
+function Register({ history }) {
   const { contexto } = useContext(deliveryContext);
   console.log(contexto, history.location.pathname);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [disabled, setDisabled] = useState(false);
 
-  const loginButton = () => {
-    console.log('email : ', email, 'password: ', password);
+  const registerButton = () => {
+    console.log('email : ', email, 'password: ', password, 'name : ', name);
     try {
-      axios.get('https://localhost:3001/users', { email, password })
+      // AINDA NAO TEMOS A API PRONTA PARA FAZER E TESTAR ESSAS REQUISICOES
+      // MAS O MOLDE SERIA ESSE
+      axios.post('https://localhost:3001/users', { email, password, name })
         .then((response) => {
+          // VERIFICA SE O USUARIO DIGITADO EXISTE OU NAO, E SE NAO EXISTIR, REGISTRA ELE.
+          // AI DEPOIS DE REGISTAR, SERIA INTERESSANTE JA ENVIAR O CLIENTE PARA A PAGINA DE PRODUTOS
           console.log(response);
-          // VERIFICAÇAO SE O CUSTUMER EXISTE, E SE EXISTER, MANDAR ELE PRA PAGINA CERTA
-          // SO VERIFICAR A ROLE DA RESPOSTA COMO NO EXEMPLO ABAIXO
-          if (response.role === 'custumer') {
-            history.push('/custumer/products');
-          }
         });
     } catch (err) {
       console.log(err);
     }
   };
 
-  const registerButton = () => {
-    history.push('/register');
-  };
-
   const verifyInputs = () => {
-    const min = 6;
+    const minPassword = 6;
+    const minName = 12;
     if (email.split('@').length === 2 && email.split('.').length === 2
-    && password.length >= min) {
+    && password.length >= minPassword && name.length >= minName) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
   };
 
-  const handleChange = ({ target: { value, name } }) => {
-    if (name === 'Email') {
+  const handleChange = ({ target: { value, name: nameInput } }) => {
+    console.log('email : ', email, 'password: ', password, 'name : ', name);
+    if (nameInput === 'Email') {
       setEmail(value);
-    } else {
+    } else if (nameInput === 'Senha') {
       setPassword(value);
+    } else {
+      setName(value);
     }
   };
 
   useEffect(() => {
     verifyInputs();
-  }, [password, email]);
-
-  if (history.location.pathname === '/') {
-    // LOGICA PRA MUDAR O NOME DA ROTA CASO SEJA /
-    // NAO CONSEGUI VERIFICAR O PORQUE NAO PASSA NO TESTE
-    history.push('login');
-  }
+  }, [password, email, name]);
 
   return (
-    <div className="login flex-column">
-      <div>
-        <img src="logo" alt="imagem-logo" />
-        <h1>Delivery app</h1>
-      </div>
+    <div className="register flex-column">
       <form className="flex-column">
         <InputsText
-          dataTestId="common_login__input-email"
-          name="Login"
+          dataTestId="common_register__input-name"
+          name="Name"
+          stateName="Name"
+          callBack={ handleChange }
+        />
+        <InputsText
+          dataTestId="common_register__input-email"
+          name="Email"
           stateName="Email"
           callBack={ handleChange }
         />
         <InputsText
-          dataTestId="common_login__input-password"
+          dataTestId="common_register__input-password"
           name="Senha"
           stateName="Senha"
           callBack={ handleChange }
@@ -84,25 +80,18 @@ function Login({ history }) {
         <Button
           dataTestId="common_login__button-login"
           importanceClass="primary"
-          name="LOGIN"
-          callBack={ loginButton }
-          disabled={ disabled }
-        />
-        <Button
-          dataTestId="common_login__button-register"
-          importanceClass="terciary"
-          name="Ainda nao tenho conta"
-          disabled={ false }
+          name="CADASTRAR"
           callBack={ registerButton }
+          disabled={ disabled }
         />
       </form>
     </div>
   );
 }
 
-export default Login;
+export default Register;
 
-Login.propTypes = {
+Register.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
     location: PropTypes.shape({

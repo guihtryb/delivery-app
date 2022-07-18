@@ -1,11 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import deliveryContext from './deliveryContext';
 
 function Provider({ children }) {
-  console.log(useState);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [cartProducts, setCartProducts] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [ordersSelected, setOrdersSelected] = useState({});
   const contextValue = {
+    ordersSelected,
+    setOrdersSelected,
+    totalPrice,
+    setTotalPrice,
+    cartProducts,
+    setCartProducts,
+    orders,
+    setOrders,
   };
+
+  useEffect(() => {
+    const preçoTotal = cartProducts.reduce((acc, x) => {
+      const { price, quantity } = x;
+      const aux = acc + price * quantity;
+      return aux;
+    }, 0);
+    if (preçoTotal) {
+      setTotalPrice(preçoTotal);
+    }
+  }, [cartProducts]);
 
   return (
     <deliveryContext.Provider value={ contextValue }>
