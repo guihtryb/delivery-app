@@ -7,23 +7,31 @@ import InputsText from '../components/InputsText';
 
 function Login({ history }) {
   const { contexto } = useContext(deliveryContext);
-  console.log(contexto, history.location.pathname);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [disabled, setDisabled] = useState(false);
+  const [isLoginInvalid, setIsLoginInvalid] = useState(false)
 
   const loginButton = () => {
-    console.log('email : ', email, 'password: ', password);
     try {
-      axios.get('https://localhost:3001/users', { email, password })
+      axios.post('http://localhost:3001/login', { email, password })
         .then((response) => {
           console.log(response);
+          const { role } = response.data
           // VERIFICAÇAO SE O CUSTUMER EXISTE, E SE EXISTER, MANDAR ELE PRA PAGINA CERTA
           // SO VERIFICAR A ROLE DA RESPOSTA COMO NO EXEMPLO ABAIXO
-          if (response.role === 'custumer') {
-            history.push('/custumer/products');
+          if (role === 'customer') {
+            history.push('/customer/products');
           }
+          if (role === 'administrator') {
+            history.push('/customer/products');
+          }
+          if (role === 'seller') {
+            history.push('/customer/products');
+          }
+        }).catch((err) => {
+          if (err.response.status === 404) setIsLoginInvalid(true)
         });
     } catch (err) {
       console.log(err);
@@ -37,7 +45,7 @@ function Login({ history }) {
   const verifyInputs = () => {
     const min = 6;
     if (email.split('@').length === 2 && email.split('.').length === 2
-    && password.length >= min) {
+      && password.length >= min) {
       setDisabled(false);
     } else {
       setDisabled(true);
@@ -73,29 +81,36 @@ function Login({ history }) {
           dataTestId="common_login__input-email"
           name="Login"
           stateName="Email"
-          callBack={ handleChange }
+          callBack={handleChange}
         />
         <InputsText
           dataTestId="common_login__input-password"
           name="Senha"
           stateName="Senha"
-          callBack={ handleChange }
+          callBack={handleChange}
         />
         <Button
           dataTestId="common_login__button-login"
           importanceClass="primary"
           name="LOGIN"
-          callBack={ loginButton }
-          disabled={ disabled }
+          callBack={loginButton}
+          disabled={disabled}
         />
         <Button
           dataTestId="common_login__button-register"
           importanceClass="terciary"
           name="Ainda nao tenho conta"
-          disabled={ false }
-          callBack={ registerButton }
+          disabled={false}
+          callBack={registerButton}
         />
       </form>
+      {
+        isLoginInvalid &&
+        <p
+          datatestid="common_login__element-invalid-email">
+          Credencias Invalidas
+        </p>
+      }
     </div>
   );
 }
