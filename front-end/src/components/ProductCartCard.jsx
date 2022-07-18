@@ -16,17 +16,17 @@ function ProductCartCard({ name, price, quantity, remove, index }) {
           name
         }
       </td>
-      <td data-testid={ quantityDatatest }>
+      <td data-testid={ quantityDatatest } className="primary">
         {
           quantity
         }
       </td>
-      <td data-testid={ priceDatatest }>
+      <td data-testid={ priceDatatest } className="purple">
         {
           `R$${price}`
         }
       </td>
-      <td data-testid={ subtotalDatatest }>
+      <td data-testid={ subtotalDatatest } className="blue">
         {
           `R$${price * quantity}`
         }
@@ -52,7 +52,7 @@ export default ProductCartCard;
 ProductCartCard.propTypes = {
   name: PropTypes.string.isRequired,
   remove: PropTypes.bool.isRequired,
-  price: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
   quantity: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
 };

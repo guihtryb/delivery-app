@@ -21,6 +21,8 @@ function Register({ history }) {
       // MAS O MOLDE SERIA ESSE
       axios.post('https://localhost:3001/users', { email, password, name })
         .then((response) => {
+          // VERIFICA SE O USUARIO DIGITADO EXISTE OU NAO, E SE NAO EXISTIR, REGISTRA ELE.
+          // AI DEPOIS DE REGISTAR, SERIA INTERESSANTE JA ENVIAR O CLIENTE PARA A PAGINA DE PRODUTOS
           console.log(response);
         });
     } catch (err) {

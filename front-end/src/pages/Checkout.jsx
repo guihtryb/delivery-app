@@ -4,6 +4,7 @@ import deliveryContext from '../context/deliveryContext';
 import ProductCartCard from '../components/ProductCartCard';
 import InputsText from '../components/InputsText';
 import Button from '../components/Button';
+import InputsSelect from '../components/InputSelect';
 
 const arrayLint = [
   'Item', 'Descrição', 'Quantidade', 'Valor Unitário', 'Sub-total', 'Remover Item'];
@@ -11,17 +12,28 @@ const arrayLint = [
 function Checkout({ history }) {
   const [adress, setAdress] = useState('');
   const [numero, setNumero] = useState(0);
+  // SETAR COMO VALOR INICIAL DO ARRAY DE PESSOAS VENDEDORAS
+  const [seller, setSeller] = useState('walter White');
+
+  const getDate = () => {
+    const today = new Date();
+    return `${today.getDate()}/${today.getMonth()}/${(today.getFullYear())}`;
+  };
 
   const {
     cartProducts,
     totalPrice,
     setOrders,
     orders,
+    setOrdersSelected,
   } = useContext(deliveryContext);
 
   const handleChange = ({ target: { name, value } }) => {
+    console.log(value);
     if (name === 'adress') {
       setAdress(value);
+    } else if (name === 'options') {
+      setSeller(value);
     } else {
       setNumero(value);
     }
@@ -32,8 +44,18 @@ function Checkout({ history }) {
     const obj = cartProducts;
     obj.adress = adress;
     obj.numero = numero;
+    obj.seller = seller;
+    obj.date = getDate();
+    obj.orderTotalPrice = totalPrice;
+    // AQUI JA CRIA O PEDIDO, COM O PREÇO TOTAL, ENDEREÇO E NUMERO.
+    // O SET ORDERS BASICO, É UM ARRAY GLOBAL COM TODOS OS PEDIDOS Q A PESSOA USUARIA FEZ, MAS COM A API NAO É NECESSARIO MANTER ELE
+    // MAS ATE ESTA TUDO FUNCIONANDO, DEIXEM ELE AQUI PARA TESTER AS APLICAÇOES DO FRONT
     setOrders([...orders, obj]);
-    history.push('/custumer/details');
+
+    // O SET ORDERS SELECTED É INTERESSANTE MANTER, POIS ELE SERVE PARA DEIXAR SALVO O PEDIDO QUE VC CLICOU, E RENDERIZAR NA PAGINA DE
+    // DETALHES
+    setOrdersSelected(obj);
+    history.push('/customer/orders');
   };
 
   return (
@@ -69,6 +91,13 @@ function Checkout({ history }) {
         </label>
       </main>
       <section>
+        <InputsSelect
+          dataTestId="customer_checkout__select-seller"
+          name="P. Vendedora Responsável"
+          callBack={ handleChange }
+          stateName="options"
+          options={ ['walter white', 'alcapone', 'rozana'] }
+        />
         <InputsText
           dataTestId="customer_checkout__input-address"
           name="Endereço"

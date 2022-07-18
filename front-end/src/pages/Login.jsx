@@ -19,6 +19,11 @@ function Login({ history }) {
       axios.get('https://localhost:3001/users', { email, password })
         .then((response) => {
           console.log(response);
+          // VERIFICAÇAO SE O CUSTUMER EXISTE, E SE EXISTER, MANDAR ELE PRA PAGINA CERTA
+          // SO VERIFICAR A ROLE DA RESPOSTA COMO NO EXEMPLO ABAIXO
+          if (response.role === 'custumer') {
+            history.push('/custumer/products');
+          }
         });
     } catch (err) {
       console.log(err);
@@ -52,6 +57,8 @@ function Login({ history }) {
   }, [password, email]);
 
   if (history.location.pathname === '/') {
+    // LOGICA PRA MUDAR O NOME DA ROTA CASO SEJA /
+    // NAO CONSEGUI VERIFICAR O PORQUE NAO PASSA NO TESTE
     history.push('login');
   }
 
