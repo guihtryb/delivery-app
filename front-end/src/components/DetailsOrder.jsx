@@ -20,6 +20,10 @@ function DetailsOrder({ name, data, callBack, orderIndex, status, pedidos }) {
             name ? <th data-testid={ sellerTest }>{ name }</th> : null
           }
           <th data-testid={ dataTest }>{ data }</th>
+          {
+            // ESSE STATUS VEM DA API OU DE ALGUM OUTRO LUGAR, PARA VERIFICAR SE O PEDIDO FOI ENTREGUE OU NAO,
+            // E ELE DEVE MUDAR CASO O PEDIDO TENHA SIDO FINALIZADO, OU O USUARIO CLICAR NO BUTAO MARCAR COMO ENTREGUE
+          }
           <th data-testid={ statusTest }>{ status }</th>
           <th>
             <Button
@@ -30,6 +34,13 @@ function DetailsOrder({ name, data, callBack, orderIndex, status, pedidos }) {
               callBack={ callBack }
             />
           </th>
+        </thead>
+        <thead>
+          <th>item</th>
+          <th>Descrição</th>
+          <th>Quantidade</th>
+          <th>Valor Unitario</th>
+          <th>SubTotal</th>
         </thead>
         <tbody>
           {
@@ -44,6 +55,19 @@ function DetailsOrder({ name, data, callBack, orderIndex, status, pedidos }) {
             ))
           }
         </tbody>
+        <h1
+          data-testid="seller_order_details__element-order-total-price"
+          className="primary"
+        >
+          Total: R$
+          {
+            pedidos.reduce((acc, x) => {
+              const { price, quantity } = x;
+              const aux = acc + price * quantity;
+              return aux;
+            }, 0)
+          }
+        </h1>
       </table>
     </label>
   );
