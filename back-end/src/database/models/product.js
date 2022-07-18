@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 const attributes = {
   name: DataTypes.STRING,
   price: DataTypes.NUMBER,
-  url_image: DataTypes.STRING
+  urlImg: { type: DataTypes.STRING, field: 'url_image' }
 };
 
 module.exports = (sequelize) => {
@@ -12,7 +12,6 @@ module.exports = (sequelize) => {
     attributes,
     {
       timestamps: false,
-      underscored: true,
     }
   );
   return product;
