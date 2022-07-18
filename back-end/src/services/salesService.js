@@ -29,7 +29,7 @@ const getSaleById = async (id) => saleModel.findOne(id);
 
 const updateSale = async (id, newSaleInfo) => saleModel.create(id, newSaleInfo);
 
-module.exporgit = {
+module.exports = {
   createSale,
   deleteSale,
   getAllSales,
