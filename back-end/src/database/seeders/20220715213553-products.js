@@ -1,47 +1,53 @@
 'use strict';
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => queryInterface.bulkInsert('products',
+  up: async (queryInterface) => queryInterface.bulkInsert('products',
     [
       {
-        name: 'Becks 330ml',
-        price: 4.49,
-        url_image: 'https://www.ambev.com.br/conteudo/uploads/2019/03/becks_330ml.png'
-      },
-      {
-        name: 'Becks 330ml',
-        price: 4.49,
-        url_image: 'https://www.ambev.com.br/conteudo/uploads/2019/03/becks_330ml.png'
-      },
-      {
-        name: 'Antarctica Pilsen 300ml',
-        price: 2.49,
-        url_image: 'https://www.tiaozinho.com/produto-imagem/500/cerveja-antarctica-pilsen-300ml-6e9cdcee39587e06e38679c4f9d06aa5.jpg'
+        name: 'Skol Lata 250ml',
+        price: 2.20,
+        url_img: 'http://localhost:3001/images/skol_lata_350ml.jpg',
       },
       {
         name: 'Heineken 600ml',
         price: 7.50,
-        url_image: 'https://www.tiaozinho.com/produto-imagem/500/cerveja-antarctica-pilsen-300ml-6e9cdcee39587e06e38679c4f9d06aa5.jpg'
-      },
-      {
+        url_img: 'http://localhost:3001/images/heineken_600ml.jpg',
+      }, {
+        name: 'Antarctica Pilsen 300ml',
+        price: 2.49,
+        url_img: 'http://localhost:3001/images/antarctica_pilsen_300ml.jpg',
+      }, {
+        name: 'Brahma 600ml',
+        price: 7.50,
+        url_img: 'http://localhost:3001/images/brahma_600ml.jpg',
+      }, {
+        name: 'Skol 269ml',
+        price: 2.19,
+        url_img: 'http://localhost:3001/images/skol_269ml.jpg',
+      }, {
+        name: 'Skol Beats Senses 313ml',
+        price: 4.49,
+        url_img: 'http://localhost:3001/images/skol_beats_senses_313ml.jpg',
+      }, {
+        name: 'Becks 330ml',
+        price: 4.99,
+        url_img: 'http://localhost:3001/images/becks_330ml.jpg',
+      }, {
         name: 'Brahma Duplo Malte 350ml',
         price: 2.79,
-        url_image: 'https://www.tiaozinho.com/produto-imagem/500/cerveja-antarctica-pilsen-300ml-6e9cdcee39587e06e38679c4f9d06aa5.jpg'
-      },
-      {
-        name: 'Skol Beats Senses',
+        url_img: 'http://localhost:3001/images/brahma_duplo_malte_350ml.jpg',
+      }, {
+        name: 'Becks 600ml',
+        price: 8.89,
+        url_img: 'http://localhost:3001/images/becks_600ml.jpg',
+      }, {
+        name: 'Skol Beats Senses 269ml',
         price: 3.57,
-        url_image: 'https://www.tiaozinho.com/produto-imagem/500/cerveja-antarctica-pilsen-300ml-6e9cdcee39587e06e38679c4f9d06aa5.jpg'
-      },
-      {
-        name: 'Brahma',
-        price: 2.19,
-        url_image: 'https://www.tiaozinho.com/produto-imagem/500/cerveja-antarctica-pilsen-300ml-6e9cdcee39587e06e38679c4f9d06aa5.jpg'
-      },
-      {
-        name: 'Skol Beats Long Neck',
-        price: 4.49,
-        url_image: 'https://www.tiaozinho.com/produto-imagem/500/cerveja-antarctica-pilsen-300ml-6e9cdcee39587e06e38679c4f9d06aa5.jpg'
+        url_img: 'http://localhost:3001/images/skol_beats_senses_269ml.jpg',
+      }, {
+        name: 'Stella Artois 275ml',
+        price: 3.49,
+        url_img: 'http://localhost:3001/images/stella_artois_275ml.jpg',
       },
     ], {}),
 
