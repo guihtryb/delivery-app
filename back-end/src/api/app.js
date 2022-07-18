@@ -1,4 +1,4 @@
-const { cors } = require('cors');
+const cors = require('cors');
 const express = require('express');
 const { json } = require('body-parser');
 const errors = require('../middlewares/errors');
