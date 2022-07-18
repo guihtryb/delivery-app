@@ -1,18 +1,25 @@
+const { user } = require('../database/models');
 const createToken = require('../helpers/createToken');
 const unauthorized = require('../errors/unauthorized');
-const userVerify = require('./validates/userVerify');
 const passwordEncryptor = require('../helpers/passwordEncryptor');
 
 const login = async ({ email, password }) => {
   const encryptedPassword = passwordEncryptor(password);
 
-  const isUser = await userVerify(email, encryptedPassword);
+  const getUser = await user.findOne({ where: { email, password: encryptedPassword } });
 
-  if (isUser === false) throw unauthorized('Invalid fields');
+  if (getUser === false) throw unauthorized('Invalid fields');
 
-  const userToken = createToken({ id: isUser.id });
+  const userToken = createToken({ id: getUser.id });
 
-  return userToken;
+  const userLoged = {
+    name: getUser.name,
+    email: getUser.email,
+    role: getUser.email,
+    token: userToken,
+  };
+  
+  return userLoged;
 };
 
 module.exports = { login }; 
