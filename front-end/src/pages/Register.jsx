@@ -1,40 +1,49 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { /* useContext, */ useEffect, useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import deliveryContext from '../context/deliveryContext';
+// import deliveryContext from '../context/deliveryContext';
 import Button from '../components/Button';
 import InputsText from '../components/InputsText';
 
+function invalidLogin() {
+  return (
+    <p
+      data-testid="common_register__element-invalid_register"
+    >
+      Credencias Invalidas
+    </p>
+  );
+}
+
 function Register({ history }) {
-  const { contexto } = useContext(deliveryContext);
-  console.log(contexto, history.location.pathname);
+  // const { contexto } = useContext(deliveryContext);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [disabled, setDisabled] = useState(false);
+  const [isLoginInvalid, setIsLoginInvalid] = useState(false);
 
   const registerButton = () => {
-    console.log('email : ', email, 'password: ', password, 'name : ', name);
-    try {
-      // AINDA NAO TEMOS A API PRONTA PARA FAZER E TESTAR ESSAS REQUISICOES
-      // MAS O MOLDE SERIA ESSE
-      axios.post('https://localhost:3001/users', { email, password, name })
-        .then((response) => {
-          // VERIFICA SE O USUARIO DIGITADO EXISTE OU NAO, E SE NAO EXISTIR, REGISTRA ELE.
-          // AI DEPOIS DE REGISTAR, SERIA INTERESSANTE JA ENVIAR O CLIENTE PARA A PAGINA DE PRODUTOS
-          console.log(response);
-        });
-    } catch (err) {
-      console.log(err);
-    }
+    axios.post('http://localhost:3001/users', { email, password, name })
+      .then((response) => {
+        history.push('/customer/products');
+        console.log(response);
+      }).catch((err) => {
+        const CONFLICT = 409;
+        if (err.response.status === CONFLICT) setIsLoginInvalid(true);
+        setIsLoginInvalid(true);
+      });
   };
 
   const verifyInputs = () => {
     const minPassword = 6;
     const minName = 12;
-    if (email.split('@').length === 2 && email.split('.').length === 2
-    && password.length >= minPassword && name.length >= minName) {
+    const validEmailExp = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
+    const isValidEmail = validEmailExp.test(email);
+    const isValidPassword = password.length >= minPassword;
+    const isValidName = name.length >= minName;
+    if (isValidEmail && isValidPassword && isValidName) {
       setDisabled(false);
     } else {
       setDisabled(true);
@@ -42,7 +51,6 @@ function Register({ history }) {
   };
 
   const handleChange = ({ target: { value, name: nameInput } }) => {
-    console.log('email : ', email, 'password: ', password, 'name : ', name);
     if (nameInput === 'Email') {
       setEmail(value);
     } else if (nameInput === 'Senha') {
@@ -85,6 +93,9 @@ function Register({ history }) {
           disabled={ disabled }
         />
       </form>
+      {
+        isLoginInvalid && invalidLogin()
+      }
     </div>
   );
 }
