@@ -1,41 +1,41 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import deliveryContext from '../context/deliveryContext';
+// import deliveryContext from '../context/deliveryContext';
 import Button from '../components/Button';
 import InputsText from '../components/InputsText';
 
-function Login({ history }) {
-  const { contexto } = useContext(deliveryContext);
+function invalidLogin() {
+  return (
+    <p
+      datatestid="common_login__element-invalid-email"
+    >
+      Credencias Invalidas
+    </p>
+  );
+}
 
+function Login({ history }) {
+  // const { contexto } = useContext(deliveryContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [disabled, setDisabled] = useState(false);
-  const [isLoginInvalid, setIsLoginInvalid] = useState(false)
+  const [isLoginInvalid, setIsLoginInvalid] = useState(false);
 
   const loginButton = () => {
-    try {
-      axios.post('http://localhost:3001/login', { email, password })
-        .then((response) => {
-          console.log(response);
-          const { role } = response.data
-          // VERIFICAÇAO SE O CUSTUMER EXISTE, E SE EXISTER, MANDAR ELE PRA PAGINA CERTA
-          // SO VERIFICAR A ROLE DA RESPOSTA COMO NO EXEMPLO ABAIXO
-          if (role === 'customer') {
-            history.push('/customer/products');
-          }
-          if (role === 'administrator') {
-            history.push('/customer/products');
-          }
-          if (role === 'seller') {
-            history.push('/customer/products');
-          }
-        }).catch((err) => {
-          if (err.response.status === 404) setIsLoginInvalid(true)
-        });
-    } catch (err) {
-      console.log(err);
-    }
+    axios.post('http://localhost:3001/login', { email, password })
+      .then((response) => {
+        console.log(response);
+        const { role } = response.data;
+        // VERIFICAÇAO SE O CUSTUMER EXISTE, E SE EXISTER, MANDAR ELE PRA PAGINA CERTA
+        // SO VERIFICAR A ROLE DA RESPOSTA COMO NO EXEMPLO ABAIXO
+        if (role === 'customer') {
+          history.push('/customer/products');
+        }
+      }).catch((err) => {
+        const NOT_FOUND = 404;
+        if (err.response.status === NOT_FOUND) setIsLoginInvalid(true);
+      });
   };
 
   const registerButton = () => {
@@ -44,8 +44,11 @@ function Login({ history }) {
 
   const verifyInputs = () => {
     const min = 6;
-    if (email.split('@').length === 2 && email.split('.').length === 2
-      && password.length >= min) {
+    const validEmailExp = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
+    const isValidEmail = validEmailExp.test(email);
+    const isValidPassword = password.length >= min;
+    console.log(isValidEmail, isValidPassword);
+    if (isValidEmail && isValidPassword) {
       setDisabled(false);
     } else {
       setDisabled(true);
@@ -62,7 +65,7 @@ function Login({ history }) {
 
   useEffect(() => {
     verifyInputs();
-  }, [password, email]);
+  }, [password, email, verifyInputs]);
 
   if (history.location.pathname === '/') {
     // LOGICA PRA MUDAR O NOME DA ROTA CASO SEJA /
@@ -81,35 +84,31 @@ function Login({ history }) {
           dataTestId="common_login__input-email"
           name="Login"
           stateName="Email"
-          callBack={handleChange}
+          callBack={ handleChange }
         />
         <InputsText
           dataTestId="common_login__input-password"
           name="Senha"
           stateName="Senha"
-          callBack={handleChange}
+          callBack={ handleChange }
         />
         <Button
           dataTestId="common_login__button-login"
           importanceClass="primary"
           name="LOGIN"
-          callBack={loginButton}
-          disabled={disabled}
+          callBack={ loginButton }
+          disabled={ disabled }
         />
         <Button
           dataTestId="common_login__button-register"
           importanceClass="terciary"
-          name="Ainda nao tenho conta"
-          disabled={false}
-          callBack={registerButton}
+          name="Ainda não tenho conta"
+          disabled={ false }
+          callBack={ registerButton }
         />
       </form>
       {
-        isLoginInvalid &&
-        <p
-          datatestid="common_login__element-invalid-email">
-          Credencias Invalidas
-        </p>
+        isLoginInvalid && invalidLogin()
       }
     </div>
   );
