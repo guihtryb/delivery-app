@@ -29,4 +29,10 @@ const getSaleById = async (id) => saleModel.findOne(id);
 
 const updateSale = async (id, newSaleInfo) => saleModel.create(id, newSaleInfo);
 
-module.exports = { createSale, deleteSale, getAllSales, getSaleById, updateSale };
+module.exports = {
+  createSale,
+  deleteSale,
+  getAllSales,
+  getSaleById,
+  updateSale,
+};

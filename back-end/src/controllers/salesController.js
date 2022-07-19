@@ -49,4 +49,10 @@ const updateSale = async (req, res, next) => {
   }
 };
 
-module.exports = { createSale, deleteSale, getAllSales, getSaleById, updateSale };
+module.exports = { 
+  createSale,
+  deleteSale,
+  getAllSales,
+  getSaleById,
+  updateSale,
+};
