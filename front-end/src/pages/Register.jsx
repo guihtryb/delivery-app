@@ -54,7 +54,7 @@ function Register({ history }) {
 
   useEffect(() => {
     verifyInputs();
-  }, [password, email, name]);
+  }, [password, email, name, verifyInputs]);
 
   return (
     <div className="register flex-column">
@@ -78,7 +78,7 @@ function Register({ history }) {
           callBack={ handleChange }
         />
         <Button
-          dataTestId="common_login__button-login"
+          dataTestId="common_register__button-register"
           importanceClass="primary"
           name="CADASTRAR"
           callBack={ registerButton }
