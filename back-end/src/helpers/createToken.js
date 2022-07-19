@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const fs = require('fs');
+const path = require('path');
 
 const createToken = (payload) => {
-const secretKey = process.env.JWT_SECRET;
+const secretKey = fs.readFileSync(path.join(__dirname, '../../jwt.evaluation.key'), 'utf-8');
+console.log(secretKey);
 
 const jwtConfig = {
   expiresIn: '10d',

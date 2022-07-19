@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const path = require('path');
 
 const tokenVerify = (req, res, next) => {
   try {
@@ -7,7 +9,7 @@ const tokenVerify = (req, res, next) => {
     if (!token) {
       return res.status(401).json({ message: 'Token not found' });
     }
-    const secretKey = 'só$abeQu&mviu';
+    const secretKey = fs.readFileSync(path.join(__dirname, '../../jwt.evaluation.key'), 'utf-8');
     const payload = jwt.verify(token, secretKey);
     req.user = payload.id;
     next();
