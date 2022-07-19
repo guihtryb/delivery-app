@@ -34,13 +34,14 @@ function ProductCard({ name, productId, price, imgSrc }) {
       // mas funciona perfeitamente
       setCartProducts([...cartProducts.filter((x) => x.name !== name), obj]);
     }
-  }, [quantity]);
+  }, [cartProducts, name, price, productId, quantity, setCartProducts]);
 
   const imgDatatest = `customer_products__img-card-bg-image-${productId}`;
   const priceDatatest = `customer_products__element-card-price-${productId}`;
   const nameDatatest = `customer_products__element-card-title-${productId}`;
   const menosDatatest = `customer_products__button-card-rm-item-${productId}`;
   const maisDatatest = `customer_products__button-card-add-item-${productId}`;
+  const quantityDatatest = `customer_products__input-card-quantity-${productId}`;
   return (
     <div
       className="product-card flex-column"
@@ -60,9 +61,10 @@ function ProductCard({ name, productId, price, imgSrc }) {
           importanceClass="primary"
           disabled={ false }
         />
-        {
-          quantity
-        }
+        <input
+          data-testid={ quantityDatatest }
+          value={ quantity }
+        />
         <Button
           name="+"
           callBack={ handleButtonClick }
@@ -79,6 +81,6 @@ export default ProductCard;
 ProductCard.propTypes = {
   name: PropTypes.string.isRequired,
   imgSrc: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+  price: PropTypes.string.isRequired,
   productId: PropTypes.number.isRequired,
 };

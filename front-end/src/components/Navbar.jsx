@@ -26,15 +26,43 @@ function Navbar({
       {
         userRole === 'customer' ? (
           <div className="flex-row">
-            <button type="button" onClick={ handleRedirectProducts }>PRODUTOS</button>
-            <button type="button" onClick={ handleRedirectOrders }>MEUS PEDIDOS</button>
+            <button
+              type="button"
+              onClick={ handleRedirectProducts }
+              data-testid="customer_products__element-navbar-link-products"
+            >
+              PRODUTOS
+            </button>
+            <button
+              type="button"
+              onClick={ handleRedirectOrders }
+              data-testid="customer_products__element-navbar-link-orders"
+            >
+              MEUS PEDIDOS
+            </button>
           </div>
         ) : (
-          <button type="button">PEDIDOS</button>
+          <button
+            type="button"
+            data-testid="customer_products__element-navbar-link-products"
+          >
+            PEDIDOS
+
+          </button>
         )
       }
-      <p>{userName}</p>
-      <button type="button" onClick={ handleLogout }>Sair</button>
+      <p
+        data-testid="customer_products__element-navbar-user-full-name"
+      >
+        {userName}
+      </p>
+      <button
+        type="button"
+        onClick={ handleLogout }
+        data-testid="customer_products__element-navbar-link-logout"
+      >
+        Sair
+      </button>
     </div>
   );
 }

@@ -7,7 +7,7 @@ const tokenVerify = (req, res, next) => {
     if (!token) {
       return res.status(401).json({ message: 'Token not found' });
     }
-    const secretKey = 'só$abeQu&mviu';
+    const secretKey = 'secret_key';
     const payload = jwt.verify(token, secretKey);
     req.user = payload.id;
     next();

@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 
 const attributes = {
   name: DataTypes.STRING,
-  price: DataTypes.NUMBER,
+  price: DataTypes.DECIMAL(10,2),
   urlImg: { type: DataTypes.STRING, field: 'url_image' }
 };
 
