@@ -1,33 +1,44 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import deliveryContext from '../context/deliveryContext';
+// import deliveryContext from '../context/deliveryContext';
 import Button from '../components/Button';
 import InputsText from '../components/InputsText';
 
-function Login({ history }) {
-  const { contexto } = useContext(deliveryContext);
-  console.log(contexto, history.location.pathname);
+function invalidLogin() {
+  return (
+    <p
+      data-testid="common_login__element-invalid-email"
+    >
+      Credencias Invalidas
+    </p>
+  );
+}
 
+function Login({ history }) {
+  // const { contexto } = useContext(deliveryContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [disabled, setDisabled] = useState(false);
+  const [isLoginInvalid, setIsLoginInvalid] = useState(false);
 
   const loginButton = () => {
-    console.log('email : ', email, 'password: ', password);
-    try {
-      axios.get('https://localhost:3001/users', { email, password })
-        .then((response) => {
-          console.log(response);
-          // VERIFICAÇAO SE O CUSTUMER EXISTE, E SE EXISTER, MANDAR ELE PRA PAGINA CERTA
-          // SO VERIFICAR A ROLE DA RESPOSTA COMO NO EXEMPLO ABAIXO
-          if (response.role === 'custumer') {
-            history.push('/custumer/products');
-          }
-        });
-    } catch (err) {
-      console.log(err);
-    }
+    axios.post('http://localhost:3001/login', { email, password })
+      .then((response) => {
+        const { role } = response.data;
+        // VERIFICAÇAO SE O CUSTUMER EXISTE, E SE EXISTER, MANDAR ELE PRA PAGINA CERTA
+        // SO VERIFICAR A ROLE DA RESPOSTA COMO NO EXEMPLO ABAIXO
+        if (role === 'customer') {
+          history.push('/customer/products');
+        }
+        // if (role === 'administrator') {
+        //   history.push('/customer/products');
+        // }
+      }).catch((err) => {
+        const NOT_FOUND = 404;
+        if (err.response.status === NOT_FOUND) setIsLoginInvalid(true);
+        setIsLoginInvalid(true);
+      });
   };
 
   const registerButton = () => {
@@ -36,8 +47,10 @@ function Login({ history }) {
 
   const verifyInputs = () => {
     const min = 6;
-    if (email.split('@').length === 2 && email.split('.').length === 2
-    && password.length >= min) {
+    const validEmailExp = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
+    const isValidEmail = validEmailExp.test(email);
+    const isValidPassword = password.length >= min;
+    if (isValidEmail && isValidPassword) {
       setDisabled(false);
     } else {
       setDisabled(true);
@@ -54,7 +67,7 @@ function Login({ history }) {
 
   useEffect(() => {
     verifyInputs();
-  }, [password, email]);
+  }, [password, email, verifyInputs]);
 
   if (history.location.pathname === '/') {
     // LOGICA PRA MUDAR O NOME DA ROTA CASO SEJA /
@@ -91,11 +104,14 @@ function Login({ history }) {
         <Button
           dataTestId="common_login__button-register"
           importanceClass="terciary"
-          name="Ainda nao tenho conta"
+          name="Ainda não tenho conta"
           disabled={ false }
           callBack={ registerButton }
         />
       </form>
+      {
+        isLoginInvalid && invalidLogin()
+      }
     </div>
   );
 }

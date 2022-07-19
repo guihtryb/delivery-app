@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function OrderCard({
-  orderDatatest, orderId, orderStatus, orderAddress,
+  orderDatatest, orderId, orderStatus, orderAddress, orderData, orderTotal,
 }) {
   return (
     <div
@@ -19,12 +19,8 @@ function OrderCard({
             <h3>{ orderStatus }</h3>
           </div>
           <div className="orderInfos flex-column">
-            {/* <div>
-              <p>{ orderData }</p>
-            </div>
-            <div>
-              <p>{ `R$${orderTotal}` }</p>
-            </div> */}
+            <p>{ orderData }</p>
+            <p>{ `R$${orderTotal}` }</p>
           </div>
         </div>
         {
@@ -40,13 +36,14 @@ function OrderCard({
     </div>
   );
 }
+
 export default OrderCard;
 
 OrderCard.propTypes = {
   orderDatatest: PropTypes.string.isRequired,
   orderId: PropTypes.number.isRequired,
   orderStatus: PropTypes.string.isRequired,
-  // orderData: PropTypes.string.isRequired,
-  // orderTotal: PropTypes.number.isRequired,
+  orderData: PropTypes.string.isRequired,
+  orderTotal: PropTypes.number.isRequired,
   orderAddress: PropTypes.string.isRequired,
 };
