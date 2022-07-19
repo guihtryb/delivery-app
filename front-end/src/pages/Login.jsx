@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import deliveryContext from '../context/deliveryContext';
 import Button from '../components/Button';
 import InputsText from '../components/InputsText';
+import img from '../images/trybelogo.png';
 
 function Login({ history }) {
   const { contexto } = useContext(deliveryContext);
@@ -64,9 +65,9 @@ function Login({ history }) {
 
   return (
     <div className="login flex-column">
-      <div>
-        <img src="logo" alt="imagem-logo" />
+      <div className="flex-row">
         <h1>Delivery app</h1>
+        <img src={ img } alt="imagem-logo" width="70px" />
       </div>
       <form className="flex-column">
         <InputsText

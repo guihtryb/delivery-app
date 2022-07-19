@@ -23,25 +23,23 @@ function ProductCartCard({ name, price, quantity, remove, index }) {
       </td>
       <td data-testid={ priceDatatest } className="purple">
         {
-          `R$${price}`
+          `R$${price.toFixed(2)}`
         }
       </td>
       <td data-testid={ subtotalDatatest } className="blue">
         {
-          `R$${price * quantity}`
+          `R$${(price * quantity).toFixed(2)}`
         }
       </td>
       {
         remove ? (
-          <td>
-            <Button
-              name="Remover"
-              dataTestId={ rmDatatest }
-              importanceClass="primary"
-              callBack={ () => { console.log('remove'); } }
-              disabled={ false }
-            />
-          </td>
+          <Button
+            name="Remover"
+            dataTestId={ rmDatatest }
+            importanceClass="primary"
+            callBack={ () => { console.log('remove'); } }
+            disabled={ false }
+          />
         ) : null
       }
     </tr>

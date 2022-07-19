@@ -81,16 +81,16 @@ function Checkout({ history }) {
                 />))
               }
             </tbody>
-            <h1
-              data-testid="customer_checkout__element-order-total-price"
-              className="primary total-price"
-            >
-              { `Total: R$${totalPrice}` }
-            </h1>
           </table>
+          <h1
+            data-testid="customer_checkout__element-order-total-price"
+            className="primary total-price"
+          >
+            { `Total: R$${totalPrice}` }
+          </h1>
         </label>
       </main>
-      <section>
+      <section className="flex-column inputs-section">
         <InputsSelect
           dataTestId="customer_checkout__select-seller"
           name="P. Vendedora Responsável"

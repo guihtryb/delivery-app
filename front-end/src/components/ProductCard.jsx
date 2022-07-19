@@ -45,7 +45,7 @@ function ProductCard({ name, productId, price, imgSrc }) {
     <div
       className="product-card flex-column"
     >
-      <p data-testid={ priceDatatest }>{ price }</p>
+      <p data-testid={ priceDatatest } className="price">{ `R$${price}` }</p>
       <img src={ imgSrc } alt={ `product-${name}` } data-testid={ imgDatatest } />
       <p data-testid={ nameDatatest }>
         {

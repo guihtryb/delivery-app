@@ -7,7 +7,7 @@ function InputsSelect({ dataTestId, callBack, stateName, name, options }) {
       { name }
       <select
         name={ stateName }
-        className="input-text"
+        className="input-select"
         data-testid={ dataTestId }
         onChange={ callBack }
       >
