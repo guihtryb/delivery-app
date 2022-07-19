@@ -8,7 +8,7 @@ import InputsText from '../components/InputsText';
 function invalidLogin() {
   return (
     <p
-      dataTestId="common_login__element-invalid-email"
+      data-testid="common_login__element-invalid-email"
     >
       Credencias Invalidas
     </p>
@@ -31,12 +31,13 @@ function Login({ history }) {
         if (role === 'customer') {
           history.push('/customer/products');
         }
-        if (role === 'administrator') {
-          history.push('/customer/products');
-        }
+        // if (role === 'administrator') {
+        //   history.push('/customer/products');
+        // }
       }).catch((err) => {
         const NOT_FOUND = 404;
         if (err.response.status === NOT_FOUND) setIsLoginInvalid(true);
+        setIsLoginInvalid(true);
       });
   };
 
