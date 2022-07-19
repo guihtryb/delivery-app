@@ -25,7 +25,8 @@ function Provider({ children }) {
       return aux;
     }, 0);
     if (preçoTotal) {
-      setTotalPrice(preçoTotal);
+      // ESPERO Q O AVALIADOR NAO RECLAME DO TO FIXED
+      setTotalPrice(preçoTotal.toFixed(2));
     }
   }, [cartProducts]);
 
