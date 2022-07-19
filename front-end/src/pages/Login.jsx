@@ -8,7 +8,7 @@ import InputsText from '../components/InputsText';
 function invalidLogin() {
   return (
     <p
-      datatestid="common_login__element-invalid-email"
+      dataTestId="common_login__element-invalid-email"
     >
       Credencias Invalidas
     </p>
@@ -25,11 +25,13 @@ function Login({ history }) {
   const loginButton = () => {
     axios.post('http://localhost:3001/login', { email, password })
       .then((response) => {
-        console.log(response);
         const { role } = response.data;
         // VERIFICAÇAO SE O CUSTUMER EXISTE, E SE EXISTER, MANDAR ELE PRA PAGINA CERTA
         // SO VERIFICAR A ROLE DA RESPOSTA COMO NO EXEMPLO ABAIXO
         if (role === 'customer') {
+          history.push('/customer/products');
+        }
+        if (role === 'administrator') {
           history.push('/customer/products');
         }
       }).catch((err) => {
@@ -47,7 +49,6 @@ function Login({ history }) {
     const validEmailExp = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
     const isValidEmail = validEmailExp.test(email);
     const isValidPassword = password.length >= min;
-    console.log(isValidEmail, isValidPassword);
     if (isValidEmail && isValidPassword) {
       setDisabled(false);
     } else {
