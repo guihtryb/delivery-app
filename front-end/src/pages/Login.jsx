@@ -30,6 +30,7 @@ function Login({ history }) {
         // VERIFICAÇAO SE O CUSTUMER EXISTE, E SE EXISTER, MANDAR ELE PRA PAGINA CERTA
         // SO VERIFICAR A ROLE DA RESPOSTA COMO NO EXEMPLO ABAIXO
         if (role === 'customer') {
+          localStorage.setItem('user', JSON.stringify(response.data));
           history.push('/customer/products');
         }
         // if (role === 'administrator') {

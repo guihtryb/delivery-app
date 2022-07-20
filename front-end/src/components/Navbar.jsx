@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import Button from './Button';
 
-function Navbar({
-  userName, userRole,
-}) {
+function Navbar() {
+  const [userName, setUsername] = useState('');
+  const [userRole, setUserRole] = useState('');
+
+  useEffect(() => {
+    // FEITO PELO HUMBERTO, NAO CONSIGO PEGAR O USUARIO DA BACK END, ENTAO COMENTAR ESSA LINHA POSTERIORMENTE PARA FUNCIONAR
+    /* const userMock = {
+      name: 'HUMBERTO',
+      role: 'customer',
+    };
+    localStorage.setItem('user', JSON.stringify(userMock)); */
+    // Daqui pra baixo é o correto
+    const { name, role } = JSON.parse(localStorage.getItem('user'));
+    console.log(name, role);
+    setUserRole(role);
+    setUsername(name);
+  }, []);
   const history = useHistory();
   const location = useLocation();
   const handleLogout = () => {
@@ -26,22 +40,40 @@ function Navbar({
       {
         userRole === 'customer' ? (
           <div className="flex-row">
-            <button type="button" onClick={ handleRedirectProducts }>PRODUTOS</button>
-            <button type="button" onClick={ handleRedirectOrders }>MEUS PEDIDOS</button>
+            <Button
+              callBack={ handleRedirectProducts }
+              disabled={ false }
+              name="PRODUTOS"
+              importanceClass="secundary"
+              dataTestId="customer_products__element-navbar-link-products"
+            />
+            <Button
+              callBack={ handleRedirectOrders }
+              disabled={ false }
+              name="MEUS PEDIDOS"
+              importanceClass="primary"
+              dataTestId="customer_products__element-navbar-link-orders"
+            />
           </div>
         ) : (
           <button type="button">PEDIDOS</button>
         )
       }
-      <p>{userName}</p>
-      <button type="button" onClick={ handleLogout }>Sair</button>
+      <h1
+        data-testid="customer_products__element-navbar-user-full-name"
+        className="purple"
+      >
+        { userName }
+      </h1>
+      <Button
+        dataTestId="customer_products__element-navbar-link-logout"
+        name="SAIR"
+        importanceClass="blue"
+        callBack={ handleLogout }
+        disabled={ false }
+      />
     </div>
   );
 }
 
 export default Navbar;
-
-Navbar.propTypes = {
-  userName: PropTypes.string.isRequired,
-  userRole: PropTypes.string.isRequired,
-};
