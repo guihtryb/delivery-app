@@ -27,7 +27,7 @@ const getAllSales = async () => saleModel.findAll({
 
 const getSaleById = async (id) => saleModel.findOne(id);
 
-const updateSale = async (id, newSaleInfo) => saleModel.create(id, newSaleInfo);
+const updateSale = async (id, newSaleInfo) => saleModel.update(id, newSaleInfo);
 
 module.exports = {
   createSale,
