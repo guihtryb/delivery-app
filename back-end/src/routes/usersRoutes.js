@@ -5,6 +5,7 @@ const userController = require('../controllers/usersController');
 const userDataVerify = require('../middlewares/userDataVerify');
 
 router.post('/users', userDataVerify, userController.create);
+router.get('/users/sellers', userController.getAllSellers);
 router.get('/users', userController.getAllUsers);
 router.get('/users/:id', userController.getUserById);
 router.put('/users/:id', userController.update);
