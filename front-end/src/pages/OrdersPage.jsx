@@ -22,7 +22,7 @@ function OrdersPage() {
   ];
   return (
     <div className="products-page flex-column">
-      <Navbar userName="User" userRole="customer" />
+      <Navbar />
       <main>
         {
           orders.map((x) => {

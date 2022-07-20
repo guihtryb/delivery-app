@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 // import deliveryContext from '../context/deliveryContext';
 import Button from '../components/Button';
 import InputsText from '../components/InputsText';
+import Navbar from '../components/Navbar';
 
 function invalidLogin() {
   return (
@@ -66,6 +67,7 @@ function Register({ history }) {
 
   return (
     <div className="register flex-column">
+      <Navbar />
       <form className="flex-column">
         <InputsText
           dataTestId="common_register__input-name"

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import deliveryContext from '../context/deliveryContext';
 import DetailsOrder from '../components/DetailsOrder';
+import Navbar from '../components/Navbar';
 
 function CustomerOrder({ history }) {
   const { ordersSelected } = useContext(deliveryContext);
@@ -15,6 +16,7 @@ function CustomerOrder({ history }) {
 
   return (
     <div className="order-page flex-column">
+      <Navbar />
       <DetailsOrder
         name={ ordersSelected.seller }
         pedidos={ ordersSelected }

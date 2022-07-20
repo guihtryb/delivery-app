@@ -25,12 +25,11 @@ function ProductsPage({ history }) {
   }, []);
 
   return (
-    <>
-      <Navbar userName="Lucca" userRole="customer" />
-      <div className="products-page flex-column">
-        <main>
-          {
-            products.map((x) => {
+    <div className="products-page flex-column">
+      <Navbar />
+      <main>
+        {
+          products.map((x) => {
             // ESSES NOMES PODEM NAO SER OS CERTOS DA RESPOSTA DA API, MAS SAO UMA BASE OBVIA DO QUE É NECEESARIO
               const { name, price, id, urlImg } = x;
               return (<ProductCard
