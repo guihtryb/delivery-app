@@ -32,18 +32,19 @@ const getAllSales = async () => saleModel.findAll({
   include: { as: 'users', model: userModel, attributes: ['id'] },
 });
 
-const getAllSalesByUser = async (id) => (
-  saleModel.findAll({ where: { sellerId: id } || { userId: id } })
-);
+const getAllSalesBySeller = async (id) => saleModel.findAll({ where: { sellerId: id } });
+
+const getAllSalesByUser = async (id) => saleModel.findAll({ where: { userId: id } });
 
 const getSaleById = async (id) => saleModel.findOne(id);
 
-const updateSale = async (id, status) => (saleModel.update({ where: { id } }, { status }));
+const updateSale = async (id, status) => saleModel.update({ status }, { where: { id } });
 
 module.exports = {
   createSale,
   deleteSale,
   getAllSales,
+  getAllSalesBySeller,
   getAllSalesByUser,
   getSaleById,
   updateSale,
