@@ -12,6 +12,15 @@ const create = async (req, res, next) => {
   }
 };
 
+const getAllSellers = async (_req, res, next) => {
+  try {
+    const sellers = await userService.getAllSellers();
+    return res.status(200).json(sellers);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getAllUsers = async (_req, res, next) => {
   try {
     const users = await userService.getAllUsers();
@@ -55,6 +64,7 @@ const destroy = async (req, res, next) => {
 
 module.exports = {
   create,
+  getAllSellers,
   getAllUsers,
   getUserById,
   update,
