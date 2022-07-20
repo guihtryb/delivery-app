@@ -29,6 +29,16 @@ const getAllSales = async (_req, res, next) => {
   }
 };
 
+const getAllSalesBySeller = async (req, res, next) => {
+  try {
+    const { user } = req;
+    const sale = await salesService.getAllSalesBySeller(user);
+    return res.status(200).json(sale);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getAllSalesByUser = async (req, res, next) => {
   try {
     const { user } = req;
@@ -63,6 +73,7 @@ module.exports = {
   createSale,
   deleteSale,
   getAllSales,
+  getAllSalesBySeller,
   getAllSalesByUser,
   getSaleById,
   updateSale,
