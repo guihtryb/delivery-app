@@ -1,9 +1,10 @@
+const createSaleDate = require('../helpers/createSaleDate');
 const { sale: saleModel, user: userModel } = require('../database/models');
 
 const createSale = async (userId, saleInfos) => {
   const { totalPrice, sellerName, deliveryAddress, deliveryNumber, status } = saleInfos;
   const { id: sellerId } = await userModel.findOne({ where: { name: sellerName } });
-  const saleDate = new Date();
+  const saleDate = createSaleDate();
 
   const params = {
     totalPrice, userId, sellerId, deliveryAddress, deliveryNumber, saleDate, status,
@@ -18,7 +19,7 @@ const createSale = async (userId, saleInfos) => {
     sellerId,
     deliveryAddress,
     deliveryNumber,
-    saleDate: JSON.stringify(saleDate).split('T')[0].slice(1),
+    saleDate,
     status,
   };
 
