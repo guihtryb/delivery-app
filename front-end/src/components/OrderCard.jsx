@@ -1,13 +1,27 @@
 import React from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function OrderCard({
   orderDatatest, orderId, orderStatus, orderAddress, orderData, orderTotal,
 }) {
+  const history = useHistory();
+  const location = useLocation();
+  const handleRedirectOrders = () => {
+    if (location.pathname !== '/customer/orders') {
+      console.log(location.pathname);
+      history.push(`/seller/orders/${orderId}`);
+    } else {
+      history.push(`/customer/orders/${orderId}`);
+    }
+  };
   return (
     <div
       className="order-card flex-row"
       data-testid={ `${orderDatatest}-${orderId}` }
+      onClick={ handleRedirectOrders }
+      onKeyPress={ handleRedirectOrders }
+      role="none"
     >
       <div className="orderId flex-column">
         <p>Pedido</p>

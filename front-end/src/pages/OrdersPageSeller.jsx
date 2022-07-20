@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 // import PropTypes from 'prop-types';
 import OrderCard from '../components/OrderCard';
 
-function OrdersPage() {
+function OrdersPageSeller() {
   const orders = [
     {
       orderId: 1,
@@ -30,7 +30,7 @@ function OrdersPage() {
               orderId, orderStatus, orderAddress, orderData, orderTotal } = x;
             return (<OrderCard
               key={ `${orderId}` }
-              orderDatatest="customer_products__element-order-date"
+              orderDatatest="seller_orders__element-order-date"
               orderId={ orderId }
               orderStatus={ orderStatus }
               orderAddress={ orderAddress }
@@ -44,7 +44,7 @@ function OrdersPage() {
   );
 }
 
-export default OrdersPage;
+export default OrdersPageSeller;
 
 // OrdersPage.propTypes = {
 //   history: PropTypes.shape({
