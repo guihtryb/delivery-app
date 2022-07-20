@@ -19,6 +19,8 @@ const create = async ({ name, email, password }) => {
   return newUser;
 };
 
+const getAllSellers = async () => user.findAll({ where: { role: 'seller' } });
+
 const getAllUsers = async () => {
   const users = await user.findAll({ attributes: { exclude: 'password' } });
   return users;
@@ -55,6 +57,7 @@ const destroy = async (id, password) => {
 
 module.exports = {
   create,
+  getAllSellers,
   getAllUsers,
   getUserById,
   update,
