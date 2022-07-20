@@ -25,15 +25,33 @@ function DetailsOrder({ name, data, callBack, orderIndex, status, pedidos }) {
             // E ELE DEVE MUDAR CASO O PEDIDO TENHA SIDO FINALIZADO, OU O USUARIO CLICAR NO BUTAO MARCAR COMO ENTREGUE
           }
           <th data-testid={ statusTest }>{ status }</th>
-          <th>
-            <Button
-              name="MARCAR COMO ENTREGUE"
-              dataTestId={ deliveryTest }
-              importanceClass="primary"
-              disabled="false"
-              callBack={ callBack }
-            />
-          </th>
+          {
+            name ? (
+              <th>
+                <Button
+                  name="MARCAR COMO ENTREGUE"
+                  dataTestId={ deliveryTest }
+                  importanceClass="primary"
+                  disabled="false"
+                  callBack={ callBack }
+                />
+              </th>
+            ) : null
+          }
+          <Button
+            name="PREPARAR PEDIDO"
+            dataTestId={ deliveryTest }
+            importanceClass="primary"
+            disabled="false"
+            callBack={ callBack }
+          />
+          <Button
+            name="SAIU PARA ENTREGA"
+            dataTestId={ deliveryTest }
+            importanceClass="primary"
+            disabled="false"
+            callBack={ callBack }
+          />
         </thead>
         <thead>
           <th>item</th>
@@ -72,6 +90,7 @@ function DetailsOrder({ name, data, callBack, orderIndex, status, pedidos }) {
     </label>
   );
 }
+
 export default DetailsOrder;
 
 DetailsOrder.propTypes = {
