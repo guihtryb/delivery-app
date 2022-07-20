@@ -7,6 +7,7 @@ const {
   createSale,
   deleteSale,
   getAllSales,
+  getAllSalesBySeller,
   getAllSalesByUser,
   getSaleById,
   updateSale,
@@ -15,7 +16,8 @@ const {
 router.post('/sales', tokenVerify, createSale);
 router.delete('/sales', deleteSale);
 router.get('/sales', getAllSales);
-router.get('/sales/seller', tokenVerify, getAllSalesByUser);
+router.get('/sales/seller', tokenVerify, getAllSalesBySeller);
+router.get('/sales/user', tokenVerify, getAllSalesByUser);
 router.get('/sales/:id', getSaleById);
 router.put('/sales/:id', updateSale);
 
