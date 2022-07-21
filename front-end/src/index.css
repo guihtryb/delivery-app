@@ -102,14 +102,17 @@ table {
   border: 2px solid rgb(135, 135, 135);
   margin: 3px;
 }
+
 .orderId {
   border: 2px solid rgb(135, 135, 135);
   margin: 3px;
 }
+
 .orderInfos{
   border: 2px solid rgb(135, 135, 135);
   margin: 3px;
 }
+
 .status-title {
   border: 2px solid rgb(219, 24, 24);
   margin: 3px;

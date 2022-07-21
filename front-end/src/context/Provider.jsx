@@ -41,6 +41,18 @@ function Provider({ children }) {
     updateCartProducts,
   };
 
+  useEffect(() => {
+    const preçoTotal = cartProducts.reduce((acc, x) => {
+      const { price, quantity } = x;
+      const aux = acc + price * quantity;
+      return aux;
+    }, 0);
+    if (preçoTotal) {
+      // ESPERO Q O AVALIADOR NAO RECLAME DO TO FIXED
+      setTotalPrice(preçoTotal.toFixed(2));
+    }
+  }, [cartProducts]);
+
   return (
     <deliveryContext.Provider value={ contextValue }>
       {children}
