@@ -12,8 +12,6 @@ function CustomerOrder({ history }) {
   // A LOGICA Q EU ESCOLHI AQUI, FOI SALVAR NO ESTADO GLOBAL O ULTIMO PEDIDO SELECIONADO, PARA ASSIM, QUANDO A GENTE ENTRAR
   // NA PAGINA DE DETAILS, SO RENDERIZAR ESSE PEDIDO SALVO GLOBALMENTE
 
-  console.log(ordersSelected, history);
-
   return (
     <div className="order-page flex-column">
       <Navbar />

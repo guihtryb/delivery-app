@@ -16,13 +16,11 @@ function ProductsPage({ history }) {
   const fetchProductsApi = () => {
     // ISSO AQUI DEVE SER CHAMADO DENTRO DO USE EFFECT, PARA SER CHAMADO QUANDO CARREGAR A PAGINA
     axios.get('https//:localhost:3001/products').then((x) => x.json()).then((res) => {
-      console.log(res);
       setProcuts(res);
     });
   };
 
   // O FETCH SERA CHAMADO NO INICIO DO CODIGO PARA CONSUMIR A API E RECEBER OS PRODUTOS DE LA
-  console.log(fetchProductsApi);
 
   return (
     <div className="products-page flex-column">
