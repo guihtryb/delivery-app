@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import deliveryContext from '../context/deliveryContext';
 import ProductCard from '../components/ProductCard';
 import { productsMock } from '../helpers/productsMock';
+import Navbar from '../components/Navbar';
 
 const buttonDatatest = 'customer_products__button-cart';
 
@@ -25,6 +26,7 @@ function ProductsPage({ history }) {
 
   return (
     <div className="products-page flex-column">
+      <Navbar />
       <main>
         {
           products.map((x) => {

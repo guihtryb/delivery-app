@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 // import deliveryContext from '../context/deliveryContext';
 import Button from '../components/Button';
 import InputsText from '../components/InputsText';
+import img from '../images/trybelogo.png';
 
 function invalidLogin() {
   return (
@@ -29,6 +30,7 @@ function Login({ history }) {
         // VERIFICAÇAO SE O CUSTUMER EXISTE, E SE EXISTER, MANDAR ELE PRA PAGINA CERTA
         // SO VERIFICAR A ROLE DA RESPOSTA COMO NO EXEMPLO ABAIXO
         if (role === 'customer') {
+          localStorage.setItem('user', JSON.stringify(response.data));
           history.push('/customer/products');
         }
         // if (role === 'administrator') {
@@ -77,9 +79,9 @@ function Login({ history }) {
 
   return (
     <div className="login flex-column">
-      <div>
-        <img src="logo" alt="imagem-logo" />
+      <div className="flex-row">
         <h1>Delivery app</h1>
+        <img src={ img } alt="imagem-logo" width="70px" />
       </div>
       <form className="flex-column">
         <InputsText

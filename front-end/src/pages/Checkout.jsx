@@ -5,6 +5,7 @@ import ProductCartCard from '../components/ProductCartCard';
 import InputsText from '../components/InputsText';
 import Button from '../components/Button';
 import InputsSelect from '../components/InputSelect';
+import Navbar from '../components/Navbar';
 
 const arrayLint = [
   'Item', 'Descrição', 'Quantidade', 'Valor Unitário', 'Sub-total', 'Remover Item'];
@@ -60,6 +61,7 @@ function Checkout({ history }) {
 
   return (
     <div className="cart-page flex-column">
+      <Navbar />
       <main>
         <label htmlFor="table-checkout">
           Finalizar pedido
@@ -81,16 +83,16 @@ function Checkout({ history }) {
                 />))
               }
             </tbody>
-            <h1
-              data-testid="customer_checkout__element-order-total-price"
-              className="primary total-price"
-            >
-              { `Total: R$${totalPrice}` }
-            </h1>
           </table>
+          <h1
+            data-testid="customer_checkout__element-order-total-price"
+            className="primary total-price"
+          >
+            { `Total: R$${totalPrice}` }
+          </h1>
         </label>
       </main>
-      <section>
+      <section className="flex-column inputs-section">
         <InputsSelect
           dataTestId="customer_checkout__select-seller"
           name="P. Vendedora Responsável"

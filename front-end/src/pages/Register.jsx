@@ -26,9 +26,12 @@ function Register({ history }) {
 
   const registerButton = () => {
     axios.post('http://localhost:3001/users', { email, password, name })
-      .then((response) => {
+      .then(() => {
+        axios.post('http://localhost:3001/login', { email, password })
+          .then((res) => {
+            localStorage.setItem('user', res.data);
+          });
         history.push('/customer/products');
-        console.log(response);
       }).catch((err) => {
         const CONFLICT = 409;
         if (err.response.status === CONFLICT) setIsLoginInvalid(true);

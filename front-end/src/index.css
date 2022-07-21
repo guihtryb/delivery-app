@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  font-size: 1.5rem;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -16,7 +17,7 @@ code {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 .flex-row {
@@ -27,23 +28,28 @@ code {
 }
 
 .primary {
+  color: white;
   background: #036B52;
 }
 
 .secundary {
+  color: white;
   background: #2FC18C;
 }
 
 .terciary {
+  color: white;
   background: #421981;
 }
 
 button {
   border: none;
   margin: 5px;
+  margin-top: 20px;
   border-radius: 5px;
   color: white;
-  width: 100%;
+  width: 50%;
+  min-height: 15%;
 }
 
 button:hover {
@@ -59,19 +65,13 @@ button:hover {
 }
 
 .product-card {
-  border: 2px solid rgb(135, 135, 135);
+  border: 2px solid  #2FC18C;
+  border-radius: 3px;
   margin: 3px;
 }
 
 .add-button-products {
-  background-color: rgb(193, 193, 193);
-  width: 100%;
-}
-
-.see-car-button {
-  position: sticky;
-  bottom: 0;
-  width: 50%;
+  width: 40%;
 }
 
 .total-price {
@@ -89,10 +89,12 @@ table {
 }
 
 .purple {
+  color: white;
   background: #421981;
 }
 
 .blue {
+  color: white;
   background: #056CF9;
 }
 
@@ -100,15 +102,40 @@ table {
   border: 2px solid rgb(135, 135, 135);
   margin: 3px;
 }
+
 .orderId {
   border: 2px solid rgb(135, 135, 135);
   margin: 3px;
 }
+
 .orderInfos{
   border: 2px solid rgb(135, 135, 135);
   margin: 3px;
 }
+
 .status-title {
   border: 2px solid rgb(219, 24, 24);
   margin: 3px;
+}
+
+.navbar {
+  width: 100vw;
+  position: sticky;
+  height: 5vh;
+  margin-top: 0;
+  top: 0;
+}
+
+.navbar button {
+  width: 30vw;
+  height: 5vh;
+  margin: 0;
+  border-radius: 0;
+}
+
+.navbar h1 {
+  height: 5vh;
+  width: 20vw;
+  text-align: center;
+  font-size: xx-large;
 }
