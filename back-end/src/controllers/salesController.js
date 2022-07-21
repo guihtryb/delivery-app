@@ -2,7 +2,7 @@ const salesService = require('../services/salesService');
 
 const createSale = async (req, res, next) => {
   try {
-    const { body, params: { userId } } = req;
+    const { body, user: userId } = req;
     const newSale = await salesService.createSale(userId, body);
     return res.status(201).json(newSale);
   } catch (error) {
@@ -29,6 +29,26 @@ const getAllSales = async (_req, res, next) => {
   }
 };
 
+const getAllSalesBySeller = async (req, res, next) => {
+  try {
+    const { user } = req;
+    const sale = await salesService.getAllSalesBySeller(user);
+    return res.status(200).json(sale);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getAllSalesByUser = async (req, res, next) => {
+  try {
+    const { user } = req;
+    const sale = await salesService.getAllSalesByUser(user);
+    return res.status(200).json(sale);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getSaleById = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -41,18 +61,20 @@ const getSaleById = async (req, res, next) => {
 
 const updateSale = async (req, res, next) => {
   try {
-    const { body, params: { id } } = req;
-    const updatedSale = await salesService.updateSale(id, body);
+    const { body: { status }, params: { id } } = req;
+    const updatedSale = await salesService.updateSale(id, status);
     return res.status(200).json(updatedSale);
   } catch (error) {
     next(error);
   }
 };
 
-module.exports = { 
+module.exports = {
   createSale,
   deleteSale,
   getAllSales,
+  getAllSalesBySeller,
+  getAllSalesByUser,
   getSaleById,
   updateSale,
 };

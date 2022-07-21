@@ -1,18 +1,25 @@
+const createSaleDate = require('../helpers/createSaleDate');
 const { sale: saleModel, user: userModel } = require('../database/models');
 
 const createSale = async (userId, saleInfos) => {
-  const { totalPrice, deliveryAddress, deliveryNumber, status } = saleInfos;
-  const saleDate = new Date();
+  const { totalPrice, sellerName, deliveryAddress, deliveryNumber, status } = saleInfos;
+  const { id: sellerId } = await userModel.findOne({ where: { name: sellerName } });
+  const saleDate = createSaleDate();
 
-  const params = { totalPrice, userId, deliveryAddress, deliveryNumber, saleDate, status };
-  const { id } = await saleModel.create(params, { where: { userId } });
+  const params = {
+    totalPrice, userId, sellerId, deliveryAddress, deliveryNumber, saleDate, status,
+  };
+
+  const { id } = await saleModel.create(params);
+
   const newSale = {
     id,
     totalPrice,
     userId,
+    sellerId,
     deliveryAddress,
     deliveryNumber,
-    saleDate: JSON.stringify(saleDate).split('T')[0].slice(1),
+    saleDate,
     status,
   };
 
@@ -25,14 +32,20 @@ const getAllSales = async () => saleModel.findAll({
   include: { as: 'users', model: userModel, attributes: ['id'] },
 });
 
+const getAllSalesBySeller = async (id) => saleModel.findAll({ where: { sellerId: id } });
+
+const getAllSalesByUser = async (id) => saleModel.findAll({ where: { userId: id } });
+
 const getSaleById = async (id) => saleModel.findOne(id);
 
-const updateSale = async (id, newSaleInfo) => saleModel.update(id, newSaleInfo);
+const updateSale = async (id, status) => saleModel.update({ status }, { where: { id } });
 
 module.exports = {
   createSale,
   deleteSale,
   getAllSales,
+  getAllSalesBySeller,
+  getAllSalesByUser,
   getSaleById,
   updateSale,
 };

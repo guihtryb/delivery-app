@@ -19,16 +19,16 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
 
-      // sellerId: {
-      //   allowNull: false,
-      //   onDelete: 'CASCADE',
-      //   onUpdate: 'CASCADE',
-      //   references: {
-      //     model: 'users',
-      //     key: 'id'
-      //   },
-      //   type: Sequelize.INTEGER,
-      // },
+      sellerId: {
+        allowNull: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        references: {
+          model: 'users',
+          key: 'id'
+        },
+        type: Sequelize.INTEGER,
+      },
 
       totalPrice: {
         type: Sequelize.FLOAT,
@@ -43,7 +43,7 @@ module.exports = {
       },
 
       saleDate: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING(50),
       },
 
       status: {

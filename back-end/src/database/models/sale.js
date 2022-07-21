@@ -25,7 +25,7 @@ const attributes = {
 
   saleDate: {
     allowNull: false,
-    type: DataTypes.DATE,
+    type: DataTypes.STRING,
   },
 
   status: {
@@ -46,6 +46,7 @@ module.exports = (sequelize) => {
 
   sale.associate = (models) => {
     sale.belongsTo(models.user, { as: 'users', foreignKey: 'userId' });
+    sale.belongsTo(models.user, { as: 'sellers', foreignKey: 'sellerId' });
   };
 
   return sale;
