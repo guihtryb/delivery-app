@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 // import deliveryContext from '../context/deliveryContext';
 import Button from '../components/Button';
 import InputsText from '../components/InputsText';
-import Navbar from '../components/Navbar';
 
 function invalidLogin() {
   return (
@@ -27,9 +26,12 @@ function Register({ history }) {
 
   const registerButton = () => {
     axios.post('http://localhost:3001/users', { email, password, name })
-      .then((response) => {
+      .then(() => {
+        axios.post('http://localhost:3001/login', { email, password })
+          .then((res) => {
+            localStorage.setItem('user', res.data);
+          });
         history.push('/customer/products');
-        console.log(response);
       }).catch((err) => {
         const CONFLICT = 409;
         if (err.response.status === CONFLICT) setIsLoginInvalid(true);
@@ -67,7 +69,6 @@ function Register({ history }) {
 
   return (
     <div className="register flex-column">
-      <Navbar />
       <form className="flex-column">
         <InputsText
           dataTestId="common_register__input-name"
