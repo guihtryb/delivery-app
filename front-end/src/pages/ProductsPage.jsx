@@ -9,6 +9,7 @@ const buttonDatatest = 'customer_products__button-cart';
 
 function ProductsPage({ history }) {
   // QUANDO A REQUISIÇAO A API FOR FEITA CORRETAMENTE, MUDAR O PRODUCTSMock para a resposta da api
+  const [disabled, setDisabled] = useState(true);
   const [products, setProducts] = useState([]);
   const { totalPrice } = useContext(deliveryContext);
 
@@ -19,9 +20,15 @@ function ProductsPage({ history }) {
     });
   };
 
+  const priceParse = (priceToParse) => {
+    if (typeof priceToParse === 'string') return priceToParse.replace('.', ',');
+  };
+
   useEffect(() => {
     fetchProductsApi();
-  }, []);
+    if (Number(totalPrice) > 0) setDisabled(false);
+    else setDisabled(true);
+  }, [totalPrice]);
 
   return (
     <div className="products-page flex-column">
@@ -46,12 +53,13 @@ function ProductsPage({ history }) {
         data-testid={ buttonDatatest }
         className="primary see-car-button"
         onClick={ () => { history.push('/customer/checkout'); } }
+        disabled={ disabled }
       >
         Ver carrinho: R$
         <span
           data-testid="customer_products__checkout-bottom-value"
         >
-          { totalPrice }
+          { priceParse(totalPrice) }
         </span>
       </button>
     </div>

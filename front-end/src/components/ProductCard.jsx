@@ -1,7 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
 import deliveryContext from '../context/deliveryContext';
+
+const NEGATIVE_ONE = -1;
 
 function ProductCard({ name, productId, price, imgSrc }) {
   const [quantity, setQuantity] = useState(0);
@@ -12,42 +14,37 @@ function ProductCard({ name, productId, price, imgSrc }) {
   const maisDatatest = `customer_products__button-card-add-item-${productId}`;
   const quantityDatatest = `customer_products__input-card-quantity-${productId}`;
   const {
-    setCartProducts,
-    cartProducts,
+    updateCartProducts,
   } = useContext(deliveryContext);
+
   const priceParse = (priceToParse) => priceToParse.replace('.', ',');
 
-  const updateCartProducts = () => {
-    const obj = {
+  const handleButtonClick = ({ target: { innerText } }) => {
+    const opValue = innerText === '-' ? NEGATIVE_ONE : 1;
+    if (quantity === 0 && opValue === NEGATIVE_ONE) return;
+    setQuantity(quantity + opValue);
+
+    updateCartProducts({
       name,
       price,
       productId,
-      quantity,
-    };
-      // isso aqui basicamente cria um outro elemento no array, que representa o produto selecionado, sua quantidade, preço
-      // id e nome, e esse filtro é pra nao deixar duplicatas, meio ganbiarra, se alguem pensar algum jeito melhor, fique a vontade
-      // mas funciona perfeitamente mentira
-    setCartProducts(
-      [...cartProducts.filter((product) => product.name !== name), obj],
-    );
+      quantity: quantity + opValue,
+    });
   };
 
-  const handleButtonClick = ({ target: { innerText } }) => {
-    const aux = quantity;
-    if (innerText === '-' && quantity > 0) {
-      setQuantity(aux - 1);
-    } else if (innerText === '+') {
-      setQuantity(aux + 1);
-    }
+  const handleChange = (e) => {
+    const { value } = e.target;
+    const productQuantity = Number(value);
+    if (productQuantity <= 0) setQuantity(0);
 
-    updateCartProducts();
-    console.log(quantity);
-    console.log(cartProducts);
+    setQuantity(productQuantity);
+    updateCartProducts({
+      name,
+      price,
+      productId,
+      quantity: productQuantity,
+    });
   };
-
-  useEffect(() => {
-
-  }, []);
 
   return (
     <div
@@ -65,6 +62,7 @@ function ProductCard({ name, productId, price, imgSrc }) {
           name
         }
       </p>
+
       <div className="add-button-products flex-row">
         <Button
           name="-"
@@ -75,7 +73,9 @@ function ProductCard({ name, productId, price, imgSrc }) {
         />
         <input
           data-testid={ quantityDatatest }
-          defaultValue={ quantity }
+          onChange={ handleChange }
+          value={ quantity }
+          type="number"
         />
         <Button
           name="+"
