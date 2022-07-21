@@ -22,6 +22,7 @@ function Provider({ children }) {
     const preçoTotal = cartProducts.reduce((acc, x) => {
       const { price, quantity } = x;
       const aux = acc + price * quantity;
+
       return aux;
     }, 0);
     if (preçoTotal) {

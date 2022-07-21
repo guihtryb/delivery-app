@@ -5,49 +5,61 @@ import deliveryContext from '../context/deliveryContext';
 
 function ProductCard({ name, productId, price, imgSrc }) {
   const [quantity, setQuantity] = useState(0);
-
-  const {
-    setCartProducts,
-    cartProducts,
-  } = useContext(deliveryContext);
-
-  const handleButtonClick = ({ target: { innerText } }) => {
-    // AUMENTA OU DIMINUI A QUANTIDADE
-    const aux = quantity;
-    if (innerText === '-' && quantity > 0) {
-      setQuantity(aux - 1);
-    } else if (innerText === '+') {
-      setQuantity(aux + 1);
-    }
-  };
-
-  useEffect(() => {
-    if (quantity) {
-      const obj = {
-        name,
-        price,
-        productId,
-        quantity,
-      };
-      // isso aqui basicamente cria um outro elemento no array, que representa o produto selecionado, sua quantidade, preço
-      // id e nome, e esse filtro é pra nao deixar duplicatas, meio ganbiarra, se alguem pensar algum jeito melhor, fique a vontade
-      // mas funciona perfeitamente
-      setCartProducts([...cartProducts.filter((x) => x.name !== name), obj]);
-    }
-  }, [cartProducts, name, price, productId, quantity, setCartProducts]);
-
   const imgDatatest = `customer_products__img-card-bg-image-${productId}`;
   const priceDatatest = `customer_products__element-card-price-${productId}`;
   const nameDatatest = `customer_products__element-card-title-${productId}`;
   const menosDatatest = `customer_products__button-card-rm-item-${productId}`;
   const maisDatatest = `customer_products__button-card-add-item-${productId}`;
   const quantityDatatest = `customer_products__input-card-quantity-${productId}`;
+  const {
+    setCartProducts,
+    cartProducts,
+  } = useContext(deliveryContext);
+  const priceParse = (priceToParse) => priceToParse.replace('.', ',');
+
+  const updateCartProducts = () => {
+    const obj = {
+      name,
+      price,
+      productId,
+      quantity,
+    };
+      // isso aqui basicamente cria um outro elemento no array, que representa o produto selecionado, sua quantidade, preço
+      // id e nome, e esse filtro é pra nao deixar duplicatas, meio ganbiarra, se alguem pensar algum jeito melhor, fique a vontade
+      // mas funciona perfeitamente mentira
+    setCartProducts(
+      [...cartProducts.filter((product) => product.name !== name), obj],
+    );
+  };
+
+  const handleButtonClick = ({ target: { innerText } }) => {
+    const aux = quantity;
+    if (innerText === '-' && quantity > 0) {
+      setQuantity(aux - 1);
+    } else if (innerText === '+') {
+      setQuantity(aux + 1);
+    }
+
+    updateCartProducts();
+    console.log(quantity);
+    console.log(cartProducts);
+  };
+
+  useEffect(() => {
+
+  }, []);
+
   return (
     <div
       className="product-card flex-column"
     >
-      <p data-testid={ priceDatatest } className="price">{ `R$${price}` }</p>
-      <img src={ imgSrc } alt={ `product-${name}` } data-testid={ imgDatatest } />
+      <p data-testid={ priceDatatest } className="price">{ priceParse(price) }</p>
+      <img
+        width="40"
+        src={ imgSrc }
+        alt={ `product-${name}` }
+        data-testid={ imgDatatest }
+      />
       <p data-testid={ nameDatatest }>
         {
           name
@@ -63,7 +75,7 @@ function ProductCard({ name, productId, price, imgSrc }) {
         />
         <input
           data-testid={ quantityDatatest }
-          value={ quantity }
+          defaultValue={ quantity }
         />
         <Button
           name="+"

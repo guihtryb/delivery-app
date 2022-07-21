@@ -11,7 +11,6 @@ function ProductsPage({ history }) {
   // QUANDO A REQUISIÇAO A API FOR FEITA CORRETAMENTE, MUDAR O PRODUCTSMock para a resposta da api
   const [products, setProducts] = useState([]);
   const { totalPrice } = useContext(deliveryContext);
-  console.log(products);
 
   const fetchProductsApi = () => {
     // ISSO AQUI DEVE SER CHAMADO DENTRO DO USE EFFECT, PARA SER CHAMADO QUANDO CARREGAR A PAGINA
@@ -31,32 +30,31 @@ function ProductsPage({ history }) {
         {
           products.map((x) => {
             // ESSES NOMES PODEM NAO SER OS CERTOS DA RESPOSTA DA API, MAS SAO UMA BASE OBVIA DO QUE É NECEESARIO
-              const { name, price, id, urlImg } = x;
-              return (<ProductCard
-                key={ `${name}-${id}` }
-                name={ name }
-                imgSrc={ urlImg }
-                productId={ id }
-                price={ price }
-              />);
-            })
-          }
-        </main>
-        <button
-          type="button"
-          data-testid={ buttonDatatest }
-          className="primary see-car-button"
-          onClick={ () => { history.push('/customer/checkout'); } }
+            const { name, price, id, urlImg } = x;
+            return (<ProductCard
+              key={ `${name}-${id}` }
+              name={ name }
+              imgSrc={ urlImg }
+              productId={ id }
+              price={ price }
+            />);
+          })
+        }
+      </main>
+      <button
+        type="button"
+        data-testid={ buttonDatatest }
+        className="primary see-car-button"
+        onClick={ () => { history.push('/customer/checkout'); } }
+      >
+        Ver carrinho: R$
+        <span
+          data-testid="customer_products__checkout-bottom-value"
         >
-          Ver carrinho: R$
-          <span
-            data-testid="customer_products__checkout-bottom-value"
-          >
-            { totalPrice }
-          </span>
-        </button>
-      </div>
-    </>
+          { totalPrice }
+        </span>
+      </button>
+    </div>
   );
 }
 
