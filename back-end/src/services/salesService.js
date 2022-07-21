@@ -10,19 +10,7 @@ const createSale = async (userId, saleInfos) => {
     totalPrice, userId, sellerId, deliveryAddress, deliveryNumber, saleDate, status,
   };
 
-  const { id } = await saleModel.create(params);
-
-  const newSale = {
-    id,
-    totalPrice,
-    userId,
-    sellerId,
-    deliveryAddress,
-    deliveryNumber,
-    saleDate,
-    status,
-  };
-
+  const newSale = await saleModel.create(params);
   return newSale;
 };
 
