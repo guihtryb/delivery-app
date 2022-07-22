@@ -36,6 +36,10 @@ function Login({ history }) {
         // if (role === 'administrator') {
         //   history.push('/customer/products');
         // }
+        if (role === 'seller') {
+          localStorage.setItem('user', JSON.stringify(response.data));
+          history.push('/seller/orders');
+        }
       }).catch((err) => {
         const NOT_FOUND = 404;
         if (err.response.status === NOT_FOUND) setIsLoginInvalid(true);
