@@ -20,13 +20,14 @@ function Provider({ children }) {
     }
   };
 
+  const calcTotalPrice = (arrayCart) => arrayCart.reduce((acc, x) => {
+    const { price, quantity } = x;
+    const aux = acc + price * quantity;
+    return aux;
+  }, 0);
+
   useEffect(() => {
-    const priceReduced = cartProducts.reduce((acc, x) => {
-      const { price, quantity } = x;
-      const aux = acc + price * quantity;
-      console.log(aux);
-      return aux;
-    }, 0);
+    const priceReduced = calcTotalPrice(cartProducts);
     setTotalPrice(priceReduced.toFixed(2));
   }, [cartProducts]);
 
@@ -43,11 +44,7 @@ function Provider({ children }) {
   };
 
   useEffect(() => {
-    const preçoTotal = cartProducts.reduce((acc, x) => {
-      const { price, quantity } = x;
-      const aux = acc + price * quantity;
-      return aux;
-    }, 0);
+    const preçoTotal = calcTotalPrice(cartProducts);
     if (preçoTotal >= 0) {
       setTotalPrice(preçoTotal.toFixed(2));
     }
