@@ -32,6 +32,7 @@ function ProductCard({ name, productId, price, imgSrc }) {
     });
   };
 
+<<<<<<< HEAD
   const handleChange = (e) => {
     const { value } = e.target;
     const productQuantity = Number(value);
@@ -45,6 +46,25 @@ function ProductCard({ name, productId, price, imgSrc }) {
       quantity: productQuantity,
     });
   };
+=======
+  useEffect(() => {
+    if (quantity) {
+      const obj = {
+        name,
+        price,
+        productId,
+        quantity,
+      };
+      // isso aqui basicamente cria um outro elemento no array, que representa o produto selecionado, sua quantidade, preço
+      // id e nome, e esse filtro é pra nao deixar duplicatas, meio ganbiarra, se alguem pensar algum jeito melhor, fique a vontade
+      // mas funciona perfeitamente
+      setCartProducts([...cartProducts.filter((product) => product.name !== name), obj]);
+    }
+    if (quantity === 0) {
+      setCartProducts([...cartProducts.filter((product) => product.name !== name)]);
+    }
+  }, [quantity, name, price, productId, cartProducts, setCartProducts]);
+>>>>>>> main-group-6
 
   return (
     <div
@@ -71,12 +91,16 @@ function ProductCard({ name, productId, price, imgSrc }) {
           importanceClass="primary"
           disabled={ false }
         />
+<<<<<<< HEAD
         <input
           data-testid={ quantityDatatest }
           onChange={ handleChange }
           value={ quantity }
           type="number"
         />
+=======
+        { quantity }
+>>>>>>> main-group-6
         <Button
           name="+"
           callBack={ handleButtonClick }

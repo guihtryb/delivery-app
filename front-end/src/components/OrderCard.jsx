@@ -9,7 +9,6 @@ function OrderCard({
   const location = useLocation();
   const handleRedirectOrders = () => {
     if (location.pathname !== '/customer/orders') {
-      console.log(location.pathname);
       history.push(`/seller/orders/${orderId}`);
     } else {
       history.push(`/customer/orders/${orderId}`);

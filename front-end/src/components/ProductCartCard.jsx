@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
+import deliveryContext from '../context/deliveryContext';
 
 function ProductCartCard({ name, price, quantity, remove, index }) {
   const nameDatatest = `customer_checkout__element-order-table-name-${index}`;
@@ -8,6 +9,14 @@ function ProductCartCard({ name, price, quantity, remove, index }) {
   const priceDatatest = `customer_checkout__element-order-table-unit-price-${index}`;
   const subtotalDatatest = `customer_checkout__element-order-table-subtotal-${index}`;
   const rmDatatest = `customer_checkout__element-order-table-remove-${index}`;
+
+  const { setCartProducts, cartProducts } = useContext(deliveryContext);
+
+  const deleteProduct = () => {
+    const productsUpdated = cartProducts.filter((product) => product.name !== name);
+    setCartProducts(productsUpdated);
+  };
+
   return (
     <tr>
       <td className="secundary">{ index }</td>
@@ -37,7 +46,7 @@ function ProductCartCard({ name, price, quantity, remove, index }) {
             name="Remover"
             dataTestId={ rmDatatest }
             importanceClass="primary"
-            callBack={ () => { console.log('remove'); } }
+            callBack={ () => deleteProduct() }
             disabled={ false }
           />
         ) : null

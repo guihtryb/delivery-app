@@ -48,8 +48,7 @@ function Provider({ children }) {
       const aux = acc + price * quantity;
       return aux;
     }, 0);
-    if (preçoTotal) {
-      // ESPERO Q O AVALIADOR NAO RECLAME DO TO FIXED
+    if (preçoTotal >= 0) {
       setTotalPrice(preçoTotal.toFixed(2));
     }
   }, [cartProducts]);

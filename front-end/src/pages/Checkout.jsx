@@ -29,8 +29,9 @@ function Checkout({ history }) {
     setOrdersSelected,
   } = useContext(deliveryContext);
 
+  console.log(cartProducts);
+
   const handleChange = ({ target: { name, value } }) => {
-    console.log(value);
     if (name === 'adress') {
       setAdress(value);
     } else if (name === 'options') {
