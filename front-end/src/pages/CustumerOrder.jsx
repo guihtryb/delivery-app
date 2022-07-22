@@ -1,10 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react';
+// import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import deliveryContext from '../context/deliveryContext';
+// import deliveryContext from '../context/deliveryContext';
 import DetailsOrder from '../components/DetailsOrder';
-import Navbar from '../components/Navbar';
+// import Navbar from '../components/Navbar';
 
 // function CustomerOrder({ history }) {
 function CustomerOrder() {
@@ -17,8 +18,6 @@ function CustomerOrder() {
   // DA SUA LISTA DE PEDIDOS, ENTAO É PRECISO PASSAR PARA ESSA PAGINA O PEDIDO CORRETO A SER RENDERIZADO,
   // A LOGICA Q EU ESCOLHI AQUI, FOI SALVAR NO ESTADO GLOBAL O ULTIMO PEDIDO SELECIONADO, PARA ASSIM, QUANDO A GENTE ENTRAR
   // NA PAGINA DE DETAILS, SO RENDERIZAR ESSE PEDIDO SALVO GLOBALMENTE
-
-  // console.log(ordersSelected, history);
 
   useEffect(() => {
     // const { token } = JSON.parse(localStorage.getItem('user'));
