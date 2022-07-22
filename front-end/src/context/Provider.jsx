@@ -7,6 +7,29 @@ function Provider({ children }) {
   const [cartProducts, setCartProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [ordersSelected, setOrdersSelected] = useState({});
+
+  const updateCartProducts = (cartProduct) => {
+    const { name, quantity } = cartProduct;
+    if (quantity === 0) {
+      const removedList = [...cartProducts.filter((product) => product.name !== name)];
+      setCartProducts(removedList);
+    } else {
+      setCartProducts(
+        [...cartProducts.filter((product) => product.name !== name), cartProduct],
+      );
+    }
+  };
+
+  useEffect(() => {
+    const priceReduced = cartProducts.reduce((acc, x) => {
+      const { price, quantity } = x;
+      const aux = acc + price * quantity;
+      console.log(aux);
+      return aux;
+    }, 0);
+    setTotalPrice(priceReduced.toFixed(2));
+  }, [cartProducts]);
+
   const contextValue = {
     ordersSelected,
     setOrdersSelected,
@@ -16,6 +39,7 @@ function Provider({ children }) {
     setCartProducts,
     orders,
     setOrders,
+    updateCartProducts,
   };
 
   useEffect(() => {

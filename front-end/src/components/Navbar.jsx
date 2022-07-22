@@ -55,7 +55,13 @@ function Navbar() {
             />
           </div>
         ) : (
-          <button type="button">PEDIDOS</button>
+          <button
+            type="button"
+            data-testid="customer_products__element-navbar-link-products"
+          >
+            PEDIDOS
+
+          </button>
         )
       }
       <h1
