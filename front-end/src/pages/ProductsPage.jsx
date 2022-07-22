@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-=======
-import React, { useContext, useState } from 'react';
-// import axios from 'axios';
->>>>>>> main-group-6
 import PropTypes from 'prop-types';
 import deliveryContext from '../context/deliveryContext';
 import ProductCard from '../components/ProductCard';
@@ -14,7 +9,6 @@ const buttonDatatest = 'customer_products__button-cart';
 
 function ProductsPage({ history }) {
   // QUANDO A REQUISIÇAO A API FOR FEITA CORRETAMENTE, MUDAR O PRODUCTSMock para a resposta da api
-<<<<<<< HEAD
   const [disabled, setDisabled] = useState(true);
   const [products, setProducts] = useState([]);
   const { totalPrice } = useContext(deliveryContext);
@@ -35,19 +29,6 @@ function ProductsPage({ history }) {
     if (Number(totalPrice) > 0) setDisabled(false);
     else setDisabled(true);
   }, [totalPrice]);
-=======
-  const [products] = useState(productsMock);
-  const { totalPrice } = useContext(deliveryContext);
-
-  // const fetchProductsApi = () => {
-  // ISSO AQUI DEVE SER CHAMADO DENTRO DO USE EFFECT, PARA SER CHAMADO QUANDO CARREGAR A PAGINA
-  // axios.get('https//:localhost:3001/products').then((x) => x.json()).then((res) => {
-  // setProcuts(res);
-  // });
-  // };
-
-  // O FETCH SERA CHAMADO NO INICIO DO CODIGO PARA CONSUMIR A API E RECEBER OS PRODUTOS DE LA
->>>>>>> main-group-6
 
   return (
     <div className="products-page flex-column">
