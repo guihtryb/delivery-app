@@ -26,7 +26,7 @@ const getAllSalesByUser = async (id) => saleModel.findAll({
   attributes: { exclude: ['deliveryAddress', 'deliveryNumber'] }, where: { userId: id },
 });
 
-const getSaleById = async (id) => saleModel.findOne({ id });
+const getSaleById = async (id) => saleModel.findByPk(id);
 
 const updateSale = async (id, status) => saleModel.update({ status }, { where: { id } });
 
