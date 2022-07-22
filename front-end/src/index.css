@@ -70,7 +70,7 @@ button.terciary:hover {
 }
 
 .disabilitado {
-  background-color: grey;
+  background-color: grey !important;
 }
 
 .disabilitado:hover {
@@ -121,7 +121,7 @@ table {
   margin: 3px;
 }
 
-.orderInfos{
+.orderInfos {
   border: 2px solid rgb(135, 135, 135);
   margin: 3px;
 }

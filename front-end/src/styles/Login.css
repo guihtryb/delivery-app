@@ -73,20 +73,26 @@
   }
 
   .login-container {
-    margin: 1rem 0;
+    margin-bottom: 0.75rem;
     order: 1;
     padding: 0.1rem 1.5rem;
     position: relative;
     width: 65vw;
   }
 
-  h1 {
+  .brand h1 {
     font-family: Pacifico , Poppins , serif;
     font-weight: 500;
   }
 
   .delivery-logo {
     display: none;
+  }
+
+  .invalid-message {
+    bottom: 14rem;
+    color: crimson;
+    position: absolute;
   }
 
   .form-logo {
