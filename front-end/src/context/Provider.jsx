@@ -24,6 +24,7 @@ function Provider({ children }) {
     const priceReduced = cartProducts.reduce((acc, x) => {
       const { price, quantity } = x;
       const aux = acc + price * quantity;
+      console.log(aux);
       return aux;
     }, 0);
     setTotalPrice(priceReduced.toFixed(2));
