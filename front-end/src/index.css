@@ -27,6 +27,11 @@ code {
   justify-content: space-evenly;
 }
 
+.flex-row.brand {
+  width: fit-content;
+  margin: 0 auto;
+}
+
 .primary {
   color: white;
   background: #036B52;
@@ -50,14 +55,22 @@ button {
   color: white;
   width: 50%;
   min-height: 15%;
+  cursor: pointer;
+  padding: 0.25rem;
+  font-weight: 600;
+  transition: all ease 0.3s;
 }
 
-button:hover {
-  background: #05231c;
+button.primary:hover {
+  background: #60B483;
+}
+
+button.terciary:hover {
+  background: #5434b3;
 }
 
 .disabilitado {
-  background-color: grey;
+  background-color: grey !important;
 }
 
 .disabilitado:hover {
@@ -108,7 +121,7 @@ table {
   margin: 3px;
 }
 
-.orderInfos{
+.orderInfos {
   border: 2px solid rgb(135, 135, 135);
   margin: 3px;
 }
