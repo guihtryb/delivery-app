@@ -1,56 +1,51 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
-// import PropTypes from 'prop-types';
 import OrderCard from '../components/OrderCard';
 
 function OrdersPage() {
-  const orders = [
-    {
-      orderId: 1,
-      orderStatus: 'entregue',
-      orderAddress: 'rua sem saída',
-      orderData: '23/23/23',
-      orderTotal: 1234124,
-    },
-    {
-      orderId: 2,
-      orderStatus: 'pendente',
-      orderAddress: 'rua de casa',
-      orderData: '23/23/23',
-      orderTotal: 1234124,
-    },
-  ];
+  const [orders, setOrders] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const { token } = JSON.parse(localStorage.getItem('user'));
+    axios
+      .get('http://localhost:3001/sales/user', {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((response) => {
+        setOrders(response.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
   return (
     <div className="products-page flex-column">
       <Navbar />
-      <main>
-        {
-          orders.map((x) => {
-            const {
-              orderId, orderStatus, orderAddress, orderData, orderTotal } = x;
-            return (<OrderCard
-              key={ `${orderId}` }
-              orderDatatest="customer_products__element-order-date"
-              orderId={ orderId }
-              orderStatus={ orderStatus }
-              orderAddress={ orderAddress }
-              orderData={ orderData }
-              orderTotal={ orderTotal }
-            />);
-          })
-        }
-      </main>
+      { isLoading ? (<p>Loading</p>) : (
+        <main>
+          {
+            orders.map((x) => {
+              const {
+                id, status, saleDate, totalPrice } = x;
+              return (<OrderCard
+                key={ `${id}` }
+                orderDatatest="customer_products__element-order-date"
+                orderId={ id }
+                orderStatus={ status }
+                orderData={ saleDate }
+                orderTotal={ totalPrice }
+              />);
+            })
+          }
+        </main>
+      )}
     </div>
   );
 }
 
 export default OrdersPage;
-
-// OrdersPage.propTypes = {
-//   history: PropTypes.shape({
-//     push: PropTypes.func,
-//     location: PropTypes.shape({
-//       pathname: PropTypes.string.isRequired,
-//     }),
-//   }).isRequired,
-// };
