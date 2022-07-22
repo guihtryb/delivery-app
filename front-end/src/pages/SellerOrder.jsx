@@ -4,7 +4,7 @@ import deliveryContext from '../context/deliveryContext';
 import DetailsOrder from '../components/DetailsOrder';
 import Navbar from '../components/Navbar';
 
-function SellerOrder({ history }) {
+function SellerOrder() {
   const { ordersSelected } = useContext(deliveryContext);
   // obs: ESSA PAGINA SERA RENDERIZADA QUANDO A PESSOA USUARIA CONCLUIR UM PEDIDO NO CARRINHO, OU CLICAR EM UM PEDIDO
   // DA SUA LISTA DE PEDIDOS, ENTAO É PRECISO PASSAR PARA ESSA PAGINA O PEDIDO CORRETO A SER RENDERIZADO,

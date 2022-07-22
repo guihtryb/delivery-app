@@ -37,7 +37,7 @@ function ProductCard({ name, productId, price, imgSrc }) {
     if (quantity === 0) {
       setCartProducts([...cartProducts.filter((product) => product.name !== name)]);
     }
-  }, [quantity]);
+  }, [quantity, name, price, productId, cartProducts, setCartProducts]);
 
   const imgDatatest = `customer_products__img-card-bg-image-${productId}`;
   const priceDatatest = `customer_products__element-card-price-${productId}`;

@@ -1,6 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import '../styles/Login.css';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import deliveryApp from '../images/delivery.png';
 // import deliveryContext from '../context/deliveryContext';
 import Button from '../components/Button';
 import InputsText from '../components/InputsText';
@@ -78,43 +81,51 @@ function Login({ history }) {
   }
 
   return (
-    <div className="login flex-column">
-      <div className="flex-row">
-        <h1>Delivery app</h1>
-        <img src={ img } alt="imagem-logo" width="70px" />
+    <section className="login flex-column">
+      <div className="login-container">
+        <form className="flex-column">
+          <img src={ img } className="form-logo" alt="imagem-logo" width="70px" />
+          <InputsText
+            dataTestId="common_login__input-email"
+            name="Login"
+            stateName="Email"
+            callBack={ handleChange }
+          />
+          <InputsText
+            dataTestId="common_login__input-password"
+            name="Senha"
+            stateName="Senha"
+            callBack={ handleChange }
+          />
+          <div className="buttons-login-container">
+            <Button
+              dataTestId="common_login__button-login"
+              importanceClass="primary"
+              name="LOGIN"
+              callBack={ loginButton }
+              disabled={ disabled }
+            />
+            <Button
+              dataTestId="common_login__button-register"
+              importanceClass="terciary"
+              name="Ainda não tenho conta"
+              disabled={ false }
+              callBack={ registerButton }
+            />
+          </div>
+        </form>
       </div>
-      <form className="flex-column">
-        <InputsText
-          dataTestId="common_login__input-email"
-          name="Login"
-          stateName="Email"
-          callBack={ handleChange }
-        />
-        <InputsText
-          dataTestId="common_login__input-password"
-          name="Senha"
-          stateName="Senha"
-          callBack={ handleChange }
-        />
-        <Button
-          dataTestId="common_login__button-login"
-          importanceClass="primary"
-          name="LOGIN"
-          callBack={ loginButton }
-          disabled={ disabled }
-        />
-        <Button
-          dataTestId="common_login__button-register"
-          importanceClass="terciary"
-          name="Ainda não tenho conta"
-          disabled={ false }
-          callBack={ registerButton }
-        />
-      </form>
+      <div>
+        <div className="flex-row brand">
+          <h1>Delivery app</h1>
+          <img className="delivery-logo" src={ img } alt="imagem-logo" width="70px" />
+        </div>
+        <img className="delivery-img" src={ deliveryApp } alt="" />
+      </div>
       {
         isLoginInvalid && invalidLogin()
       }
-    </div>
+    </section>
   );
 }
 
