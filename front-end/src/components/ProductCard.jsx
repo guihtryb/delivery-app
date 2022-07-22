@@ -32,9 +32,12 @@ function ProductCard({ name, productId, price, imgSrc }) {
       // isso aqui basicamente cria um outro elemento no array, que representa o produto selecionado, sua quantidade, preço
       // id e nome, e esse filtro é pra nao deixar duplicatas, meio ganbiarra, se alguem pensar algum jeito melhor, fique a vontade
       // mas funciona perfeitamente
-      setCartProducts([...cartProducts.filter((x) => x.name !== name), obj]);
+      setCartProducts([...cartProducts.filter((product) => product.name !== name), obj]);
     }
-  }, [quantity]);
+    if (quantity === 0) {
+      setCartProducts([...cartProducts.filter((product) => product.name !== name)]);
+    }
+  }, [quantity, name, price, productId, cartProducts, setCartProducts]);
 
   const imgDatatest = `customer_products__img-card-bg-image-${productId}`;
   const priceDatatest = `customer_products__element-card-price-${productId}`;
@@ -60,9 +63,7 @@ function ProductCard({ name, productId, price, imgSrc }) {
           importanceClass="primary"
           disabled={ false }
         />
-        {
-          quantity
-        }
+        { quantity }
         <Button
           name="+"
           callBack={ handleButtonClick }
