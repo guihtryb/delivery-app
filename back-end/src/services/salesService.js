@@ -22,9 +22,11 @@ const getAllSales = async () => saleModel.findAll({
 
 const getAllSalesBySeller = async (id) => saleModel.findAll({ where: { sellerId: id } });
 
-const getAllSalesByUser = async (id) => saleModel.findAll({ where: { userId: id } });
+const getAllSalesByUser = async (id) => saleModel.findAll({
+  attributes: { exclude: ['deliveryAddress', 'deliveryNumber'] }, where: { userId: id },
+});
 
-const getSaleById = async (id) => saleModel.findOne(id);
+const getSaleById = async (id) => saleModel.findByPk(id);
 
 const updateSale = async (id, status) => saleModel.update({ status }, { where: { id } });
 

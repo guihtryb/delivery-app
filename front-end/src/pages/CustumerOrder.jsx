@@ -18,8 +18,6 @@ function CustomerOrder() {
   // A LOGICA Q EU ESCOLHI AQUI, FOI SALVAR NO ESTADO GLOBAL O ULTIMO PEDIDO SELECIONADO, PARA ASSIM, QUANDO A GENTE ENTRAR
   // NA PAGINA DE DETAILS, SO RENDERIZAR ESSE PEDIDO SALVO GLOBALMENTE
 
-  // console.log(ordersSelected, history);
-
   useEffect(() => {
     // const { token } = JSON.parse(localStorage.getItem('user'));
     const url = pathname.split('/');
