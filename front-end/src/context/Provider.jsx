@@ -1,12 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import deliveryContext from './deliveryContext';
+import usersService from '../services/users';
 
 function Provider({ children }) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [cartProducts, setCartProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [ordersSelected, setOrdersSelected] = useState({});
+  const [sellersOptions, setSellersOptions] = useState([]);
+
+  useEffect(() => {
+    const loadSellersList = async () => {
+      const sellersList = (await usersService.getSellers())
+        .map((seller) => seller.name);
+      setSellersOptions(sellersList);
+    };
+    loadSellersList();
+  }, []);
 
   const updateCartProducts = (cartProduct) => {
     const { name, quantity } = cartProduct;
@@ -41,6 +52,7 @@ function Provider({ children }) {
     orders,
     setOrders,
     updateCartProducts,
+    sellersOptions,
   };
 
   useEffect(() => {
