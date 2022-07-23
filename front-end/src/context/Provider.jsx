@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import deliveryContext from './deliveryContext';
 import usersService from '../services/users';
+import productsService from '../services/products';
 
 function Provider({ children }) {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -9,14 +10,22 @@ function Provider({ children }) {
   const [orders, setOrders] = useState([]);
   const [ordersSelected, setOrdersSelected] = useState({});
   const [sellersOptions, setSellersOptions] = useState([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const loadSellersList = async () => {
+    const getSellersList = async () => {
       const sellersList = (await usersService.getSellers())
         .map((seller) => seller.name);
       setSellersOptions(sellersList);
     };
-    loadSellersList();
+
+    const getProducts = async () => {
+      const productsList = (await productsService.getAll());
+      setProducts(productsList);
+    };
+
+    getSellersList();
+    getProducts();
   }, []);
 
   const updateCartProducts = (cartProduct) => {
@@ -53,6 +62,7 @@ function Provider({ children }) {
     setOrders,
     updateCartProducts,
     sellersOptions,
+    products,
   };
 
   useEffect(() => {
