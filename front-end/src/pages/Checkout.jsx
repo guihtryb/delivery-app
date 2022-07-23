@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import deliveryContext from '../context/deliveryContext';
 import ProductCartCard from '../components/ProductCartCard';
 import InputsText from '../components/InputsText';
@@ -11,52 +12,48 @@ const arrayLint = [
   'Item', 'Descrição', 'Quantidade', 'Valor Unitário', 'Sub-total', 'Remover Item'];
 
 function Checkout({ history }) {
-  const [adress, setAdress] = useState('');
-  const [numero, setNumero] = useState(0);
-  // SETAR COMO VALOR INICIAL DO ARRAY DE PESSOAS VENDEDORAS
-  const [seller, setSeller] = useState('walter White');
-
-  const getDate = () => {
-    const today = new Date();
-    return `${today.getDate()}/${today.getMonth()}/${(today.getFullYear())}`;
-  };
+  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [deliveryNumber, setDeliveryNumber] = useState(0);
+  const [sellerName, setSellerName] = useState('Fulana Pereira');
 
   const {
     cartProducts,
     totalPrice,
-    setOrders,
-    orders,
-    setOrdersSelected,
   } = useContext(deliveryContext);
 
-  console.log(cartProducts);
-
   const handleChange = ({ target: { name, value } }) => {
-    if (name === 'adress') {
-      setAdress(value);
+    if (name === 'address') {
+      setDeliveryAddress(value);
     } else if (name === 'options') {
-      setSeller(value);
+      setSellerName(value);
     } else {
-      setNumero(value);
+      setDeliveryNumber(value);
     }
   };
 
   const handleClick = () => {
-    // AQUI DEVERIA FAZER O POST PARA A API BOTANDO UM NOVO PEDIDO
-    const obj = cartProducts;
-    obj.adress = adress;
-    obj.numero = numero;
-    obj.seller = seller;
-    obj.date = getDate();
-    obj.orderTotalPrice = totalPrice;
-    // AQUI JA CRIA O PEDIDO, COM O PREÇO TOTAL, ENDEREÇO E NUMERO.
-    // O SET ORDERS BASICO, É UM ARRAY GLOBAL COM TODOS OS PEDIDOS Q A PESSOA USUARIA FEZ, MAS COM A API NAO É NECESSARIO MANTER ELE
-    // MAS ATE ESTA TUDO FUNCIONANDO, DEIXEM ELE AQUI PARA TESTER AS APLICAÇOES DO FRONT
-    setOrders([...orders, obj]);
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    const { token } = user;
+
+    axios({
+      method: 'POST',
+      url: 'http://localhost:3001/sales',
+      data: {
+        totalPrice,
+        sellerName,
+        deliveryAddress,
+        deliveryNumber,
+        status: 'Pendente',
+      },
+      headers: {
+        Authorization: token,
+      },
+    });
 
     // O SET ORDERS SELECTED É INTERESSANTE MANTER, POIS ELE SERVE PARA DEIXAR SALVO O PEDIDO QUE VC CLICOU, E RENDERIZAR NA PAGINA DE
     // DETALHES
-    setOrdersSelected(obj);
+    // setOrdersSelected(obj);
     history.push('/customer/orders');
   };
 
@@ -99,13 +96,13 @@ function Checkout({ history }) {
           name="P. Vendedora Responsável"
           callBack={ handleChange }
           stateName="options"
-          options={ ['walter white', 'alcapone', 'rozana'] }
+          options={ ['Fulana Pereira'] }
         />
         <InputsText
           dataTestId="customer_checkout__input-address"
           name="Endereço"
           callBack={ handleChange }
-          stateName="adress"
+          stateName="address"
         />
         <InputsText
           dataTestId="customer_checkout__input-address"
