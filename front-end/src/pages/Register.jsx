@@ -30,7 +30,7 @@ function Register({ history }) {
       .then(() => {
         axios.post('http://localhost:3001/login', { email, password })
           .then((res) => {
-            localStorage.setItem('user', res.data);
+            localStorage.setItem('user', JSON.stringify(res.data));
           });
         history.push('/customer/products');
       }).catch((err) => {
