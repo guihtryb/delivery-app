@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const API_BASE = 'http://localhost:3001/';
 
 export const basicFetchRequisition = (baseUrl, endpoint) => axios

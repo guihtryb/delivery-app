@@ -20,7 +20,7 @@ function Provider({ children }) {
     };
 
     const getProducts = async () => {
-      const productsList = (await productsService.getAll());
+      const productsList = await productsService.getAll();
       setProducts(productsList);
     };
 
