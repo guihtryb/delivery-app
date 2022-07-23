@@ -8,6 +8,7 @@ import deliveryApp from '../images/delivery.png';
 import Button from '../components/Button';
 import InputsText from '../components/InputsText';
 import img from '../images/trybelogo.png';
+import isEmailAndPasswordValid from '../utils/loginValidation';
 
 function invalidLogin() {
   return (
@@ -39,8 +40,6 @@ function Login({ history }) {
     axios.post('http://localhost:3001/login', { email, password })
       .then((response) => {
         const { role } = response.data;
-        // VERIFICAÇAO SE O CUSTUMER EXISTE, E SE EXISTER, MANDAR ELE PRA PAGINA CERTA
-        // SO VERIFICAR A ROLE DA RESPOSTA COMO NO EXEMPLO ABAIXO
         localStorage.setItem('user', JSON.stringify(response.data));
         checkLogin(role, history);
       }).catch((err) => {
@@ -55,24 +54,13 @@ function Login({ history }) {
   };
 
   const verifyInputs = () => {
-    const min = 6;
-    const validEmailExp = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
-    const isValidEmail = validEmailExp.test(email);
-    const isValidPassword = password.length >= min;
-    if (isValidEmail && isValidPassword) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
+    const validation = isEmailAndPasswordValid(email, password);
+    setDisabled(!validation);
   };
 
-  const handleChange = ({ target: { value, name } }) => {
-    if (name === 'Email') {
-      setEmail(value);
-    } else {
-      setPassword(value);
-    }
-  };
+  const handleChange = (
+    { target: { value, name } },
+  ) => (name === 'Email' ? setEmail(value) : setPassword(value));
 
   useEffect(() => {
     verifyInputs();

@@ -1,33 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import deliveryContext from '../context/deliveryContext';
 import ProductCard from '../components/ProductCard';
 import Navbar from '../components/Navbar';
 
-const buttonDatatest = 'customer_products__button-cart';
-
 function ProductsPage({ history }) {
-  // QUANDO A REQUISIÇAO A API FOR FEITA CORRETAMENTE, MUDAR O PRODUCTSMock para a resposta da api
   const [disabled, setDisabled] = useState(true);
-  const [products, setProducts] = useState([]);
-  const { totalPrice } = useContext(deliveryContext);
+  const { products, totalPrice } = useContext(deliveryContext);
 
-  const fetchProductsApi = () => {
-    // ISSO AQUI DEVE SER CHAMADO DENTRO DO USE EFFECT, PARA SER CHAMADO QUANDO CARREGAR A PAGINA
-    axios.get('http://localhost:3001/products').then((response) => {
-      setProducts(response.data);
-    });
-  };
+  const buttonDatatest = 'customer_products__button-cart';
 
   const priceParse = (priceToParse) => {
     if (typeof priceToParse === 'string') return priceToParse.replace('.', ',');
   };
 
   useEffect(() => {
-    fetchProductsApi();
-    if (Number(totalPrice) > 0) setDisabled(false);
-    else setDisabled(true);
+    setDisabled(+totalPrice > 0);
   }, [totalPrice]);
 
   return (
@@ -44,7 +32,8 @@ function ProductsPage({ history }) {
               imgSrc={ urlImg }
               id={ id }
               price={ price }
-            />);
+            />
+            );
           })
         }
       </main>

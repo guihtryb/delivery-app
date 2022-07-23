@@ -64,7 +64,7 @@ export default ProductCartCard;
 ProductCartCard.propTypes = {
   name: PropTypes.string.isRequired,
   remove: PropTypes.bool.isRequired,
-  price: PropTypes.number.isRequired,
+  price: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
 };
