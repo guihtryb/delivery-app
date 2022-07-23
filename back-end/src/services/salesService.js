@@ -1,16 +1,17 @@
 const createSaleDate = require('../helpers/createSaleDate');
 const { sale: saleModel, user: userModel } = require('../database/models');
 
-const createSale = async (userId, saleInfos) => {
+const createSale = async (saleInfos) => {
   const { totalPrice, sellerName, deliveryAddress, deliveryNumber, status } = saleInfos;
   const { id: sellerId } = await userModel.findOne({ where: { name: sellerName } });
   const saleDate = createSaleDate();
 
   const params = {
-    totalPrice, userId, sellerId, deliveryAddress, deliveryNumber, saleDate, status,
+    totalPrice, sellerId, deliveryAddress, deliveryNumber, saleDate, status,
   };
 
   const newSale = await saleModel.create(params);
+  // const { id: saleId } = await saleModel.findOne({ where:  })
   return newSale;
 };
 

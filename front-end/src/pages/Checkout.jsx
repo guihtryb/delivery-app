@@ -44,11 +44,11 @@ function Checkout({ history }) {
   const handleClick = () => {
     // AQUI DEVERIA FAZER O POST PARA A API BOTANDO UM NOVO PEDIDO
     const obj = cartProducts;
-    obj.adress = adress;
-    obj.numero = numero;
-    obj.seller = seller;
-    obj.date = getDate();
-    obj.orderTotalPrice = totalPrice;
+    obj.deliveryAddress = adress;
+    obj.deliveryNumber = numero;
+    obj.sellerName = seller;
+    obj.totalPrice = totalPrice;
+
     // AQUI JA CRIA O PEDIDO, COM O PREÇO TOTAL, ENDEREÇO E NUMERO.
     // O SET ORDERS BASICO, É UM ARRAY GLOBAL COM TODOS OS PEDIDOS Q A PESSOA USUARIA FEZ, MAS COM A API NAO É NECESSARIO MANTER ELE
     // MAS ATE ESTA TUDO FUNCIONANDO, DEIXEM ELE AQUI PARA TESTER AS APLICAÇOES DO FRONT
@@ -79,7 +79,7 @@ function Checkout({ history }) {
                   name={ product.name }
                   price={ product.price }
                   quantity={ product.quantity }
-                  index={ index + 1 }
+                  index={ index }
                   remove
                 />))
               }
@@ -89,7 +89,7 @@ function Checkout({ history }) {
             data-testid="customer_checkout__element-order-total-price"
             className="primary total-price"
           >
-            { `Total: R$${totalPrice}` }
+            { totalPrice.replace('.', ',') }
           </h1>
         </label>
       </main>
@@ -102,7 +102,7 @@ function Checkout({ history }) {
           options={ ['walter white', 'alcapone', 'rozana'] }
         />
         <InputsText
-          dataTestId="customer_checkout__input-address"
+          dataTestId="customer_checkout__input-addressNumber"
           name="Endereço"
           callBack={ handleChange }
           stateName="adress"

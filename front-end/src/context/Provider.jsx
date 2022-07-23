@@ -24,7 +24,6 @@ function Provider({ children }) {
     const priceReduced = cartProducts.reduce((acc, x) => {
       const { price, quantity } = x;
       const aux = acc + price * quantity;
-      console.log(aux);
       return aux;
     }, 0);
     setTotalPrice(priceReduced.toFixed(2));
@@ -45,8 +44,8 @@ function Provider({ children }) {
   useEffect(() => {
     const preçoTotal = cartProducts.reduce((acc, x) => {
       const { price, quantity } = x;
-      const aux = acc + price * quantity;
-      return aux;
+      const auxiliar = acc + price * quantity;
+      return auxiliar;
     }, 0);
     if (preçoTotal >= 0) {
       setTotalPrice(preçoTotal.toFixed(2));

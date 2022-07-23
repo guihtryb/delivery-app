@@ -2,7 +2,7 @@ const salesService = require('../services/salesService');
 
 const createSale = async (req, res, next) => {
   try {
-    const { body, user: userId } = req;
+    const { body } = req;
     const newSale = await salesService.createSale(userId, body);
     return res.status(201).json(newSale);
   } catch (error) {
