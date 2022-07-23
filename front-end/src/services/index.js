@@ -1,3 +1,5 @@
-const API_BASE = 'http://localhost:3001/';
+export const API_BASE = 'http://localhost:3001/';
 
-export default API_BASE;
+export const basicFetchRequisition = (baseUrl, endpoint) => axios
+  .get(`${baseUrl}${endpoint}`)
+  .then((res) => res.data);

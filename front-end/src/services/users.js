@@ -1,9 +1,4 @@
-import axios from 'axios';
-import API_BASE from '.';
-
-export const basicFetchRequisition = (baseUrl, endpoint) => axios
-  .get(`${baseUrl}${endpoint}`)
-  .then((res) => res.data);
+import { API_BASE, basicFetchRequisition } from '.';
 
 const filterByRole = (role, userData) => userData.filter((item) => item.role === role);
 
