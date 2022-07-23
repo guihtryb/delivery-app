@@ -23,8 +23,7 @@ function OrderCard({
       role="none"
     >
       <div className="orderId flex-column">
-        <p>Pedido</p>
-        <p>{ orderId }</p>
+        <span>{`pedido ${orderId}`}</span>
       </div>
       <div className="status-card flex-column">
         <div className="status-infos flex-row">
@@ -32,8 +31,8 @@ function OrderCard({
             <h3>{ orderStatus }</h3>
           </div>
           <div className="orderInfos flex-column">
-            <p>{ orderData }</p>
-            <p>{ `R$${orderTotal}` }</p>
+            <p className="order-data">{ orderData }</p>
+            <p className="order-total">{ `R$${orderTotal}` }</p>
           </div>
         </div>
         {

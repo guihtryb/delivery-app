@@ -27,6 +27,7 @@ function Checkout({ history }) {
     totalPrice,
     sellersOptions,
   } = useContext(deliveryContext);
+
   const handleChange = ({ target: { name, value } }) => {
     if (name === 'address') {
       setDeliveryAddress(value);
@@ -74,14 +75,16 @@ function Checkout({ history }) {
             </thead>
             <tbody>
               {
-                cartProducts.map((product, index) => (<ProductCartCard
-                  key={ product.name }
-                  name={ product.name }
-                  price={ product.price }
-                  quantity={ product.quantity }
-                  index={ index + 1 }
-                  remove
-                />))
+                cartProducts.map((product, index) => (
+                  <ProductCartCard
+                    key={ product.name }
+                    name={ product.name }
+                    price={ product.price }
+                    quantity={ product.quantity }
+                    index={ index + 1 }
+                    remove
+                  />
+                ))
               }
             </tbody>
           </table>
