@@ -8,13 +8,19 @@ import Button from '../components/Button';
 import InputsSelect from '../components/InputSelect';
 import Navbar from '../components/Navbar';
 
-const arrayLint = [
-  'Item', 'Descrição', 'Quantidade', 'Valor Unitário', 'Sub-total', 'Remover Item'];
+const tableColumns = [
+  'Item',
+  'Descrição',
+  'Quantidade',
+  'Valor Unitário',
+  'Sub-total',
+  'Remover Item',
+];
 
 function Checkout({ history }) {
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [deliveryNumber, setDeliveryNumber] = useState(0);
-  const [sellerName, setSellerName] = useState('Fulana Pereira');
+  const [sellerName, setSellerName] = useState('Delivery App Admin');
 
   const {
     cartProducts,
@@ -66,7 +72,7 @@ function Checkout({ history }) {
           <table name="table-checkout">
             <thead>
               {
-                arrayLint.map((x) => <th key={ `th-${x}` }>{ x }</th>)
+                tableColumns.map((column) => <th key={ `th-${column}` }>{ column }</th>)
               }
             </thead>
             <tbody>
@@ -96,7 +102,8 @@ function Checkout({ history }) {
           name="P. Vendedora Responsável"
           callBack={ handleChange }
           stateName="options"
-          options={ ['Fulana Pereira'] }
+          sellerName={ sellerName }
+          options={ ['Delivery App Admin', 'Fulana Pereira', 'Cliente Zé Birita'] }
         />
         <InputsText
           dataTestId="customer_checkout__input-address"
