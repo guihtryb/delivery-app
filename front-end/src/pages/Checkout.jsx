@@ -20,13 +20,13 @@ const tableColumns = [
 function Checkout({ history }) {
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [deliveryNumber, setDeliveryNumber] = useState(0);
-  const [sellerName, setSellerName] = useState('Delivery App Admin');
+  const [sellerName, setSellerName] = useState('Fulana Pereira');
 
   const {
     cartProducts,
     totalPrice,
+    sellersOptions,
   } = useContext(deliveryContext);
-
   const handleChange = ({ target: { name, value } }) => {
     if (name === 'address') {
       setDeliveryAddress(value);
@@ -57,9 +57,6 @@ function Checkout({ history }) {
       },
     });
 
-    // O SET ORDERS SELECTED É INTERESSANTE MANTER, POIS ELE SERVE PARA DEIXAR SALVO O PEDIDO QUE VC CLICOU, E RENDERIZAR NA PAGINA DE
-    // DETALHES
-    // setOrdersSelected(obj);
     history.push('/customer/orders');
   };
 
@@ -103,7 +100,7 @@ function Checkout({ history }) {
           callBack={ handleChange }
           stateName="options"
           sellerName={ sellerName }
-          options={ ['Delivery App Admin', 'Fulana Pereira', 'Cliente Zé Birita'] }
+          options={ sellersOptions }
         />
         <InputsText
           dataTestId="customer_checkout__input-address"
