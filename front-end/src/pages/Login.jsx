@@ -19,6 +19,15 @@ function invalidLogin() {
   );
 }
 
+// Lenny - Criei essa função para ajustar o erro de complexidade do lint.
+function checkLogin(role, history) {
+  if (role === 'customer') {
+    history.push('/customer/products');
+  } else if (role === 'seller') {
+    history.push('/seller/orders');
+  }
+}
+
 function Login({ history }) {
   // const { contexto } = useContext(deliveryContext);
   const [email, setEmail] = useState('');
@@ -32,17 +41,8 @@ function Login({ history }) {
         const { role } = response.data;
         // VERIFICAÇAO SE O CUSTUMER EXISTE, E SE EXISTER, MANDAR ELE PRA PAGINA CERTA
         // SO VERIFICAR A ROLE DA RESPOSTA COMO NO EXEMPLO ABAIXO
-        if (role === 'customer') {
-          localStorage.setItem('user', JSON.stringify(response.data));
-          history.push('/customer/products');
-        }
-        // if (role === 'administrator') {
-        //   history.push('/customer/products');
-        // }
-        // if (role === 'seller') {
-        //   localStorage.setItem('user', JSON.stringify(response.data));
-        //   history.push('/seller/orders');
-        // }
+        localStorage.setItem('user', JSON.stringify(response.data));
+        checkLogin(role, history);
       }).catch((err) => {
         const NOT_FOUND = 404;
         if (err.response.status === NOT_FOUND) setIsLoginInvalid(true);
