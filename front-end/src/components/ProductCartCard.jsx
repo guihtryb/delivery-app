@@ -9,9 +9,7 @@ function ProductCartCard({ name, price, quantity, remove, index }) {
   const priceDatatest = `customer_checkout__element-order-table-unit-price-${index}`;
   const subtotalDatatest = `customer_checkout__element-order-table-subtotal-${index}`;
   const rmDatatest = `customer_checkout__element-order-table-remove-${index}`;
-
   const { setCartProducts, cartProducts } = useContext(deliveryContext);
-
   const deleteProduct = () => {
     const productsUpdated = cartProducts.filter((product) => product.name !== name);
     setCartProducts(productsUpdated);
@@ -32,12 +30,12 @@ function ProductCartCard({ name, price, quantity, remove, index }) {
       </td>
       <td data-testid={ priceDatatest } className="purple">
         {
-          `R$${price.toFixed(2)}`
+          `R$${price}`
         }
       </td>
       <td data-testid={ subtotalDatatest } className="blue">
         {
-          `R$${(price * quantity).toFixed(2)}`
+          `R$${(+price * quantity).toFixed(2)}`
         }
       </td>
       {
@@ -59,7 +57,7 @@ export default ProductCartCard;
 ProductCartCard.propTypes = {
   name: PropTypes.string.isRequired,
   remove: PropTypes.bool.isRequired,
-  price: PropTypes.number.isRequired,
+  price: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
 };
