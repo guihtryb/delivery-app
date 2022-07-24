@@ -15,7 +15,7 @@ function ProductsPage({ history }) {
   };
 
   useEffect(() => {
-    setDisabled(+totalPrice > 0);
+    setDisabled(!+totalPrice > 0);
   }, [totalPrice]);
 
   return (

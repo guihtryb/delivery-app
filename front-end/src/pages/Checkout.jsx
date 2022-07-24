@@ -26,6 +26,7 @@ function Checkout({ history }) {
     cartProducts,
     totalPrice,
     sellersOptions,
+    setOrdersSelected,
   } = useContext(deliveryContext);
   const handleChange = ({ target: { name, value } }) => {
     if (name === 'address') {
@@ -47,7 +48,7 @@ function Checkout({ history }) {
       url: 'http://localhost:3001/sales',
       data: {
         totalPrice,
-        sellerName,
+        sellerName: 'Fulana Pereira',
         deliveryAddress,
         deliveryNumber,
         status: 'Pendente',
@@ -55,9 +56,11 @@ function Checkout({ history }) {
       headers: {
         Authorization: token,
       },
-    });
+    }).then((res) => {
+      console.log(res.data);
+      history.push(`/customer/orders/${res.data.id}`);
 
-    history.push('/customer/orders');
+    });
   };
 
   return (
