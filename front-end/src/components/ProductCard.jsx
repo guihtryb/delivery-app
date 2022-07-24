@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
 import deliveryContext from '../context/deliveryContext';
@@ -50,11 +50,6 @@ function ProductCard({ name, id, price, imgSrc }) {
       quantityProduct: productQuantity,
     });
   };
-
-  useEffect(() => {
-    console.log(typeof document.querySelector(`.input-${id}`).value);
-    console.log(quantityProduct);
-  }, [quantityProduct]);
 
   return (
     <div

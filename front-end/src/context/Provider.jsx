@@ -9,7 +9,7 @@ function Provider({ children }) {
   const [cartProducts, setCartProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [ordersSelected, setOrdersSelected] = useState({});
-  const [sellersOptions, setSellersOptions] = useState([]);
+  const [sellersOptions, setSellersOptions] = useState(['Fulana Pereira']);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {

@@ -15,7 +15,7 @@ const checkoutNewSale = async (
   );
   await expect(page).toTypeInInput(
     customerCheckoutPage.input.addressNumber,
-    `${deliveryNumber}`
+    `${deliveryNumber}`,
   );
 
   await expect(page).toWaitReqFinished({

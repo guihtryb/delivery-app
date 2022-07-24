@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import OrderCard from '../components/OrderCard';
 
 function OrdersPage() {
-  const [orders, setOrders] = useState('');
+  const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const { token } = JSON.parse(localStorage.getItem('user'));

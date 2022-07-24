@@ -39,15 +39,14 @@ function Checkout({ history }) {
 
   const handleClick = () => {
     const user = JSON.parse(localStorage.getItem('user'));
-
     const { token } = user;
-
+    console.log(sellerName);
     axios({
       method: 'POST',
       url: 'http://localhost:3001/sales',
       data: {
         totalPrice,
-        sellerName,
+        sellerName: 'Fulana Pereira',
         deliveryAddress,
         deliveryNumber,
         status: 'Pendente',
@@ -55,9 +54,10 @@ function Checkout({ history }) {
       headers: {
         Authorization: token,
       },
+    }).then((res) => {
+      console.log(res.data);
+      history.push(`/customer/orders/${res.data.id}`);
     });
-
-    history.push('/customer/orders');
   };
 
   return (
@@ -103,13 +103,13 @@ function Checkout({ history }) {
           options={ sellersOptions }
         />
         <InputsText
-          dataTestId="customer_checkout__input-addressNumber"
+          dataTestId="customer_checkout__input-address"
           name="Endereço"
           callBack={ handleChange }
           stateName="address"
         />
         <InputsText
-          dataTestId="customer_checkout__input-address"
+          dataTestId="customer_checkout__input-addressNumber"
           name="Número"
           callBack={ handleChange }
           stateName="numero"

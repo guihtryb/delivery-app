@@ -18,6 +18,7 @@ module.exports = (sequelize) => {
     attributes,
     {
       timestamps: false,
+      underscored: true,
     }
   );
   return product;
