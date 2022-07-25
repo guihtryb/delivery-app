@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import '../styles/Login.css';
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import deliveryApp from '../images/delivery.png';
 // import deliveryContext from '../context/deliveryContext';
@@ -9,6 +8,7 @@ import Button from '../components/Button';
 import InputsText from '../components/InputsText';
 import img from '../images/trybelogo.png';
 import isEmailAndPasswordValid from '../utils/loginValidation';
+import loginService from '../services/login';
 
 function invalidLogin() {
   return (
@@ -27,26 +27,16 @@ function Login({ history }) {
   const [disabled, setDisabled] = useState(false);
   const [isLoginInvalid, setIsLoginInvalid] = useState(false);
 
-  const loginButton = () => {
-    axios.post('http://localhost:3001/login', { email, password })
-      .then((response) => {
-        const { role } = response.data;
-        if (role === 'customer') {
-          localStorage.setItem('user', JSON.stringify(response.data));
-          history.push('/customer/products');
-        }
-        // if (role === 'administrator') {
-        //   history.push('/customer/products');
-        // }
-        if (role === 'seller') {
-          localStorage.setItem('user', JSON.stringify(response.data));
-          history.push('/seller/orders');
-        }
-      }).catch((err) => {
-        const NOT_FOUND = 404;
-        if (err.response.status === NOT_FOUND) setIsLoginInvalid(true);
-        setIsLoginInvalid(true);
-      });
+  const handleLogin = async () => {
+    const userLogin = await loginService.login({ email, password });
+
+    if (userLogin) {
+      localStorage.setItem('user', JSON.stringify(userLogin));
+      if (userLogin.role === 'customer') history.push('/customer/products');
+      if (userLogin.role === 'seller') history.push('/seller/orders');
+    } else {
+      setIsLoginInvalid(true);
+    }
   };
 
   const registerButton = () => {
@@ -94,7 +84,7 @@ function Login({ history }) {
               dataTestId="common_login__button-login"
               importanceClass="primary"
               name="LOGIN"
-              callBack={ loginButton }
+              callBack={ handleLogin }
               disabled={ disabled }
             />
             <Button
