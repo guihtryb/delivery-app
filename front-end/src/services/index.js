@@ -14,7 +14,11 @@ export const getRequisitionWithParams = (baseUrl, route, param) => axios
   .get(`${baseUrl}${route}/${param}`)
   .then((res) => res.data);
 
-export const basicPostRequisition = (baseUrl, route, data, headers) => axios
+export const basicPostRequisition = (baseUrl, route, data) => axios
+  .post(`${baseUrl}${route}`, data)
+  .then((res) => res.data);
+
+export const postRequisitionWithHeaders = (baseUrl, route, data, headers) => axios
   .post(`${baseUrl}${route}`, data, { headers })
   .then((res) => res.data);
 

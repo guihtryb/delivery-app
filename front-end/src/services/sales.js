@@ -2,10 +2,10 @@ import {
   API_BASE,
   basicDeleteRequisition,
   basicGetRequisition,
-  basicPostRequisition,
   basicUpdateRequisition,
   getRequisitionWithHeaders,
   getRequisitionWithParams,
+  postRequisitionWithHeaders,
 } from '.';
 
 const salesService = {
@@ -20,7 +20,7 @@ const salesService = {
   ],
   getBySaleId: async (id) => getRequisitionWithParams(API_BASE, 'sales', id),
   createSale: async (data, headers) => {
-    const { id /* , products */ } = await basicPostRequisition(
+    const { id /* , products */ } = await postRequisitionWithHeaders(
       API_BASE,
       'sales',
       data,
