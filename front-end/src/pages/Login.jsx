@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import '../styles/Login.css';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
@@ -43,18 +42,17 @@ function Login({ history }) {
     history.push('/register');
   };
 
-  const verifyInputs = () => {
-    const validation = isEmailAndPasswordValid(email, password);
-    setDisabled(!validation);
-  };
-
   const handleChange = (
     { target: { value, name } },
   ) => (name === 'Email' ? setEmail(value) : setPassword(value));
 
   useEffect(() => {
+    const verifyInputs = () => {
+      const validation = isEmailAndPasswordValid(email, password);
+      setDisabled(!validation);
+    };
     verifyInputs();
-  }, [password, email, verifyInputs]);
+  }, [email, password]);
 
   if (history.location.pathname === '/') {
     // LOGICA PRA MUDAR O NOME DA ROTA CASO SEJA /
