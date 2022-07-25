@@ -35,7 +35,6 @@ function OrdersPage() {
                 id, status, saleDate, totalPrice } = order;
               return (<OrderCard
                 key={ `${id}` }
-                orderDatatest="customer_products__element-order-date"
                 orderId={ id }
                 orderStatus={ status }
                 orderData={ saleDate }

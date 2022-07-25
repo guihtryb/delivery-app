@@ -45,7 +45,7 @@ function Checkout({ history }) {
 
     const data = {
       totalPrice,
-      sellerName,
+      sellerName: 'Fulana Pereira',
       deliveryAddress,
       deliveryNumber,
       status: 'Pendente',
