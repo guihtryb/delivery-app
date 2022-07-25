@@ -43,7 +43,6 @@ const update = async (body, id) => {
 
   await user.update({ name, email }, { where: { id } });
   const userUpdated = await user.findByPk(id, { attributes: { exclude: 'password' } });
-  console.log(userUpdated);
     return userUpdated;
 };
 
