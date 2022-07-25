@@ -1,8 +1,8 @@
-import { API_BASE, basicFetchRequisition } from '.';
+import { API_BASE, basicGetRequisition } from '.';
 
 const productsService = {
   getAll: async () => [
-    ...await basicFetchRequisition(API_BASE, 'products'),
+    ...await basicGetRequisition(API_BASE, 'products'),
   ],
 };
 
