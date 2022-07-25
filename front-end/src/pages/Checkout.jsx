@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import deliveryContext from '../context/deliveryContext';
 import ProductCartCard from '../components/ProductCartCard';
 import InputsText from '../components/InputsText';
 import Button from '../components/Button';
 import InputsSelect from '../components/InputSelect';
 import Navbar from '../components/Navbar';
+import salesService from '../services/sales';
 
 const tableColumns = [
   'Item',
@@ -21,6 +21,7 @@ function Checkout({ history }) {
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [deliveryNumber, setDeliveryNumber] = useState(0);
   const [sellerName, setSellerName] = useState('Fulana Pereira');
+  const [saleId, setSaleId] = useState(0);
 
   const {
     cartProducts,
@@ -43,23 +44,47 @@ function Checkout({ history }) {
 
     const { token } = user;
 
-    axios({
-      method: 'POST',
-      url: 'http://localhost:3001/sales',
-      data: {
-        totalPrice,
-        sellerName,
-        deliveryAddress,
-        deliveryNumber,
-        status: 'Pendente',
-      },
-      headers: {
-        Authorization: token,
-      },
-    });
+    const data = {
+      totalPrice,
+      sellerName,
+      deliveryAddress,
+      deliveryNumber,
+      status: 'Pendente',
+    };
+    // cartProducts,
 
-    history.push('/customer/orders');
+    const headers = {
+      Authorization: token,
+    };
+
+    const registerSale = async () => {
+      const newsaleId = await salesService.createSale(data, headers);
+
+      setSaleId(newsaleId);
+    };
+
+    registerSale();
+
+    // axios.post('http://localhost:3001/sales', {
+    //   data: {
+    //     totalPrice,
+    //     sellerName,
+    //     deliveryAddress,
+    //     // cartProducts
+    //     // db -> cartProducts.forEach((product) => saleProducts.create(productId, quantity))
+    //     deliveryNumber,
+    //     status: 'Pendente',
+    //   },
+    //   headers: {
+    //     Authorization: token,
+    //   },
+    // })
+    //   .then((res) => setSaleId(res.data.id));
   };
+
+  const redirectToOrderDetails = (id) => history.push(`/customer/orders/${id}`);
+
+  if (saleId) redirectToOrderDetails(saleId);
 
   return (
     <div className="cart-page flex-column">
