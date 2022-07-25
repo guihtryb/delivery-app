@@ -23,6 +23,11 @@ function Login({ history }) {
   const [password, setPassword] = useState('');
   const [disabled, setDisabled] = useState(false);
   const [isLoginInvalid, setIsLoginInvalid] = useState(false);
+  const isLogged = localStorage.getItem('user');
+
+  if (isLogged) {
+    history.push('/customer/products');
+  }
 
   useEffect(() => {
     const user = localStorage.getItem('user');

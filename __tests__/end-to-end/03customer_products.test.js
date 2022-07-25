@@ -29,7 +29,7 @@ beforeEach(async () => {
   });
 });
 
-describe.skip(requirement(11), () => {
+describe(requirement(11), () => {
   test("O avaliador testará a existência dos data-testids referentes ao navbar", async () => {
     await expect(page).toFindElement(
       customerProductsPage.element.navbar.links.products
@@ -46,7 +46,7 @@ describe.skip(requirement(11), () => {
   });
 });
 
-describe.skip(requirement(12), () => {
+describe(requirement(12), () => {
   const cardIds = products.state01.map((el) => el.id);
 
   test("O avaliador testará os data-testids referentes aos card de cada produto",
@@ -75,7 +75,7 @@ describe.skip(requirement(12), () => {
   );
 });
 
-describe.skip(requirement(13), () => {
+describe(requirement(13), () => {
   test("O avaliador testará se o local storage contém os dados da pessoa usuária", async () => {
     const { name, email } = user.customer();
 
@@ -106,7 +106,7 @@ describe.skip(requirement(13), () => {
   })
 });
 
-describe.skip(requirement(14), () => {
+describe(requirement(14), () => {
   const cards = products.state01;
 
   test("O avaliador testará se os dados de cada card condizem com os dados esperados",
@@ -245,7 +245,7 @@ describe(requirement(15), () => {
   });
 });
 
-describe.skip(requirement(16), () => {
+describe(requirement(16), () => {
   test("O avaliador testará a existência de um botão de carrinho com um valor total válido e que seja capaz de nos direcionar a tela de checkout", async () => {
     const itemList = action.customer.getRandomProducts();
     showCurrentCart(itemList, global.__TESTDESC__);

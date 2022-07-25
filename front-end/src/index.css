@@ -139,7 +139,7 @@ table {
 }
 
 .order-total::before {
-  content: "total: ";
+  content: "total: R$";
 }
 
 .status-title {
