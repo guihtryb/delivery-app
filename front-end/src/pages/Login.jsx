@@ -1,7 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import '../styles/Login.css';
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import deliveryApp from '../images/delivery.png';
 // import deliveryContext from '../context/deliveryContext';
@@ -9,6 +7,7 @@ import Button from '../components/Button';
 import InputsText from '../components/InputsText';
 import img from '../images/trybelogo.png';
 import isEmailAndPasswordValid from '../utils/loginValidation';
+import loginService from '../services/login';
 
 function invalidLogin() {
   return (
@@ -20,15 +19,6 @@ function invalidLogin() {
   );
 }
 
-// Lenny - Criei essa função para ajustar o erro de complexidade do lint.
-function checkLogin(role, history) {
-  if (role === 'customer') {
-    history.push('/customer/products');
-  } else if (role === 'seller') {
-    history.push('/seller/orders');
-  }
-}
-
 function Login({ history }) {
   // const { contexto } = useContext(deliveryContext);
   const [email, setEmail] = useState('');
@@ -36,6 +26,7 @@ function Login({ history }) {
   const [disabled, setDisabled] = useState(false);
   const [isLoginInvalid, setIsLoginInvalid] = useState(false);
 
+<<<<<<< HEAD
   const loginButton = () => {
     axios.post('http://localhost:3001/login', { email, password })
       .then((response) => {
@@ -47,15 +38,22 @@ function Login({ history }) {
         if (err.response.status === NOT_FOUND) setIsLoginInvalid(true);
         setIsLoginInvalid(true);
       });
+=======
+  const handleLogin = async () => {
+    const userLogin = await loginService.login({ email, password });
+
+    if (userLogin) {
+      localStorage.setItem('user', JSON.stringify(userLogin));
+      if (userLogin.role === 'customer') history.push('/customer/products');
+      if (userLogin.role === 'seller') history.push('/seller/orders');
+    } else {
+      setIsLoginInvalid(true);
+    }
+>>>>>>> b3380af62edceaced2e3dac9e4791d3c415ba1b9
   };
 
   const registerButton = () => {
     history.push('/register');
-  };
-
-  const verifyInputs = () => {
-    const validation = isEmailAndPasswordValid(email, password);
-    setDisabled(!validation);
   };
 
   const handleChange = (
@@ -63,8 +61,12 @@ function Login({ history }) {
   ) => (name === 'Email' ? setEmail(value) : setPassword(value));
 
   useEffect(() => {
+    const verifyInputs = () => {
+      const validation = isEmailAndPasswordValid(email, password);
+      setDisabled(!validation);
+    };
     verifyInputs();
-  }, [password, email, verifyInputs]);
+  }, [email, password]);
 
   if (history.location.pathname === '/') {
     // LOGICA PRA MUDAR O NOME DA ROTA CASO SEJA /
@@ -94,7 +96,7 @@ function Login({ history }) {
               dataTestId="common_login__button-login"
               importanceClass="primary"
               name="LOGIN"
-              callBack={ loginButton }
+              callBack={ handleLogin }
               disabled={ disabled }
             />
             <Button

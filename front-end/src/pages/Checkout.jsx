@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import deliveryContext from '../context/deliveryContext';
 import ProductCartCard from '../components/ProductCartCard';
 import InputsText from '../components/InputsText';
 import Button from '../components/Button';
 import InputsSelect from '../components/InputSelect';
 import Navbar from '../components/Navbar';
+import salesService from '../services/sales';
 
 const tableColumns = [
   'Item',
@@ -21,12 +21,14 @@ function Checkout({ history }) {
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [deliveryNumber, setDeliveryNumber] = useState(0);
   const [sellerName, setSellerName] = useState('Fulana Pereira');
+  const [saleId, setSaleId] = useState(0);
 
   const {
     cartProducts,
     totalPrice,
     sellersOptions,
   } = useContext(deliveryContext);
+
   const handleChange = ({ target: { name, value } }) => {
     if (name === 'address') {
       setDeliveryAddress(value);
@@ -40,6 +42,7 @@ function Checkout({ history }) {
   const handleClick = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     const { token } = user;
+<<<<<<< HEAD
     console.log(sellerName);
     axios({
       method: 'POST',
@@ -58,7 +61,50 @@ function Checkout({ history }) {
       console.log(res.data);
       history.push(`/customer/orders/${res.data.id}`);
     });
+=======
+
+    const data = {
+      totalPrice,
+      sellerName,
+      deliveryAddress,
+      deliveryNumber,
+      status: 'Pendente',
+    };
+    // cartProducts,
+
+    const headers = {
+      Authorization: token,
+    };
+
+    const registerSale = async () => {
+      const newsaleId = await salesService.createSale(data, headers);
+
+      setSaleId(newsaleId);
+    };
+
+    registerSale();
+
+    // axios.post('http://localhost:3001/sales', {
+    //   data: {
+    //     totalPrice,
+    //     sellerName,
+    //     deliveryAddress,
+    //     // cartProducts
+    //     // db -> cartProducts.forEach((product) => saleProducts.create(productId, quantity))
+    //     deliveryNumber,
+    //     status: 'Pendente',
+    //   },
+    //   headers: {
+    //     Authorization: token,
+    //   },
+    // })
+    //   .then((res) => setSaleId(res.data.id));
+>>>>>>> b3380af62edceaced2e3dac9e4791d3c415ba1b9
   };
+
+  const redirectToOrderDetails = (id) => history.push(`/customer/orders/${id}`);
+
+  if (saleId) redirectToOrderDetails(saleId);
 
   return (
     <div className="cart-page flex-column">
@@ -74,6 +120,7 @@ function Checkout({ history }) {
             </thead>
             <tbody>
               {
+<<<<<<< HEAD
                 cartProducts.map((product, index) => (<ProductCartCard
                   key={ product.name }
                   name={ product.name }
@@ -82,6 +129,18 @@ function Checkout({ history }) {
                   index={ index }
                   remove
                 />))
+=======
+                cartProducts.map((product, index) => (
+                  <ProductCartCard
+                    key={ product.name }
+                    name={ product.name }
+                    price={ product.price }
+                    quantity={ product.quantity }
+                    index={ index + 1 }
+                    remove
+                  />
+                ))
+>>>>>>> b3380af62edceaced2e3dac9e4791d3c415ba1b9
               }
             </tbody>
           </table>
