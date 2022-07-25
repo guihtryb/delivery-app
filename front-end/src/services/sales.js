@@ -1,5 +1,6 @@
 import {
   API_BASE,
+  basicDeleteRequisition,
   basicGetRequisition,
   basicPostRequisition,
   basicUpdateRequisition,
@@ -18,7 +19,6 @@ const salesService = {
     ...await getRequisitionWithHeaders(API_BASE, 'sales/user', headers),
   ],
   getBySaleId: async (id) => getRequisitionWithParams(API_BASE, 'sales', id),
-
   createSale: async (data, headers) => {
     const { id /* , products */ } = await basicPostRequisition(
       API_BASE,
@@ -29,6 +29,7 @@ const salesService = {
     return id;
   },
   updateSale: async (id, data) => basicUpdateRequisition(API_BASE, 'sales', id, data),
+  deleteSale: async (id) => basicDeleteRequisition(API_BASE, 'sales', id),
 };
 
 export default salesService;
