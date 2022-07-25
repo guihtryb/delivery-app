@@ -5,9 +5,17 @@ const createSale = async (userId, saleInfos) => {
   const { totalPrice, sellerName, deliveryAddress, deliveryNumber, status } = saleInfos;
   const { id: sellerId } = await userModel.findOne({ where: { name: sellerName } });
   const saleDate = createSaleDate();
+  // wip - branch ivan para createSale e minha branch com aviso no update
+  // const sellerIdUnderscored = ['seller_id'];
 
   const params = {
-    totalPrice, userId, sellerId, deliveryAddress, deliveryNumber, saleDate, status,
+    totalPrice,
+    userId,
+    sellerId,
+    deliveryAddress,
+    deliveryNumber,
+    saleDate,
+    status,
   };
 
   const newSale = await saleModel.create(params);
@@ -28,7 +36,7 @@ const getAllSalesByUser = async (id) => saleModel.findAll({
 
 const getSaleById = async (id) => saleModel.findByPk(id);
 
-const updateSale = async (id, status) => saleModel.update({ status }, { where: { id } });
+const updateSale = async (id, status) => saleModel.update({ status }, { where: { id } }); // wip - retornar objeto sale com status atualizado
 
 module.exports = {
   createSale,
