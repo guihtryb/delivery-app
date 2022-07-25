@@ -33,7 +33,7 @@ function ProductCard({ name, id, price, imgSrc }) {
       name,
       price,
       id,
-      quantity: aux,
+      quantityProduct: aux,
     });
   };
 
@@ -41,6 +41,7 @@ function ProductCard({ name, id, price, imgSrc }) {
     const { value } = e.target;
     const productQuantity = Number(value);
     if (productQuantity <= 0) setQuantity(0);
+    console.log(typeof productQuantity, productQuantity);
 
     setQuantity(productQuantity);
     updateCartProducts({
@@ -80,7 +81,7 @@ function ProductCard({ name, id, price, imgSrc }) {
           data-testid={ quantityDatatest }
           className={ `input-${id}` }
           onChange={ handleChange }
-          value={ quantityProduct.toString() }
+          value={ quantityProduct }
           type="text"
         />
         <Button

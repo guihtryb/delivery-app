@@ -29,8 +29,8 @@ function Provider({ children }) {
   }, []);
 
   const updateCartProducts = (cartProduct) => {
-    const { name, quantity } = cartProduct;
-    if (quantity === 0) {
+    const { name, quantityProduct } = cartProduct;
+    if (quantityProduct === 0) {
       const removedList = [...cartProducts.filter((product) => product.name !== name)];
       setCartProducts(removedList);
     } else {
@@ -41,8 +41,10 @@ function Provider({ children }) {
   };
 
   const calcTotalPrice = (arrayCart) => arrayCart.reduce((acc, x) => {
-    const { price, quantity } = x;
-    const aux = acc + price * quantity;
+    console.log(x);
+    const { price, quantityProduct } = x;
+    const aux = acc + parseFloat(price) * quantityProduct;
+    console.log(aux);
     return aux;
   }, 0);
 

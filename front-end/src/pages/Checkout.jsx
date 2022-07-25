@@ -78,7 +78,7 @@ function Checkout({ history }) {
                   key={ product.name }
                   name={ product.name }
                   price={ product.price }
-                  quantity={ product.quantity }
+                  quantity={ product.quantityProduct }
                   index={ index }
                   remove
                 />))
