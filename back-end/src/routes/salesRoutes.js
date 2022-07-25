@@ -14,7 +14,7 @@ const {
 } = salesController;
 
 router.post('/sales', tokenVerify, createSale);
-router.delete('/sales', deleteSale);
+router.delete('/sales', deleteSale); // id
 router.get('/sales', getAllSales);
 router.get('/sales/seller', tokenVerify, getAllSalesBySeller);
 router.get('/sales/user', tokenVerify, getAllSalesByUser);

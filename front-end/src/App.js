@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import Provider from './context/Provider';
 import Checkout from './pages/Checkout';
 import CustomerOrder from './pages/CustumerOrder';
@@ -15,7 +15,7 @@ function App() {
     <Provider>
       <div className="app">
         <Switch>
-          <Route exact path="/" component={ Login } />
+          <Redirect exact from="/" to="/login" />
           <Route exact path="/login" component={ Login } />
           <Route exact path="/register" component={ Register } />
           <Route exact path="/customer/products" component={ ProductsPage } />

@@ -1,10 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { /* useContext, */ useEffect, useState } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 // import deliveryContext from '../context/deliveryContext';
 import Button from '../components/Button';
 import InputsText from '../components/InputsText';
+import usersService from '../services/users';
+import loginService from '../services/login';
+import isRegisterInputsValid from '../utils/registerValidation';
 
 function invalidLogin() {
   return (
@@ -25,34 +26,28 @@ function Register({ history }) {
   const [disabled, setDisabled] = useState(false);
   const [isLoginInvalid, setIsLoginInvalid] = useState(false);
 
-  const registerButton = () => {
-    axios.post('http://localhost:3001/users', { email, password, name })
-      .then(() => {
-        axios.post('http://localhost:3001/login', { email, password })
-          .then((res) => {
-            localStorage.setItem('user', res.data);
-          });
-        history.push('/customer/products');
-      }).catch((err) => {
-        const CONFLICT = 409;
-        if (err.response.status === CONFLICT) setIsLoginInvalid(true);
-        setIsLoginInvalid(true);
-      });
-  };
+  const handleRegister = async () => {
+    try {
+      await usersService.createUser({ name, email, password });
 
-  const verifyInputs = () => {
-    const minPassword = 6;
-    const minName = 12;
-    const validEmailExp = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
-    const isValidEmail = validEmailExp.test(email);
-    const isValidPassword = password.length >= minPassword;
-    const isValidName = name.length >= minName;
-    if (isValidEmail && isValidPassword && isValidName) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
+      const newUserLogin = await loginService.login({ email, password });
+
+      if (newUserLogin) {
+        localStorage.setItem('user', JSON.stringify(newUserLogin));
+        history.push('/customer/products');
+      }
+    } catch {
+      setIsLoginInvalid(true);
     }
   };
+
+  useEffect(() => {
+    const verifyInputs = () => {
+      const valid = isRegisterInputsValid(email, password, name);
+      setDisabled(!valid);
+    };
+    verifyInputs();
+  }, [email, password, name]);
 
   const handleChange = ({ target: { value, name: nameInput } }) => {
     if (nameInput === 'Email') {
@@ -63,10 +58,6 @@ function Register({ history }) {
       setName(value);
     }
   };
-
-  useEffect(() => {
-    verifyInputs();
-  }, [password, email, name, verifyInputs]);
 
   return (
     <div className="register flex-column">
@@ -93,7 +84,7 @@ function Register({ history }) {
           dataTestId="common_register__button-register"
           importanceClass="primary"
           name="CADASTRAR"
-          callBack={ registerButton }
+          callBack={ handleRegister }
           disabled={ disabled }
         />
       </form>

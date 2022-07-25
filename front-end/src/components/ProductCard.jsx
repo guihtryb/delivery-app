@@ -3,16 +3,14 @@ import PropTypes from 'prop-types';
 import Button from './Button';
 import deliveryContext from '../context/deliveryContext';
 
-const NEGATIVE_ONE = -1;
-
-function ProductCard({ name, productId, price, imgSrc }) {
-  const [quantity, setQuantity] = useState(0);
-  const imgDatatest = `customer_products__img-card-bg-image-${productId}`;
-  const priceDatatest = `customer_products__element-card-price-${productId}`;
-  const nameDatatest = `customer_products__element-card-title-${productId}`;
-  const menosDatatest = `customer_products__button-card-rm-item-${productId}`;
-  const maisDatatest = `customer_products__button-card-add-item-${productId}`;
-  const quantityDatatest = `customer_products__input-card-quantity-${productId}`;
+function ProductCard({ name, id, price, imgSrc }) {
+  const [quantityProduct, setQuantity] = useState(0);
+  const imgDatatest = `customer_products__img-card-bg-image-${id}`;
+  const priceDatatest = `customer_products__element-card-price-${id}`;
+  const nameDatatest = `customer_products__element-card-title-${id}`;
+  const menosDatatest = `customer_products__button-card-rm-item-${id}`;
+  const maisDatatest = `customer_products__button-card-add-item-${id}`;
+  const quantityDatatest = `customer_products__input-card-quantity-${id}`;
   const {
     updateCartProducts,
   } = useContext(deliveryContext);
@@ -20,15 +18,22 @@ function ProductCard({ name, productId, price, imgSrc }) {
   const priceParse = (priceToParse) => priceToParse.replace('.', ',');
 
   const handleButtonClick = ({ target: { innerText } }) => {
-    const opValue = innerText === '-' ? NEGATIVE_ONE : 1;
-    if (quantity === 0 && opValue === NEGATIVE_ONE) return;
-    setQuantity(quantity + opValue);
+    let aux = quantityProduct;
+    if (innerText === '-' && quantityProduct !== 0) {
+      setQuantity(quantityProduct - 1);
+      aux -= 1;
+    } else if (innerText === '-' && quantityProduct === 0) {
+      setQuantity(0);
+    } else {
+      aux += 1;
+      setQuantity(quantityProduct + 1);
+    }
 
     updateCartProducts({
       name,
       price,
-      productId,
-      quantity: quantity + opValue,
+      id,
+      quantityProduct: aux,
     });
   };
 
@@ -41,8 +46,8 @@ function ProductCard({ name, productId, price, imgSrc }) {
     updateCartProducts({
       name,
       price,
-      productId,
-      quantity: productQuantity,
+      id,
+      quantityProduct: productQuantity,
     });
   };
 
@@ -73,9 +78,10 @@ function ProductCard({ name, productId, price, imgSrc }) {
         />
         <input
           data-testid={ quantityDatatest }
+          className={ `input-${id}` }
           onChange={ handleChange }
-          value={ quantity }
-          type="number"
+          value={ quantityProduct }
+          type="text"
         />
         <Button
           name="+"
@@ -94,5 +100,5 @@ ProductCard.propTypes = {
   name: PropTypes.string.isRequired,
   imgSrc: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
-  productId: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired,
 };

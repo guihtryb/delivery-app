@@ -1,26 +1,27 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import OrderCard from '../components/OrderCard';
+import salesService from '../services/sales';
 
 function OrdersPage() {
-  const [orders, setOrders] = useState('');
+  const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const { token } = JSON.parse(localStorage.getItem('user'));
-    axios
-      .get('http://localhost:3001/sales/user', {
-        headers: {
-          Authorization: token,
-        },
-      })
-      .then((response) => {
-        setOrders(response.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+
+    const headers = {
+      Authorization: token,
+    };
+
+    const loadOrders = async () => {
+      const ordersList = await salesService.getAllUserSales(headers);
+      console.log(ordersList);
+      setOrders(ordersList);
+    };
+
+    loadOrders();
+    setIsLoading(false);
   }, []);
 
   return (
@@ -29,9 +30,9 @@ function OrdersPage() {
       { isLoading ? (<p>Loading</p>) : (
         <main>
           {
-            orders.map((x) => {
+            orders.map((order) => {
               const {
-                id, status, saleDate, totalPrice } = x;
+                id, status, saleDate, totalPrice } = order;
               return (<OrderCard
                 key={ `${id}` }
                 orderDatatest="customer_products__element-order-date"

@@ -14,7 +14,10 @@ function Navbar() {
     };
     localStorage.setItem('user', JSON.stringify(userMock)); */
     // Daqui pra baixo é o correto
-    const { name, role } = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    const { role, name } = user;
+
     setUserRole(role);
     setUsername(name);
   }, []);

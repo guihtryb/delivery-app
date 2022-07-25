@@ -7,10 +7,13 @@ function ProductCartCard({ name, price, quantity, remove, index }) {
   const nameDatatest = `customer_checkout__element-order-table-name-${index}`;
   const quantityDatatest = `customer_checkout__element-order-table-quantity-${index}`;
   const priceDatatest = `customer_checkout__element-order-table-unit-price-${index}`;
-  const subtotalDatatest = `customer_checkout__element-order-table-subtotal-${index}`;
+  const subtotalDatatest = `customer_checkout__element-order-table-sub-total-${index}`;
   const rmDatatest = `customer_checkout__element-order-table-remove-${index}`;
+  const itemData = `customer_checkout__element-order-table-item-number-${index}`;
 
   const { setCartProducts, cartProducts } = useContext(deliveryContext);
+
+  const chanceDot = (string) => string.replaceAll('.', ',');
 
   const deleteProduct = () => {
     const productsUpdated = cartProducts.filter((product) => product.name !== name);
@@ -19,7 +22,7 @@ function ProductCartCard({ name, price, quantity, remove, index }) {
 
   return (
     <tr>
-      <td className="secundary">{ index }</td>
+      <td className="secundary" data-testid={ itemData }>{ index + 1 }</td>
       <td data-testid={ nameDatatest }>
         {
           name
@@ -32,12 +35,12 @@ function ProductCartCard({ name, price, quantity, remove, index }) {
       </td>
       <td data-testid={ priceDatatest } className="purple">
         {
-          `R$${price.toFixed(2)}`
+          chanceDot(parseFloat(price).toFixed(2))
         }
       </td>
       <td data-testid={ subtotalDatatest } className="blue">
         {
-          `R$${(price * quantity).toFixed(2)}`
+          chanceDot(parseFloat(price * quantity).toFixed(2))
         }
       </td>
       {
@@ -59,7 +62,7 @@ export default ProductCartCard;
 ProductCartCard.propTypes = {
   name: PropTypes.string.isRequired,
   remove: PropTypes.bool.isRequired,
-  price: PropTypes.number.isRequired,
+  price: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
 };

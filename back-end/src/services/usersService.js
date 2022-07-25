@@ -32,6 +32,7 @@ const getUserById = async (id) => {
   return getUser; 
 };
 
+// wip - sugestão de receber password e newPassword
 const update = async (body, id) => {
   const { name, email, password } = body;
   const checkPassword = await user.findByPk(id);
@@ -42,7 +43,6 @@ const update = async (body, id) => {
 
   await user.update({ name, email }, { where: { id } });
   const userUpdated = await user.findByPk(id, { attributes: { exclude: 'password' } });
-  console.log(userUpdated);
     return userUpdated;
 };
 

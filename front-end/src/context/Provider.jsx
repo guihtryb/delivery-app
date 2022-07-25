@@ -1,16 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import deliveryContext from './deliveryContext';
+import usersService from '../services/users';
+import productsService from '../services/products';
 
 function Provider({ children }) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [cartProducts, setCartProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [ordersSelected, setOrdersSelected] = useState({});
+  const [sellersOptions, setSellersOptions] = useState(['Fulana Pereira']);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const getSellersList = async () => {
+      const sellersList = (await usersService.getSellers())
+        .map((seller) => seller.name);
+      setSellersOptions(sellersList);
+    };
+
+    const getProducts = async () => {
+      const productsList = await productsService.getAll();
+      setProducts(productsList);
+    };
+
+    getSellersList();
+    getProducts();
+  }, []);
 
   const updateCartProducts = (cartProduct) => {
-    const { name, quantity } = cartProduct;
-    if (quantity === 0) {
+    const { name, quantityProduct } = cartProduct;
+    if (quantityProduct === 0) {
       const removedList = [...cartProducts.filter((product) => product.name !== name)];
       setCartProducts(removedList);
     } else {
@@ -20,13 +40,14 @@ function Provider({ children }) {
     }
   };
 
+  const calcTotalPrice = (arrayCart) => arrayCart.reduce((acc, x) => {
+    const { price, quantityProduct } = x;
+    const aux = acc + parseFloat(price) * quantityProduct;
+    return aux;
+  }, 0);
+
   useEffect(() => {
-    const priceReduced = cartProducts.reduce((acc, x) => {
-      const { price, quantity } = x;
-      const aux = acc + price * quantity;
-      console.log(aux);
-      return aux;
-    }, 0);
+    const priceReduced = calcTotalPrice(cartProducts);
     setTotalPrice(priceReduced.toFixed(2));
   }, [cartProducts]);
 
@@ -40,14 +61,12 @@ function Provider({ children }) {
     orders,
     setOrders,
     updateCartProducts,
+    sellersOptions,
+    products,
   };
 
   useEffect(() => {
-    const preçoTotal = cartProducts.reduce((acc, x) => {
-      const { price, quantity } = x;
-      const aux = acc + price * quantity;
-      return aux;
-    }, 0);
+    const preçoTotal = calcTotalPrice(cartProducts);
     if (preçoTotal >= 0) {
       setTotalPrice(preçoTotal.toFixed(2));
     }

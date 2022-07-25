@@ -11,21 +11,25 @@ const attributes = {
   totalPrice: {
     allowNull: false,
     type: DataTypes.DECIMAL,
+    field: 'total_price',
   },
 
   deliveryAddress: {
     allowNull: false,
     type: DataTypes.STRING,
+    field: 'delivery_address',
   },
 
   deliveryNumber: {
     allowNull: false,
     type: DataTypes.STRING,
+    field: 'delivery_number',
   },
 
   saleDate: {
     allowNull: false,
-    type: DataTypes.STRING,
+    type: DataTypes.DATE,
+    field: 'sale_date',
   },
 
   status: {
@@ -45,8 +49,8 @@ module.exports = (sequelize) => {
   );
 
   sale.associate = (models) => {
-    sale.belongsTo(models.user, { as: 'users', foreignKey: 'userId' });
-    sale.belongsTo(models.user, { as: 'sellers', foreignKey: 'sellerId' });
+    sale.belongsTo(models.user, { as: 'users', foreignKey: 'user_id' });
+    sale.belongsTo(models.user, { as: 'sellers', foreignKey: 'seller_id' });
   };
 
   return sale;
