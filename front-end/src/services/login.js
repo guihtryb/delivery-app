@@ -4,7 +4,7 @@ import {
 } from '.';
 
 const loginService = {
-  login: async () => basicPostRequisition(API_BASE, 'login', data),
+  login: async (data) => basicPostRequisition(API_BASE, 'login', data),
 };
 
 export default loginService;
