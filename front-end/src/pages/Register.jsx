@@ -27,15 +27,16 @@ function Register({ history }) {
   const [isLoginInvalid, setIsLoginInvalid] = useState(false);
 
   const handleRegister = async () => {
-    await usersService.createUser({ name, email, password });
+    try {
+      await usersService.createUser({ name, email, password });
 
-    const newUserLogin = await loginService.login({ email, password });
+      const newUserLogin = await loginService.login({ email, password });
 
-    if (newUserLogin) {
-      localStorage.setItem('user', JSON.stringify(newUserLogin));
-
-      history.push('/customer/products');
-    } else {
+      if (newUserLogin) {
+        localStorage.setItem('user', JSON.stringify(newUserLogin));
+        history.push('/customer/products');
+      }
+    } catch {
       setIsLoginInvalid(true);
     }
   };

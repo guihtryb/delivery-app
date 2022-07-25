@@ -25,13 +25,14 @@ function Login({ history }) {
   const [isLoginInvalid, setIsLoginInvalid] = useState(false);
 
   const handleLogin = async () => {
-    const userLogin = await loginService.login({ email, password });
-
-    if (userLogin) {
-      localStorage.setItem('user', JSON.stringify(userLogin));
-      if (userLogin.role === 'customer') history.push('/customer/products');
-      if (userLogin.role === 'seller') history.push('/seller/orders');
-    } else {
+    try {
+      const userLogin = await loginService.login({ email, password });
+      if (userLogin) {
+        localStorage.setItem('user', JSON.stringify(userLogin));
+        if (userLogin.role === 'customer') history.push('/customer/products');
+        if (userLogin.role === 'seller') history.push('/seller/orders');
+      }
+    } catch {
       setIsLoginInvalid(true);
     }
   };
