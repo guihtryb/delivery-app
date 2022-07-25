@@ -37,11 +37,6 @@ function CustomerOrder() {
           data={ order.saleDate }
         />
       )}
-      {/* <DetailsOrder - não entendi,
-        name={ ordersSelected.seller }
-        pedidos={ ordersSelected }
-        data={ ordersSelected.date }
-      /> */}
     </div>
   );
 }

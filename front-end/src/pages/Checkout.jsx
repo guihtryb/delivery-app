@@ -41,7 +41,6 @@ function Checkout({ history }) {
 
   const handleClick = () => {
     const user = JSON.parse(localStorage.getItem('user'));
-
     const { token } = user;
 
     const data = {
@@ -100,16 +99,14 @@ function Checkout({ history }) {
             </thead>
             <tbody>
               {
-                cartProducts.map((product, index) => (
-                  <ProductCartCard
-                    key={ product.name }
-                    name={ product.name }
-                    price={ product.price }
-                    quantity={ product.quantity }
-                    index={ index + 1 }
-                    remove
-                  />
-                ))
+                cartProducts.map((product, index) => (<ProductCartCard
+                  key={ product.name }
+                  name={ product.name }
+                  price={ product.price }
+                  quantity={ product.quantityProduct }
+                  index={ index }
+                  remove
+                />))
               }
             </tbody>
           </table>
@@ -117,7 +114,7 @@ function Checkout({ history }) {
             data-testid="customer_checkout__element-order-total-price"
             className="primary total-price"
           >
-            { `Total: R$${totalPrice}` }
+            { totalPrice.replace('.', ',') }
           </h1>
         </label>
       </main>
@@ -137,7 +134,7 @@ function Checkout({ history }) {
           stateName="address"
         />
         <InputsText
-          dataTestId="customer_checkout__input-address"
+          dataTestId="customer_checkout__input-addressNumber"
           name="Número"
           callBack={ handleChange }
           stateName="numero"

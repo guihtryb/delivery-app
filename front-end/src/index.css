@@ -168,6 +168,7 @@ table {
 .navbar h1 {
   height: 5vh;
   width: 20vw;
+  white-space: nowrap;
   text-align: center;
   font-size: xx-large;
 }
