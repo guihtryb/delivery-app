@@ -31,10 +31,8 @@ function CustomerOrder() {
       <Navbar />
       { isLoading ? (<p>Loading</p>) : (
         <DetailsOrder
-          // wip - sale=order, e remover outras props
-          name="Fulana Pereira"
-          pedidos={ [order] } // wip - order.products
-          data={ order.saleDate }
+          sale={ order }
+          seller={ false }
         />
       )}
     </div>

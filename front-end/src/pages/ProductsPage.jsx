@@ -25,7 +25,6 @@ function ProductsPage({ history }) {
       <main>
         {
           products.map((x) => {
-            // ESSES NOMES PODEM NAO SER OS CERTOS DA RESPOSTA DA API, MAS SAO UMA BASE OBVIA DO QUE É NECEESARIO
             const { name, price, id, urlImg } = x;
             return (<ProductCard
               key={ id }

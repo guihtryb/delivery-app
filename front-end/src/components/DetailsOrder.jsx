@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
 import ProductCartCard from './ProductCartCard';
-import deliveryContext from '../context/deliveryContext';
 
 const sellerTest = 'customer_order_details__element-order-details-label-seller-name';
 const pedidoIdTest = 'customer_order_details__element-order-details-label-order-id';
@@ -10,31 +9,25 @@ const dataTest = 'customer_order_details__element-order-details-label-order-date
 const statusTest = 'customer_order_details__element-order-details-label-delivery-status';
 const deliveryTest = 'customer_order_details__button-delivery-check';
 
-// wip - substituir todas props por apenas sale
 function DetailsOrder({
-  name,
-  data,
+  sale,
   callBack,
-  orderIndex,
-  status,
-  pedidos /* wip - substituir pedidos por products */ }) {
-  const { cartProducts } = useContext(deliveryContext); // wip - substituir context por prop products
-  console.log(cartProducts);
+}) {
   return (
     <label htmlFor="tabela">
       Detalhe do Pedido
       <table name="tabela">
         <thead>
           <th data-testid={ pedidoIdTest }>
-            { `PEDIDO ${orderIndex}`/* wip - substituir por id da venda saleId */}
+            { `PEDIDO ${sale.id}`}
           </th>
           {
-            name ? <th data-testid={ sellerTest }>{ name }</th> : null
+            seller ? <th data-testid={ sellerTest }>{ sale.sellerName }</th> : null
           }
           <th data-testid={ dataTest }>{ data }</th>
-          <th data-testid={ statusTest }>{ status }</th>
+          <th data-testid={ statusTest }>{ sale.saleDate }</th>
           {
-            name ? (
+            seller ? (
               <th>
                 <Button
                   name="MARCAR COMO ENTREGUE"
@@ -70,12 +63,12 @@ function DetailsOrder({
         </thead>
         <tbody>
           {
-            cartProducts.map((pedido, index) => (
+            sale.products.map((product, index) => (
               <ProductCartCard
-                name={ pedido.name }
-                key={ `key ${pedido.name}` }
-                price={ pedido.price }
-                quantity={ pedido.quantityProduct }
+                name={ product.name }
+                key={ product.name }
+                price={ product.price }
+                quantity={ product.quantity }
                 index={ index }
               />
             ))
@@ -85,7 +78,7 @@ function DetailsOrder({
           data-testid="seller_order_details__element-order-total-price"
           className="primary"
         >
-          {`Total: R$ ${pedidos[0].totalPrice}`}
+          {`Total: R$ ${sale.totalPrice}`}
         </h1>
       </table>
     </label>
@@ -95,14 +88,15 @@ function DetailsOrder({
 export default DetailsOrder;
 
 DetailsOrder.propTypes = {
-  name: PropTypes.string.isRequired,
-  status: PropTypes.bool.isRequired,
-  data: PropTypes.string.isRequired,
+  sale: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    sellerName: PropTypes.string.isRequired,
+    saleDate: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    data: PropTypes.string.isRequired,
+    orderIndex: PropTypes.number.isRequired,
+    products: PropTypes,
+    totalPrice: PropTypes.number.isRequired,
+  }).isRequired,
   callBack: PropTypes.func.isRequired,
-  orderIndex: PropTypes.number.isRequired,
-  pedidos: PropTypes
-    .arrayOf(PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      totalPrice: PropTypes.number.isRequired,
-    })).isRequired,
 };

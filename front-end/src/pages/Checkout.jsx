@@ -50,7 +50,6 @@ function Checkout({ history }) {
       deliveryNumber,
       status: 'Pendente',
     };
-    // cartProducts,
 
     const headers = {
       Authorization: token,
@@ -63,22 +62,6 @@ function Checkout({ history }) {
     };
 
     registerSale();
-
-    // axios.post('http://localhost:3001/sales', {
-    //   data: {
-    //     totalPrice,
-    //     sellerName,
-    //     deliveryAddress,
-    //     // cartProducts
-    //     // db -> cartProducts.forEach((product) => saleProducts.create(productId, quantity))
-    //     deliveryNumber,
-    //     status: 'Pendente',
-    //   },
-    //   headers: {
-    //     Authorization: token,
-    //   },
-    // })
-    //   .then((res) => setSaleId(res.data.id));
   };
 
   const redirectToOrderDetails = (id) => history.push(`/customer/orders/${id}`);
