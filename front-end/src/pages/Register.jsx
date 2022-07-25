@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { /* useContext, */ useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 // import deliveryContext from '../context/deliveryContext';
@@ -6,6 +5,7 @@ import Button from '../components/Button';
 import InputsText from '../components/InputsText';
 import usersService from '../services/users';
 import loginService from '../services/login';
+import isRegisterInputsValid from '../utils/registerValidation';
 
 function invalidLogin() {
   return (
@@ -30,7 +30,6 @@ function Register({ history }) {
     await usersService.createUser({ name, email, password });
 
     const newUserLogin = await loginService.login({ email, password });
-    console.log(newUserLogin);
 
     if (newUserLogin) {
       localStorage.setItem('user', JSON.stringify(newUserLogin));
@@ -41,19 +40,13 @@ function Register({ history }) {
     }
   };
 
-  const verifyInputs = () => {
-    const minPassword = 6;
-    const minName = 12;
-    const validEmailExp = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
-    const isValidEmail = validEmailExp.test(email);
-    const isValidPassword = password.length >= minPassword;
-    const isValidName = name.length >= minName;
-    if (isValidEmail && isValidPassword && isValidName) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
-  };
+  useEffect(() => {
+    const verifyInputs = () => {
+      const valid = isRegisterInputsValid(email, password, name);
+      setDisabled(!valid);
+    };
+    verifyInputs();
+  }, [email, password, name]);
 
   const handleChange = ({ target: { value, name: nameInput } }) => {
     if (nameInput === 'Email') {
@@ -64,10 +57,6 @@ function Register({ history }) {
       setName(value);
     }
   };
-
-  useEffect(() => {
-    verifyInputs();
-  }, [password, email, name, verifyInputs]);
 
   return (
     <div className="register flex-column">
