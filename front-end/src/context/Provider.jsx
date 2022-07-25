@@ -41,10 +41,8 @@ function Provider({ children }) {
   };
 
   const calcTotalPrice = (arrayCart) => arrayCart.reduce((acc, x) => {
-    console.log(x);
     const { price, quantityProduct } = x;
     const aux = acc + parseFloat(price) * quantityProduct;
-    console.log(aux);
     return aux;
   }, 0);
 

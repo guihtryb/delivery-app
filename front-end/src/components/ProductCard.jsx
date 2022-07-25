@@ -41,7 +41,6 @@ function ProductCard({ name, id, price, imgSrc }) {
     const { value } = e.target;
     const productQuantity = Number(value);
     if (productQuantity <= 0) setQuantity(0);
-    console.log(typeof productQuantity, productQuantity);
 
     setQuantity(productQuantity);
     updateCartProducts({

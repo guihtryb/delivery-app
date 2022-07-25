@@ -19,7 +19,7 @@ function DetailsOrder({
   status,
   pedidos /* wip - substituir pedidos por products */ }) {
   const { cartProducts } = useContext(deliveryContext); // wip - substituir context por prop products
-
+  console.log(cartProducts);
   return (
     <label htmlFor="tabela">
       Detalhe do Pedido
@@ -75,7 +75,7 @@ function DetailsOrder({
                 name={ pedido.name }
                 key={ `key ${pedido.name}` }
                 price={ pedido.price }
-                quantity={ pedido.quantity }
+                quantity={ pedido.quantityProduct }
                 index={ index }
               />
             ))

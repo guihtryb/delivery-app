@@ -20,8 +20,6 @@ function ProductCartCard({ name, price, quantity, remove, index }) {
     setCartProducts(productsUpdated);
   };
 
-  console.log(price);
-
   return (
     <tr>
       <td className="secundary" data-testid={ itemData }>{ index + 1 }</td>
