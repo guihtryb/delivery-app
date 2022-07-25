@@ -2,7 +2,6 @@ import '../styles/Login.css';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import deliveryApp from '../images/delivery.png';
-// import deliveryContext from '../context/deliveryContext';
 import Button from '../components/Button';
 import InputsText from '../components/InputsText';
 import img from '../images/trybelogo.png';
@@ -20,7 +19,6 @@ function invalidLogin() {
 }
 
 function Login({ history }) {
-  // const { contexto } = useContext(deliveryContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [disabled, setDisabled] = useState(false);
@@ -53,12 +51,6 @@ function Login({ history }) {
     };
     verifyInputs();
   }, [email, password]);
-
-  if (history.location.pathname === '/') {
-    // LOGICA PRA MUDAR O NOME DA ROTA CASO SEJA /
-    // NAO CONSEGUI VERIFICAR O PORQUE NAO PASSA NO TESTE
-    history.push('login');
-  }
 
   return (
     <section className="login flex-column">
