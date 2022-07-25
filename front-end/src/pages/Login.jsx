@@ -20,6 +20,15 @@ function invalidLogin() {
   );
 }
 
+// Lenny - Criei essa função para ajustar o erro de complexidade do lint.
+function checkLogin(role, history) {
+  if (role === 'customer') {
+    history.push('/customer/products');
+  } else if (role === 'seller') {
+    history.push('/seller/orders');
+  }
+}
+
 function Login({ history }) {
   // const { contexto } = useContext(deliveryContext);
   const [email, setEmail] = useState('');
