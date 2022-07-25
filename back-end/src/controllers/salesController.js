@@ -3,6 +3,7 @@ const salesService = require('../services/salesService');
 const createSale = async (req, res, next) => {
   try {
     const { body, user } = req;
+    console.log(user);
     const newSale = await salesService.createSale(body, user);
     return res.status(201).json(newSale);
   } catch (error) {
@@ -52,7 +53,7 @@ const getAllSalesByUser = async (req, res, next) => {
 const getSaleById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    console.log(id)
+    console.log(id);
     const sale = await salesService.getSaleById(id);
     console.log('RETORNO SALE - ', sale);
     return res.status(200).json(sale);
