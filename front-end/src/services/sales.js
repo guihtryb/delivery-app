@@ -12,8 +12,8 @@ const salesService = {
   getAllSales: async () => [
     ...await basicGetRequisition(API_BASE, 'sales'),
   ],
-  getAllSellerSales: async () => [
-    ...await basicGetRequisition(API_BASE, 'sales/seller'),
+  getAllSellerSales: async (headers) => [
+    ...await getRequisitionWithHeaders(API_BASE, 'sales/seller', headers),
   ],
   getAllUserSales: async (headers) => [
     ...await getRequisitionWithHeaders(API_BASE, 'sales/user', headers),
