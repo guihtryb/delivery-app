@@ -1,4 +1,3 @@
-const createSaleDate = require('../helpers/createSaleDate');
 const { sale: saleModel, user: userModel } = require('../database/models');
 
 const sellerIdUnderscored = ['seller_id'];
