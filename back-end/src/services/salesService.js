@@ -1,25 +1,28 @@
+const formingSale = require('../helpers/formingSale');
+const formingProducts = require('../helpers/formingProducts');
 const { sale: saleModel, user: userModel } = require('../database/models');
 
-const sellerIdUnderscored = ['seller_id'];
-const userIdUnderscored = ['user_id'];
-
 const createSale = async (saleInfos, userId) => {
-  const { totalPrice, sellerName, deliveryAddress, deliveryNumber, status } = saleInfos;
+  const {
+    totalPrice, sellerName, deliveryAddress, deliveryNumber, status, cartProducts,
+  } = saleInfos;
+
   const { id: sellerId } = await userModel.findOne({ where: { name: sellerName } });
   const saleDate = new Date();
-
-  const params = {
+  const saleParams = {
     totalPrice,
-    [userIdUnderscored]: userId,
-    [sellerIdUnderscored]: sellerId,
+    userId,
+    sellerId,
     deliveryAddress,
     deliveryNumber,
     saleDate,
     status,
   };
 
-  const newSale = await saleModel.create(params);
-  // const { id: saleId } = await saleModel.findOne({ where:  })
+  const { id } = await saleModel.create(saleParams, { where: { userId } });
+  const newSale = formingSale(id, saleParams, cartProducts);
+  await formingProducts(id, cartProducts);
+
   return newSale;
 };
 
@@ -29,13 +32,10 @@ const getAllSales = async () => saleModel.findAll({
   include: { as: 'users', model: userModel, attributes: ['id'] },
 });
 
-const getAllSalesBySeller = async (id) => saleModel.findAll({
-  where: { [sellerIdUnderscored]: id } });
+const getAllSalesBySeller = async (sellerId) => saleModel.findAll({ where: { sellerId } });
 
-const getAllSalesByUser = async (id) => saleModel.findAll({
-  attributes: {
-    exclude: ['deliveryAddress', 'deliveryNumber'] },
-    where: { [userIdUnderscored]: id },
+const getAllSalesByUser = async (userId) => saleModel.findAll({
+  attributes: { exclude: ['deliveryAddress', 'deliveryNumber'] }, where: { userId },
 });
 
 const getSaleById = async (id) => saleModel.findByPk(id);
