@@ -1,21 +1,19 @@
-const { saleProduct: saleProductModel } = require('../database/models');
+const { salesProduct: salesProductModel } = require('../database/models');
 
-const createSaleProduct = async (saleProductInfos) => (
-  saleProductModel.create(saleProductInfos)
-);
+const createSaleProducts = async (saleProductInfos) => salesProductModel.create(saleProductInfos);
 
-const deleteSaleProduct = async (id) => saleProductModel.delete(id);
+const deleteSaleProduct = async (id) => salesProductModel.delete(id);
 
-const getAllSalesProducts = async () => saleProductModel.findAll();
+const getAllSalesProducts = async () => salesProductModel.findAll();
 
-const getSaleProductById = async (id) => saleProductModel.findOne(id);
+const getSaleProductById = async (id) => salesProductModel.findOne(id);
 
 const updateSaleProduct = async (id, newSaleProductInfo) => (
-  saleProductModel.update(id, newSaleProductInfo)
+  salesProductModel.update(id, newSaleProductInfo)
 );
 
 module.exports = {
-  createSaleProduct,
+  createSaleProducts,
   deleteSaleProduct,
   getAllSalesProducts,
   getSaleProductById,
