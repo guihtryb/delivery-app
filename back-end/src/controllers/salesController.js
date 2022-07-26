@@ -20,15 +20,6 @@ const deleteSale = async (req, res, next) => {
   }
 };
 
-const getAllSales = async (_req, res, next) => {
-  try {
-    const sales = await salesService.getAllSales();
-    return res.status(200).json(sales);
-  } catch (error) {
-    next(error);
-  }
-};
-
 const getAllSalesBySeller = async (req, res, next) => {
   try {
     const { user } = req;
@@ -72,7 +63,6 @@ const updateSale = async (req, res, next) => {
 module.exports = {
   createSale,
   deleteSale,
-  getAllSales,
   getAllSalesBySeller,
   getAllSalesByUser,
   getSaleById,
