@@ -4,45 +4,43 @@ import Button from './Button';
 import deliveryContext from '../context/deliveryContext';
 
 function ProductCard({ name, id, price, imgSrc }) {
-  const [quantityProduct, setQuantity] = useState(0);
+  const [quantityProduct, setQuantityProduct] = useState(0);
+
   const imgDatatest = `customer_products__img-card-bg-image-${id}`;
   const priceDatatest = `customer_products__element-card-price-${id}`;
   const nameDatatest = `customer_products__element-card-title-${id}`;
   const menosDatatest = `customer_products__button-card-rm-item-${id}`;
   const maisDatatest = `customer_products__button-card-add-item-${id}`;
   const quantityDatatest = `customer_products__input-card-quantity-${id}`;
+
   const {
     updateCartProducts,
+    totalPrice,
   } = useContext(deliveryContext);
 
   const priceParse = (priceToParse) => priceToParse.replace('.', ',');
 
   const handleButtonClick = ({ target: { innerText } }) => {
-    let aux = quantityProduct;
-    if (innerText === '-' && quantityProduct !== 0) {
-      setQuantity(quantityProduct - 1);
-      aux -= 1;
-    } else if (innerText === '-' && quantityProduct === 0) {
-      setQuantity(0);
-    } else {
-      aux += 1;
-      setQuantity(quantityProduct + 1);
-    }
+    const NEGATIVE_ONE = -1;
+    const opValue = innerText === '-' ? NEGATIVE_ONE : 1;
+    console.log('InnerText: (', innerText, ')', totalPrice);
+    if (quantityProduct === 0 && opValue === NEGATIVE_ONE) return;
+    setQuantityProduct(quantityProduct + opValue);
 
     updateCartProducts({
       name,
       price,
       id,
-      quantityProduct: aux,
+      quantityProduct: quantityProduct + opValue,
     });
   };
 
   const handleChange = (e) => {
     const { value } = e.target;
     const productQuantity = Number(value);
-    if (productQuantity <= 0) setQuantity(0);
+    if (productQuantity <= 0) setQuantityProduct(0);
 
-    setQuantity(productQuantity);
+    setQuantityProduct(productQuantity);
     updateCartProducts({
       name,
       price,
@@ -78,7 +76,7 @@ function ProductCard({ name, id, price, imgSrc }) {
         />
         <input
           data-testid={ quantityDatatest }
-          className={ `input-${id}` }
+          className={ `input-${id} qualquercoisa` }
           onChange={ handleChange }
           value={ quantityProduct }
           type="text"

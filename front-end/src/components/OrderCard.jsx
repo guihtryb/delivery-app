@@ -2,14 +2,6 @@ import React from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const dateParse = (date) => {
-  const year = date.split('-')[0];
-  const month = date.split('-')[1];
-  const day = date.split('-')[2].split('T')[0];
-
-  return `${day}/${month}/${year}`;
-};
-
 const priceParse = (priceToParse) => priceToParse.replace('.', ',');
 
 function OrderCard({
@@ -60,7 +52,7 @@ function OrderCard({
               className="order-data"
               data-testid={ dataTestOrderDate }
             >
-              { dateParse(orderData) }
+              { orderData }
             </p>
             <p
               className="order-total"
@@ -90,7 +82,7 @@ OrderCard.propTypes = {
   orderId: PropTypes.number.isRequired,
   orderStatus: PropTypes.string.isRequired,
   orderData: PropTypes.string.isRequired,
-  orderTotal: PropTypes.number.isRequired,
+  orderTotal: PropTypes.string.isRequired,
   orderAddress: PropTypes.string.isRequired,
   sellerCard: PropTypes.bool.isRequired,
 };

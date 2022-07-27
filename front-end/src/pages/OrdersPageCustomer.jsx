@@ -16,7 +16,6 @@ function OrdersPage() {
 
     const loadOrders = async () => {
       const ordersList = await salesService.getAllUserSales(headers);
-      console.log(ordersList);
       setOrders(ordersList);
     };
 
@@ -39,6 +38,8 @@ function OrdersPage() {
                 orderStatus={ status }
                 orderData={ saleDate }
                 orderTotal={ totalPrice }
+                orderAddress=""
+                sellerCard={ false }
               />);
             })
           }

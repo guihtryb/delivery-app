@@ -2,8 +2,8 @@ const salesService = require('../services/salesService');
 
 const createSale = async (req, res, next) => {
   try {
-    const { body, user } = req;
-    const newSale = await salesService.createSale(body, user);
+    const { body } = req;
+    const newSale = await salesService.createSale(body);
     return res.status(201).json(newSale);
   } catch (error) {
     next(error);
@@ -15,15 +15,6 @@ const deleteSale = async (req, res, next) => {
     const { id } = req.params;
     await salesService.deleteSale(id);
     return res.status(204).end();
-  } catch (error) {
-    next(error);
-  }
-};
-
-const getAllSales = async (_req, res, next) => {
-  try {
-    const sales = await salesService.getAllSales();
-    return res.status(200).json(sales);
   } catch (error) {
     next(error);
   }
@@ -72,7 +63,6 @@ const updateSale = async (req, res, next) => {
 module.exports = {
   createSale,
   deleteSale,
-  getAllSales,
   getAllSalesBySeller,
   getAllSalesByUser,
   getSaleById,

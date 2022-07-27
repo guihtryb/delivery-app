@@ -1,65 +1,75 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
 import ProductCartCard from './ProductCartCard';
-import deliveryContext from '../context/deliveryContext';
 
-const sellerTest = 'customer_order_details__element-order-details-label-seller-name';
-const pedidoIdTest = 'customer_order_details__element-order-details-label-order-id';
-const dataTest = 'customer_order_details__element-order-details-label-order-date';
-const statusTest = 'customer_order_details__element-order-details-label-delivery-status';
-const deliveryTest = 'customer_order_details__button-delivery-check';
+const priceParse = (priceToParse) => priceToParse.replace('.', ',');
 
-// wip - substituir todas props por apenas sale
+const customerButton = (status, statusControls) => {
+  const deliveryTest = 'customer_order_details__button-delivery-check';
+
+  return (
+    <th>
+      <Button
+        name="MARCAR COMO ENTREGUE"
+        dataTestId={ deliveryTest }
+        importanceClass="primary"
+        disabled={ status !== 'Em Trânsito' }
+        callBack={ statusControls.markAsDelivered }
+      />
+    </th>);
+};
+
+const sellerButtons = (status, statusControls) => {
+  const dispatchTest = 'seller_order_details__button-dispatch-check';
+  const preparingTest = 'seller_order_details__button-preparing-check';
+
+  return (
+    <th>
+      <Button
+        name="PREPARAR PEDIDO"
+        dataTestId={ preparingTest }
+        importanceClass="primary"
+        disabled={ status !== 'Pendente' }
+        callBack={ statusControls.markAsPreparing }
+      />
+      <Button
+        name="SAIU PARA ENTREGA"
+        dataTestId={ dispatchTest }
+        importanceClass="primary"
+        disabled={ status !== 'Preparando' }
+        callBack={ statusControls.markAsOutForDelivery }
+      />
+    </th>
+  );
+};
+
 function DetailsOrder({
-  name,
-  data,
-  callBack,
-  orderIndex,
-  status,
-  pedidos /* wip - substituir pedidos por products */ }) {
-  const { cartProducts } = useContext(deliveryContext); // wip - substituir context por prop products
-  console.log(cartProducts);
+  sale,
+  seller,
+  statusControls,
+}) {
+  const isSeller = seller ? 'seller' : 'customer';
+  const dataTestPrice = `${isSeller}_order_details__element-order-total-price`;
+  const sellerTest = `${isSeller}_order_details__element-order-details-label-seller-name`;
+  const pedidoIdTest = `${isSeller}_order_details__element-order-details-label-order-id`;
+  const dataTest = `${isSeller}_order_details__element-order-details-label-order-date`;
+  const stTest = `${isSeller}_order_details__element-order-details-label-delivery-status`;
   return (
     <label htmlFor="tabela">
       Detalhe do Pedido
       <table name="tabela">
         <thead>
           <th data-testid={ pedidoIdTest }>
-            { `PEDIDO ${orderIndex}`/* wip - substituir por id da venda saleId */}
+            { `PEDIDO ${sale.id}`}
           </th>
+          <th data-testid={ sellerTest }>{`P.Vend: ${sale.sellerName}`}</th>
+          <th data-testid={ dataTest }>{ sale.saleDate }</th>
+          <th data-testid={ stTest }>{ sale.status }</th>
           {
-            name ? <th data-testid={ sellerTest }>{ name }</th> : null
+            !seller ? customerButton(sale.status, statusControls)
+              : sellerButtons(sale.status, statusControls)
           }
-          <th data-testid={ dataTest }>{ data }</th>
-          <th data-testid={ statusTest }>{ status }</th>
-          {
-            name ? (
-              <th>
-                <Button
-                  name="MARCAR COMO ENTREGUE"
-                  dataTestId={ deliveryTest }
-                  importanceClass="primary"
-                  disabled="false"
-                  callBack={ callBack }
-                />
-              </th>
-            ) : null
-          }
-          <Button
-            name="PREPARAR PEDIDO"
-            dataTestId={ deliveryTest }
-            importanceClass="primary"
-            disabled="false"
-            callBack={ callBack }
-          />
-          <Button
-            name="SAIU PARA ENTREGA"
-            dataTestId={ deliveryTest }
-            importanceClass="primary"
-            disabled="false"
-            callBack={ callBack }
-          />
         </thead>
         <thead>
           <th>item</th>
@@ -70,22 +80,22 @@ function DetailsOrder({
         </thead>
         <tbody>
           {
-            cartProducts.map((pedido, index) => (
+            sale.products.map((product, index) => (
               <ProductCartCard
-                name={ pedido.name }
-                key={ `key ${pedido.name}` }
-                price={ pedido.price }
-                quantity={ pedido.quantityProduct }
+                name={ product.name }
+                key={ product.name }
+                price={ product.price }
+                quantity={ product.quantity }
                 index={ index }
               />
             ))
           }
         </tbody>
         <h1
-          data-testid="seller_order_details__element-order-total-price"
+          data-testid={ dataTestPrice }
           className="primary"
         >
-          {`Total: R$ ${pedidos[0].totalPrice}`}
+          {priceParse(sale.totalPrice)}
         </h1>
       </table>
     </label>
@@ -95,14 +105,20 @@ function DetailsOrder({
 export default DetailsOrder;
 
 DetailsOrder.propTypes = {
-  name: PropTypes.string.isRequired,
-  status: PropTypes.bool.isRequired,
-  data: PropTypes.string.isRequired,
-  callBack: PropTypes.func.isRequired,
-  orderIndex: PropTypes.number.isRequired,
-  pedidos: PropTypes
-    .arrayOf(PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      totalPrice: PropTypes.number.isRequired,
-    })).isRequired,
+  sale: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    sellerName: PropTypes.string.isRequired,
+    saleDate: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    data: PropTypes.string.isRequired,
+    orderIndex: PropTypes.number.isRequired,
+    products: PropTypes,
+    totalPrice: PropTypes.number.isRequired,
+  }).isRequired,
+  seller: PropTypes.bool.isRequired,
+  statusControls: PropTypes.shape({
+    markAsDelivered: PropTypes.func,
+    markAsPreparing: PropTypes.func,
+    markAsOutForDelivery: PropTypes.func,
+  }).isRequired,
 };

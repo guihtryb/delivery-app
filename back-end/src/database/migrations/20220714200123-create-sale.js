@@ -10,22 +10,24 @@ module.exports = {
 
       user_id: {
         allowNull: false,
+        foreignKey: true,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         references: {
+          key: 'id',
           model: 'users',
-          key: 'id'
         },
         type: Sequelize.INTEGER,
       },
 
       seller_id: {
         allowNull: false,
+        foreignKey: true,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         references: {
+          key: 'id',
           model: 'users',
-          key: 'id'
         },
         type: Sequelize.INTEGER,
       },

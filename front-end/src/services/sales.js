@@ -20,13 +20,13 @@ const salesService = {
   ],
   getBySaleId: async (id) => getRequisitionWithParams(API_BASE, 'sales', id),
   createSale: async (data, headers) => {
-    const { id /* , products */ } = await postRequisitionWithHeaders(
+    const { id } = await postRequisitionWithHeaders(
       API_BASE,
       'sales',
       data,
       headers,
     );
-    return id;
+    return { id };
   },
   updateSale: async (id, data) => basicUpdateRequisition(API_BASE, 'sales', id, data),
   deleteSale: async (id) => basicDeleteRequisition(API_BASE, 'sales', id),

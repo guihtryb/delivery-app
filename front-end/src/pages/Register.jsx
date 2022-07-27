@@ -1,6 +1,5 @@
-import React, { /* useContext, */ useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-// import deliveryContext from '../context/deliveryContext';
 import Button from '../components/Button';
 import InputsText from '../components/InputsText';
 import usersService from '../services/users';
@@ -18,8 +17,6 @@ function invalidLogin() {
 }
 
 function Register({ history }) {
-  // const { contexto } = useContext(deliveryContext);
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');

@@ -7,13 +7,6 @@ function Navbar() {
   const [userRole, setUserRole] = useState('');
 
   useEffect(() => {
-    // FEITO PELO HUMBERTO, NAO CONSIGO PEGAR O USUARIO DA BACK END, ENTAO COMENTAR ESSA LINHA POSTERIORMENTE PARA FUNCIONAR
-    /* const userMock = {
-      name: 'HUMBERTO',
-      role: 'customer',
-    };
-    localStorage.setItem('user', JSON.stringify(userMock)); */
-    // Daqui pra baixo é o correto
     const user = JSON.parse(localStorage.getItem('user'));
 
     const { role, name } = user;
@@ -35,6 +28,12 @@ function Navbar() {
   const handleRedirectOrders = () => {
     if (location.pathname !== '/customer/orders') {
       history.push('/customer/orders');
+    }
+  };
+  const handleRedirectSellerOrders = () => {
+    console.log('clicou');
+    if (location.pathname !== '/seller/orders') {
+      history.push('/seller/orders');
     }
   };
   return (
@@ -60,10 +59,10 @@ function Navbar() {
         ) : (
           <button
             type="button"
-            data-testid="customer_products__element-navbar-link-products"
+            onClick={ handleRedirectSellerOrders }
+            data-testid="customer_products__element-navbar-link-orders"
           >
             PEDIDOS
-
           </button>
         )
       }

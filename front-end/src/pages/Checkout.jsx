@@ -7,6 +7,8 @@ import Button from '../components/Button';
 import InputsSelect from '../components/InputSelect';
 import Navbar from '../components/Navbar';
 import salesService from '../services/sales';
+import salesProductsService from '../services/salesProducts';
+import usersService from '../services/users';
 
 const tableColumns = [
   'Item',
@@ -41,44 +43,34 @@ function Checkout({ history }) {
 
   const handleClick = () => {
     const user = JSON.parse(localStorage.getItem('user'));
-    const { token } = user;
-
-    const data = {
-      totalPrice,
-      sellerName: 'Fulana Pereira',
-      deliveryAddress,
-      deliveryNumber,
-      status: 'Pendente',
-    };
-    // cartProducts,
-
-    const headers = {
-      Authorization: token,
-    };
+    const { token, name } = user;
 
     const registerSale = async () => {
-      const newsaleId = await salesService.createSale(data, headers);
+      // const { id: sellerId } = (await usersService.getSellers())
+      // .find((seller) => seller.name === sellerName);
+      const { id: userId } = (await usersService.getCustomers())
+        .find((customer) => customer.name === name);
 
-      setSaleId(newsaleId);
+      const data = {
+        userId,
+        sellerId: 2,
+        totalPrice,
+        deliveryAddress,
+        deliveryNumber,
+      };
+
+      const headers = {
+        Authorization: token,
+      };
+
+      const { id } = await salesService.createSale(data, headers);
+
+      await salesProductsService.createSalesProducts({ saleId: id, cartProducts });
+
+      setSaleId(id);
     };
 
     registerSale();
-
-    // axios.post('http://localhost:3001/sales', {
-    //   data: {
-    //     totalPrice,
-    //     sellerName,
-    //     deliveryAddress,
-    //     // cartProducts
-    //     // db -> cartProducts.forEach((product) => saleProducts.create(productId, quantity))
-    //     deliveryNumber,
-    //     status: 'Pendente',
-    //   },
-    //   headers: {
-    //     Authorization: token,
-    //   },
-    // })
-    //   .then((res) => setSaleId(res.data.id));
   };
 
   const redirectToOrderDetails = (id) => history.push(`/customer/orders/${id}`);
@@ -99,14 +91,16 @@ function Checkout({ history }) {
             </thead>
             <tbody>
               {
-                cartProducts.map((product, index) => (<ProductCartCard
-                  key={ product.name }
-                  name={ product.name }
-                  price={ product.price }
-                  quantity={ product.quantityProduct }
-                  index={ index }
-                  remove
-                />))
+                cartProducts.map((product, index) => (
+                  <ProductCartCard
+                    key={ product.name }
+                    name={ product.name }
+                    price={ product.price }
+                    quantity={ product.quantityProduct }
+                    index={ index }
+                    remove
+                  />
+                ))
               }
             </tbody>
           </table>

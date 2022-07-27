@@ -4,7 +4,7 @@ import Provider from './context/Provider';
 import Checkout from './pages/Checkout';
 import CustomerOrder from './pages/CustumerOrder';
 import Login from './pages/Login';
-import OrdersPage from './pages/OrdersPage';
+import OrdersPageCustomer from './pages/OrdersPageCustomer';
 import ProductsPage from './pages/ProductsPage';
 import Register from './pages/Register';
 import OrdersPageSeller from './pages/OrdersPageSeller';
@@ -20,7 +20,7 @@ function App() {
           <Route exact path="/register" component={ Register } />
           <Route exact path="/customer/products" component={ ProductsPage } />
           <Route exact path="/customer/checkout" component={ Checkout } />
-          <Route exact path="/customer/orders" component={ OrdersPage } />
+          <Route exact path="/customer/orders" component={ OrdersPageCustomer } />
           <Route exact path="/customer/orders/:id" component={ CustomerOrder } />
           <Route exact path="/seller/orders" component={ OrdersPageSeller } />
           <Route exact path="/seller/orders/:id" component={ SellerOrder } />
