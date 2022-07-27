@@ -11,7 +11,8 @@ const deliveryTest = 'customer_order_details__button-delivery-check';
 
 function DetailsOrder({
   sale,
-  callBack,
+  seller,
+  statusControls,
 }) {
   return (
     <label htmlFor="tabela">
@@ -27,14 +28,14 @@ function DetailsOrder({
           <th data-testid={ dataTest }>{ data }</th>
           <th data-testid={ statusTest }>{ sale.saleDate }</th>
           {
-            seller ? (
+            !seller ? (
               <th>
                 <Button
                   name="MARCAR COMO ENTREGUE"
                   dataTestId={ deliveryTest }
                   importanceClass="primary"
-                  disabled="false"
-                  callBack={ callBack }
+                  disabled={ sale.status !== 'Entregue' }
+                  callBack={ statusControls.markAsDelivered }
                 />
               </th>
             ) : null
@@ -43,15 +44,15 @@ function DetailsOrder({
             name="PREPARAR PEDIDO"
             dataTestId={ deliveryTest }
             importanceClass="primary"
-            disabled="false"
-            callBack={ callBack }
+            disabled={ sale.status !== 'Pendente' }
+            callBack={ statusControls.markAsPreparing }
           />
           <Button
             name="SAIU PARA ENTREGA"
             dataTestId={ deliveryTest }
             importanceClass="primary"
-            disabled="false"
-            callBack={ callBack }
+            disabled={ sale.status !== 'Preparando' }
+            callBack={ statusControls.markAsOutForDelivery }
           />
         </thead>
         <thead>
@@ -98,5 +99,10 @@ DetailsOrder.propTypes = {
     products: PropTypes,
     totalPrice: PropTypes.number.isRequired,
   }).isRequired,
-  callBack: PropTypes.func.isRequired,
+  seller: PropTypes.bool.isRequired,
+  statusControls: PropTypes.shape({
+    markAsDelivered: PropTypes.func,
+    markAsPreparing: PropTypes.func,
+    markAsOutForDelivery: PropTypes.func,
+  }).isRequired,
 };
