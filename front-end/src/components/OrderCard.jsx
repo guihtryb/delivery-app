@@ -13,7 +13,7 @@ const dateParse = (date) => {
 const priceParse = (priceToParse) => priceToParse.replace('.', ',');
 
 function OrderCard({
-  orderId, orderStatus, orderAddress, orderData, orderTotal,
+  orderId, orderStatus, orderAddress, orderData, orderTotal, sellerCard,
 }) {
   const history = useHistory();
   const location = useLocation();
@@ -24,6 +24,14 @@ function OrderCard({
       history.push(`/customer/orders/${orderId}`);
     }
   };
+
+  const isSeller = sellerCard ? 'seller' : 'customer';
+
+  const dataTestOrderId = `${isSeller}_orders__element-order-id-${orderId}`;
+  const dataTestDeliveryStatus = `${isSeller}_orders__element-delivery-status-${orderId}`;
+  const dataTestOrderDate = `${isSeller}_orders__element-order-date-${orderId}`;
+  const dataTestCardPrice = `${isSeller}_orders__element-card-price-${orderId}`;
+
   return (
     <div
       className="order-card flex-row"
@@ -33,7 +41,7 @@ function OrderCard({
     >
       <div className="orderId flex-column">
         <span
-          data-testid={ `customer_orders__element-order-id-${orderId}` }
+          data-testid={ dataTestOrderId }
         >
           {`pedido ${orderId}`}
         </span>
@@ -42,7 +50,7 @@ function OrderCard({
         <div className="status-infos flex-row">
           <div className="status-title">
             <h3
-              data-testid={ `customer_orders__element-delivery-status-${orderId}` }
+              data-testid={ dataTestDeliveryStatus }
             >
               { orderStatus }
             </h3>
@@ -50,13 +58,13 @@ function OrderCard({
           <div className="orderInfos flex-column">
             <p
               className="order-data"
-              data-testid={ `customer_orders__element-order-date-${orderId}` }
+              data-testid={ dataTestOrderDate }
             >
               { dateParse(orderData) }
             </p>
             <p
               className="order-total"
-              data-testid={ `customer_orders__element-card-price-${orderId}` }
+              data-testid={ dataTestCardPrice }
             >
               { priceParse(orderTotal) }
             </p>
@@ -84,4 +92,5 @@ OrderCard.propTypes = {
   orderData: PropTypes.string.isRequired,
   orderTotal: PropTypes.number.isRequired,
   orderAddress: PropTypes.string.isRequired,
+  sellerCard: PropTypes.bool.isRequired,
 };

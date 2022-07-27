@@ -34,12 +34,12 @@ function OrdersPage() {
                 id, status, deliveryAddress, deliveryNumber, saleDate, totalPrice } = x;
               return (<OrderCard
                 key={ `${id}` }
-                orderDatatest="customer_products__element-order-date"
                 orderId={ id }
                 orderStatus={ status }
                 orderAddress={ `${deliveryAddress}, ${deliveryNumber}` }
                 orderData={ saleDate }
                 orderTotal={ totalPrice }
+                sellerCard
               />);
             })
           }
