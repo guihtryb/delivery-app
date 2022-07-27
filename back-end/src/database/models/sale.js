@@ -8,6 +8,20 @@ const attributes = {
     type: DataTypes.INTEGER
   },
 
+  userId: {
+    allowNull: false,
+    field: 'user_id',
+    foreignKey: true,
+    type: DataTypes.INTEGER,
+  },
+
+  sellerId: {
+    allowNull: false,
+    field: 'seller_id',
+    foreignKey: true,
+    type: DataTypes.INTEGER,
+  },
+
   totalPrice: {
     allowNull: false,
     type: DataTypes.DECIMAL,
