@@ -17,7 +17,7 @@ function Navbar() {
   const history = useHistory();
   const location = useLocation();
   const handleLogout = () => {
-    // localStorage.clear();
+    localStorage.clear();
     history.push('/');
   };
   const handleRedirectProducts = () => {

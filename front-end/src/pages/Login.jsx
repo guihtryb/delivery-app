@@ -112,6 +112,7 @@ export default Login;
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
+    action: PropTypes.string,
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired,
     }),

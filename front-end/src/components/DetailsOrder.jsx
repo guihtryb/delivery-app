@@ -15,7 +15,7 @@ const customerButton = (status, statusControls) => (
       name="MARCAR COMO ENTREGUE"
       dataTestId={ deliveryTest }
       importanceClass="primary"
-      disabled={ status !== 'Em trânsito' }
+      disabled={ status !== 'Em Trânsito' }
       callBack={ statusControls.markAsDelivered }
     />
   </th>);
