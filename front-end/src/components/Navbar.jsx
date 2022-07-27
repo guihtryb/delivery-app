@@ -30,6 +30,12 @@ function Navbar() {
       history.push('/customer/orders');
     }
   };
+  const handleRedirectSellerOrders = () => {
+    console.log('clicou');
+    if (location.pathname !== '/seller/orders') {
+      history.push('/seller/orders');
+    }
+  };
   return (
     <div className="navbar flex-row">
       {
@@ -53,10 +59,10 @@ function Navbar() {
         ) : (
           <button
             type="button"
-            data-testid="customer_products__element-navbar-link-products"
+            onClick={ handleRedirectSellerOrders }
+            data-testid="customer_products__element-navbar-link-orders"
           >
             PEDIDOS
-
           </button>
         )
       }

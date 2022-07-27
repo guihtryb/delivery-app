@@ -15,7 +15,7 @@ function ProductsPage({ history }) {
   };
 
   useEffect(() => {
-    const isPriceLowerThanZero = +totalPrice < 0;
+    const isPriceLowerThanZero = +totalPrice <= 0;
     setDisabled(isPriceLowerThanZero);
   }, [totalPrice]);
 

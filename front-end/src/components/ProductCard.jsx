@@ -76,7 +76,7 @@ function ProductCard({ name, id, price, imgSrc }) {
         />
         <input
           data-testid={ quantityDatatest }
-          className={ `input-${id}` }
+          className={ `input-${id} qualquercoisa` }
           onChange={ handleChange }
           value={ quantityProduct }
           type="text"

@@ -3,47 +3,58 @@ import PropTypes from 'prop-types';
 import Button from './Button';
 import ProductCartCard from './ProductCartCard';
 
-const sellerTest = 'customer_order_details__element-order-details-label-seller-name';
-const pedidoIdTest = 'customer_order_details__element-order-details-label-order-id';
-const dataTest = 'customer_order_details__element-order-details-label-order-date';
-const statusTest = 'customer_order_details__element-order-details-label-delivery-status';
-const deliveryTest = 'customer_order_details__button-delivery-check';
+const priceParse = (priceToParse) => priceToParse.replace('.', ',');
 
-const customerButton = (status, statusControls) => (
-  <th>
-    <Button
-      name="MARCAR COMO ENTREGUE"
-      dataTestId={ deliveryTest }
-      importanceClass="primary"
-      disabled={ status !== 'Em Trânsito' }
-      callBack={ statusControls.markAsDelivered }
-    />
-  </th>);
+const customerButton = (status, statusControls) => {
+  const deliveryTest = 'customer_order_details__button-delivery-check';
 
-const sellerButtons = (status, statusControls) => (
-  <th>
-    <Button
-      name="PREPARAR PEDIDO"
-      dataTestId={ deliveryTest }
-      importanceClass="primary"
-      disabled={ status !== 'Pendente' }
-      callBack={ statusControls.markAsPreparing }
-    />
-    <Button
-      name="SAIU PARA ENTREGA"
-      dataTestId={ deliveryTest }
-      importanceClass="primary"
-      disabled={ status !== 'Preparando' }
-      callBack={ statusControls.markAsOutForDelivery }
-    />
-  </th>
-);
+  return (
+    <th>
+      <Button
+        name="MARCAR COMO ENTREGUE"
+        dataTestId={ deliveryTest }
+        importanceClass="primary"
+        disabled={ status !== 'Em Trânsito' }
+        callBack={ statusControls.markAsDelivered }
+      />
+    </th>);
+};
+
+const sellerButtons = (status, statusControls) => {
+  const dispatchTest = 'seller_order_details__button-dispatch-check';
+  const preparingTest = 'seller_order_details__button-preparing-check';
+
+  return (
+    <th>
+      <Button
+        name="PREPARAR PEDIDO"
+        dataTestId={ preparingTest }
+        importanceClass="primary"
+        disabled={ status !== 'Pendente' }
+        callBack={ statusControls.markAsPreparing }
+      />
+      <Button
+        name="SAIU PARA ENTREGA"
+        dataTestId={ dispatchTest }
+        importanceClass="primary"
+        disabled={ status !== 'Preparando' }
+        callBack={ statusControls.markAsOutForDelivery }
+      />
+    </th>
+  );
+};
 
 function DetailsOrder({
   sale,
   seller,
   statusControls,
 }) {
+  const isSeller = seller ? 'seller' : 'customer';
+  const dataTestPrice = `${isSeller}_order_details__element-order-total-price`;
+  const sellerTest = `${isSeller}_order_details__element-order-details-label-seller-name`;
+  const pedidoIdTest = `${isSeller}_order_details__element-order-details-label-order-id`;
+  const dataTest = `${isSeller}_order_details__element-order-details-label-order-date`;
+  const stTest = `${isSeller}_order_details__element-order-details-label-delivery-status`;
   return (
     <label htmlFor="tabela">
       Detalhe do Pedido
@@ -54,7 +65,7 @@ function DetailsOrder({
           </th>
           <th data-testid={ sellerTest }>{`P.Vend: ${sale.sellerName}`}</th>
           <th data-testid={ dataTest }>{ sale.saleDate }</th>
-          <th data-testid={ statusTest }>{ sale.status }</th>
+          <th data-testid={ stTest }>{ sale.status }</th>
           {
             !seller ? customerButton(sale.status, statusControls)
               : sellerButtons(sale.status, statusControls)
@@ -81,10 +92,10 @@ function DetailsOrder({
           }
         </tbody>
         <h1
-          data-testid="seller_order_details__element-order-total-price"
+          data-testid={ dataTestPrice }
           className="primary"
         >
-          {`Total: R$ ${sale.totalPrice}`}
+          {priceParse(sale.totalPrice)}
         </h1>
       </table>
     </label>

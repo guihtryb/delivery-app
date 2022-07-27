@@ -38,6 +38,8 @@ function OrdersPage() {
                 orderStatus={ status }
                 orderData={ saleDate }
                 orderTotal={ totalPrice }
+                orderAddress=""
+                sellerCard={ false }
               />);
             })
           }
