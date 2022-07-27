@@ -32,7 +32,7 @@ function SellerOrder() {
     },
     markAsOutForDelivery: async () => {
       salesService
-        .updateSale(order.id, { status: 'Em trânsito' });
+        .updateSale(order.id, { status: 'Em Trânsito' });
       setRerender(true);
     },
   };

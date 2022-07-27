@@ -7,13 +7,6 @@ function Navbar() {
   const [userRole, setUserRole] = useState('');
 
   useEffect(() => {
-    // FEITO PELO HUMBERTO, NAO CONSIGO PEGAR O USUARIO DA BACK END, ENTAO COMENTAR ESSA LINHA POSTERIORMENTE PARA FUNCIONAR
-    /* const userMock = {
-      name: 'HUMBERTO',
-      role: 'customer',
-    };
-    localStorage.setItem('user', JSON.stringify(userMock)); */
-    // Daqui pra baixo é o correto
     const user = JSON.parse(localStorage.getItem('user'));
 
     const { role, name } = user;
@@ -24,7 +17,7 @@ function Navbar() {
   const history = useHistory();
   const location = useLocation();
   const handleLogout = () => {
-    localStorage.clear();
+    // localStorage.clear();
     history.push('/');
   };
   const handleRedirectProducts = () => {

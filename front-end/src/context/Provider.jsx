@@ -40,8 +40,8 @@ function Provider({ children }) {
     }
   };
 
-  const calcTotalPrice = (arrayCart) => arrayCart.reduce((acc, x) => {
-    const { price, quantityProduct } = x;
+  const calcTotalPrice = (arrayProducts) => arrayProducts.reduce((acc, product) => {
+    const { price, quantityProduct } = product;
     const aux = acc + parseFloat(price) * quantityProduct;
     return aux;
   }, 0);

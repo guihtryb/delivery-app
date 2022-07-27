@@ -15,6 +15,7 @@ function ProductCard({ name, id, price, imgSrc }) {
 
   const {
     updateCartProducts,
+    totalPrice,
   } = useContext(deliveryContext);
 
   const priceParse = (priceToParse) => priceToParse.replace('.', ',');
@@ -22,7 +23,7 @@ function ProductCard({ name, id, price, imgSrc }) {
   const handleButtonClick = ({ target: { innerText } }) => {
     const NEGATIVE_ONE = -1;
     const opValue = innerText === '-' ? NEGATIVE_ONE : 1;
-
+    console.log('InnerText: (', innerText, ')', totalPrice);
     if (quantityProduct === 0 && opValue === NEGATIVE_ONE) return;
     setQuantityProduct(quantityProduct + opValue);
 

@@ -7,6 +7,8 @@ import Button from '../components/Button';
 import InputsSelect from '../components/InputSelect';
 import Navbar from '../components/Navbar';
 import salesService from '../services/sales';
+import salesProductsService from '../services/salesProducts';
+import usersService from '../services/users';
 
 const tableColumns = [
   'Item',
@@ -41,25 +43,31 @@ function Checkout({ history }) {
 
   const handleClick = () => {
     const user = JSON.parse(localStorage.getItem('user'));
-    const { token } = user;
-
-    const data = {
-      totalPrice,
-      sellerName,
-      deliveryAddress,
-      deliveryNumber,
-      status: 'Pendente',
-      cartProducts,
-    };
-
-    const headers = {
-      Authorization: token,
-    };
+    const { token, name } = user;
 
     const registerSale = async () => {
-      const newSale = await salesService.createSale(data, headers);
+      // const { id: sellerId } = (await usersService.getSellers())
+      // .find((seller) => seller.name === sellerName);
+      const { id: userId } = (await usersService.getCustomers())
+        .find((customer) => customer.name === name);
 
-      setSaleId(newSale.id);
+      const data = {
+        userId,
+        sellerId: 2,
+        totalPrice,
+        deliveryAddress,
+        deliveryNumber,
+      };
+
+      const headers = {
+        Authorization: token,
+      };
+
+      const { id } = await salesService.createSale(data, headers);
+
+      await salesProductsService.createSalesProducts({ saleId: id, cartProducts });
+
+      setSaleId(id);
     };
 
     registerSale();
