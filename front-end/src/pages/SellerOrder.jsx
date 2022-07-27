@@ -7,6 +7,7 @@ import DetailsOrder from '../components/DetailsOrder';
 
 function SellerOrder() {
   const [order, setSellerOrder] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const [rerender, setRerender] = useState(true);
   const { pathname } = useLocation();
   const urlParts = pathname.split('/');
@@ -16,10 +17,11 @@ function SellerOrder() {
     const loadSellerOrders = async () => {
       const sellerOrdersData = await salesService.getBySaleId(orderId);
       setSellerOrder(sellerOrdersData);
+      setIsLoading(false);
     };
 
     if (rerender) loadSellerOrders();
-
+    loadSellerOrders();
     setRerender(false);
   }, [orderId, rerender]);
 
@@ -38,11 +40,13 @@ function SellerOrder() {
   return (
     <div className="order-page flex-column">
       <Navbar />
-      <DetailsOrder
-        sale={ order }
-        seller
-        statusControls={ sellerStatusControls }
-      />
+      { isLoading ? (<p>Loading</p>) : (
+        <DetailsOrder
+          sale={ order }
+          seller
+          statusControls={ sellerStatusControls }
+        />
+      )}
     </div>
   );
 }

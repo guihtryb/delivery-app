@@ -56,6 +56,6 @@ OrderCard.propTypes = {
   orderId: PropTypes.number.isRequired,
   orderStatus: PropTypes.string.isRequired,
   orderData: PropTypes.string.isRequired,
-  orderTotal: PropTypes.number.isRequired,
+  orderTotal: PropTypes.string.isRequired,
   orderAddress: PropTypes.string.isRequired,
 };

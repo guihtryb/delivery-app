@@ -23,7 +23,7 @@ function CustomerOrder() {
     };
 
     if (rerender) loadOrder();
-
+    loadOrder();
     setRerender(false);
   }, [id, rerender]);
 
