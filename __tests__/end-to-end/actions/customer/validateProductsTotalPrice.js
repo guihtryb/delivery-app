@@ -52,8 +52,6 @@ const validateProductsTotalPrice = async (page, itemList) => {
         `[data-testid$='-${productId}']`,
       String(quantity)
     );
-
-    console.log('o produto ', name, quantity, productId );
   }
 
   await expect(page).toGetTextFromElement(
