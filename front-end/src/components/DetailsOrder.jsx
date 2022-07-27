@@ -9,6 +9,36 @@ const dataTest = 'customer_order_details__element-order-details-label-order-date
 const statusTest = 'customer_order_details__element-order-details-label-delivery-status';
 const deliveryTest = 'customer_order_details__button-delivery-check';
 
+const customerButton = (status, statusControls) => (
+  <th>
+    <Button
+      name="MARCAR COMO ENTREGUE"
+      dataTestId={ deliveryTest }
+      importanceClass="primary"
+      disabled={ status !== 'Entregue' }
+      callBack={ statusControls.markAsDelivered }
+    />
+  </th>);
+
+const sellerButtons = (status, statusControls) => (
+  <th>
+    <Button
+      name="PREPARAR PEDIDO"
+      dataTestId={ deliveryTest }
+      importanceClass="primary"
+      disabled={ status !== 'Pendente' }
+      callBack={ statusControls.markAsPreparing }
+    />
+    <Button
+      name="SAIU PARA ENTREGA"
+      dataTestId={ deliveryTest }
+      importanceClass="primary"
+      disabled={ status !== 'Preparando' }
+      callBack={ statusControls.markAsOutForDelivery }
+    />
+  </th>
+);
+
 function DetailsOrder({
   sale,
   seller,
@@ -22,38 +52,13 @@ function DetailsOrder({
           <th data-testid={ pedidoIdTest }>
             { `PEDIDO ${sale.id}`}
           </th>
+          <th data-testid={ sellerTest }>{`P.Vend: ${sale.sellerName}`}</th>
+          <th data-testid={ dataTest }>{ sale.saleDate }</th>
+          <th data-testid={ statusTest }>{ sale.status }</th>
           {
-            seller ? <th data-testid={ sellerTest }>{ sale.sellerName }</th> : null
+            !seller ? customerButton(sale.status, statusControls)
+              : sellerButtons(sale.status, statusControls)
           }
-          <th data-testid={ dataTest }>{ data }</th>
-          <th data-testid={ statusTest }>{ sale.saleDate }</th>
-          {
-            !seller ? (
-              <th>
-                <Button
-                  name="MARCAR COMO ENTREGUE"
-                  dataTestId={ deliveryTest }
-                  importanceClass="primary"
-                  disabled={ sale.status !== 'Entregue' }
-                  callBack={ statusControls.markAsDelivered }
-                />
-              </th>
-            ) : null
-          }
-          <Button
-            name="PREPARAR PEDIDO"
-            dataTestId={ deliveryTest }
-            importanceClass="primary"
-            disabled={ sale.status !== 'Pendente' }
-            callBack={ statusControls.markAsPreparing }
-          />
-          <Button
-            name="SAIU PARA ENTREGA"
-            dataTestId={ deliveryTest }
-            importanceClass="primary"
-            disabled={ sale.status !== 'Preparando' }
-            callBack={ statusControls.markAsOutForDelivery }
-          />
         </thead>
         <thead>
           <th>item</th>
@@ -90,7 +95,7 @@ export default DetailsOrder;
 
 DetailsOrder.propTypes = {
   sale: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     sellerName: PropTypes.string.isRequired,
     saleDate: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,

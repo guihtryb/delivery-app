@@ -49,6 +49,7 @@ function Checkout({ history }) {
       deliveryAddress,
       deliveryNumber,
       status: 'Pendente',
+      cartProducts,
     };
 
     const headers = {
@@ -56,9 +57,9 @@ function Checkout({ history }) {
     };
 
     const registerSale = async () => {
-      const newsaleId = await salesService.createSale(data, headers);
+      const newSale = await salesService.createSale(data, headers);
 
-      setSaleId(newsaleId);
+      setSaleId(newSale.id);
     };
 
     registerSale();
@@ -82,14 +83,16 @@ function Checkout({ history }) {
             </thead>
             <tbody>
               {
-                cartProducts.map((product, index) => (<ProductCartCard
-                  key={ product.name }
-                  name={ product.name }
-                  price={ product.price }
-                  quantity={ product.quantityProduct }
-                  index={ index }
-                  remove
-                />))
+                cartProducts.map((product, index) => (
+                  <ProductCartCard
+                    key={ product.name }
+                    name={ product.name }
+                    price={ product.price }
+                    quantity={ product.quantityProduct }
+                    index={ index }
+                    remove
+                  />
+                ))
               }
             </tbody>
           </table>

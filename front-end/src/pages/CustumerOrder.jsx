@@ -19,13 +19,12 @@ function CustomerOrder() {
     const loadOrder = async () => {
       const orderData = await salesService.getBySaleId(id);
       setOrder(orderData);
+      setIsLoading(false);
     };
 
     if (rerender) loadOrder();
 
     setRerender(false);
-
-    setIsLoading(false);
   }, [id, rerender]);
 
   const costumerStatusControls = {
