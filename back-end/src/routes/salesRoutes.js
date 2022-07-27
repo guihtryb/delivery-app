@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const tokenVerify = require('../middlewares/tokenVerify');
 const salesController = require('../controllers/salesController');
+const { createSaleProducts } = require('../controllers/salesProductsController');
 
 const router = Router();
 const { 
@@ -15,6 +16,7 @@ const {
 const saleId = '/sales/:id';
 
 router.post('/sales', tokenVerify, createSale);
+router.post('/salesProducts', createSaleProducts);
 router.delete(saleId, deleteSale);
 router.get('/sales/seller', tokenVerify, getAllSalesBySeller);
 router.get('/sales/user', tokenVerify, getAllSalesByUser);

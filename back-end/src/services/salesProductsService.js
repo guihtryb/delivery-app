@@ -1,13 +1,15 @@
 const { salesProduct: salesProductModel } = require('../database/models');
 
-const createSaleProducts = async (saleId, cartProducts) => (
-  Promise.all(
+const createSaleProducts = async (saleId, cartProducts) => {
+  const newSalesProducts = await Promise.all(
     cartProducts.map(async (product) => {
       const { id: productId, quantityProduct: quantity } = product;
-      await salesProductModel.create({ saleId, productId, quantity });
+      return salesProductModel.create({ saleId, productId, quantity });
     }),
-  )
-);
+    );
+
+  return newSalesProducts;
+};
 
 const deleteSaleProduct = async (id) => salesProductModel.delete(id);
 

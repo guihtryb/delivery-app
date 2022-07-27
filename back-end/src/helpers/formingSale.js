@@ -1,7 +1,7 @@
 const formingSaleDate = require('./formingSaleDate');
 const { user: userModel } = require('../database/models');
 
-const formingSale = async (id, saleParams, products) => {
+const formingSale = async (id, saleParams) => {
   const {
     totalPrice, userId, sellerId, deliveryAddress, deliveryNumber, saleDate, status,
   } = saleParams;
@@ -17,7 +17,7 @@ const formingSale = async (id, saleParams, products) => {
     deliveryNumber,
     saleDate: formingSaleDate(saleDate),
     status,
-    products,
+    // products,
   };
 };
 
