@@ -47,8 +47,10 @@ function Provider({ children }) {
   }, 0);
 
   useEffect(() => {
-    const priceReduced = calcTotalPrice(cartProducts);
-    setTotalPrice(priceReduced.toFixed(2));
+    const preçoTotal = calcTotalPrice(cartProducts);
+    if (preçoTotal >= 0) {
+      setTotalPrice(preçoTotal.toFixed(2));
+    }
   }, [cartProducts]);
 
   const contextValue = {
@@ -64,13 +66,6 @@ function Provider({ children }) {
     sellersOptions,
     products,
   };
-
-  useEffect(() => {
-    const preçoTotal = calcTotalPrice(cartProducts);
-    if (preçoTotal >= 0) {
-      setTotalPrice(preçoTotal.toFixed(2));
-    }
-  }, [cartProducts]);
 
   return (
     <deliveryContext.Provider value={ contextValue }>
