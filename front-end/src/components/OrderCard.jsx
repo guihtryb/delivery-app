@@ -23,9 +23,9 @@ function OrderCard({
       role="none"
     >
       <div className="orderId flex-column">
-        <span>
-          {/* // data-testid={ `customer_orders__element-order-id-${orderId}` } */}
-          {/* > */}
+        <span
+          data-testid={ `customer_orders__element-order-id-${orderId}` }
+        >
           {`pedido ${orderId}`}
         </span>
       </div>
