@@ -4,13 +4,19 @@ const formingSaleDate = require('../helpers/formingSaleDate');
 const salesProductsService = require('./salesProductsService');
 const { sale: saleModel, user: userModel } = require('../database/models');
 
-const createSale = async (newSaleInfos, userId) => {
+const createSale = async (newSaleInfos) => {
+  // const {
+  //   totalPrice, sellerName, deliveryAddress, deliveryNumber, status,
+  // } = newSaleInfos;
+
   const {
-    totalPrice, sellerName, deliveryAddress, deliveryNumber, status, cartProducts,
+    userId, sellerId, totalPrice, deliveryAddress, deliveryNumber,
   } = newSaleInfos;
 
-  const { id: sellerId } = await userModel.findOne({ where: { name: sellerName } });
+  // const { id: sellerId } = await userModel.findOne({ where: { name: sellerName } });
+
   const saleDate = new Date();
+
   const saleParams = {
     totalPrice,
     userId,
@@ -18,13 +24,12 @@ const createSale = async (newSaleInfos, userId) => {
     deliveryAddress,
     deliveryNumber,
     saleDate,
-    status,
+    status: 'Pendente',
   };
 
   const { id } = await saleModel.create(saleParams);
-  await salesProductsService.createSaleProducts(id, cartProducts);
 
-  return formingSale(id, saleParams, cartProducts);
+  return formingSale(id, saleParams);
 };
 
 const deleteSale = async (id) => saleModel.delete(id);
