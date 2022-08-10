@@ -46,14 +46,15 @@ function Checkout({ history }) {
     const { token, name } = user;
 
     const registerSale = async () => {
-      // const { id: sellerId } = (await usersService.getSellers())
-      // .find((seller) => seller.name === sellerName);
+      const { id: sellerId } = (await usersService.getSellers())
+      .find((seller) => seller.name === sellerName);
+
       const { id: userId } = (await usersService.getCustomers())
         .find((customer) => customer.name === name);
 
       const data = {
         userId,
-        sellerId: 2,
+        sellerId,
         totalPrice,
         deliveryAddress,
         deliveryNumber,

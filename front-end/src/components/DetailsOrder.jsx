@@ -17,7 +17,8 @@ const customerButton = (status, statusControls) => {
         disabled={ status !== 'Em Trânsito' }
         callBack={ statusControls.markAsDelivered }
       />
-    </th>);
+    </th>
+  );
 };
 
 const sellerButtons = (status, statusControls) => {
