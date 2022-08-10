@@ -5,15 +5,9 @@ const salesProductsService = require('./salesProductsService');
 const { sale: saleModel, user: userModel } = require('../database/models');
 
 const createSale = async (newSaleInfos) => {
-  // const {
-  //   totalPrice, sellerName, deliveryAddress, deliveryNumber, status,
-  // } = newSaleInfos;
-
   const {
     userId, sellerId, totalPrice, deliveryAddress, deliveryNumber,
   } = newSaleInfos;
-
-  // const { id: sellerId } = await userModel.findOne({ where: { name: sellerName } });
 
   const saleDate = new Date();
 

@@ -32,7 +32,6 @@ const getUserById = async (id) => {
   return getUser; 
 };
 
-// wip - sugestão de receber password e newPassword
 const update = async (body, id) => {
   const { name, email, password } = body;
   const checkPassword = await user.findByPk(id);

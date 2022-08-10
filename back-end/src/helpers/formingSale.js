@@ -17,7 +17,6 @@ const formingSale = async (id, saleParams) => {
     deliveryNumber,
     saleDate: formingSaleDate(saleDate),
     status,
-    // products,
   };
 };
 
